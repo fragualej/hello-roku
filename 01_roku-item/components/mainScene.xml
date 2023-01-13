@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<component name="mainScene" extends="Scene">
+    <script type="text/brightscript" uri="mainScene.brs"/>
+    <children>
+        <layoutGroup id="layoutGroup" horizAlignment="center" itemSpacings="[30]">
+            <rectangle 
+                id="rectangle" 
+                color="#FFFFFF" 
+                width="462" 
+                height="462">
+                <poster 
+                    id="poster" 
+                    width="432" 
+                    height="432" 
+                    translation="[15, 15]" 
+                    uri="pkg:/images/profiles/bettafish.jpg"/>
+            </rectangle>
+            <simpleLabel 
+                id="label" 
+                text="Bettafish" 
+                fontUri="font:SystemFontFile" 
+                fontSize="40" 
+                horizOrigin="left" 
+                vertOrigin="center" />
+        </layoutGroup>
+    </children>
+</component>
