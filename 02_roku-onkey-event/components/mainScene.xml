@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<component name="mainScene" extends="Scene">
+    <script type="text/brightscript" uri="mainScene.brs"/>
+    <children>
+        <LayoutGroup id="LayoutGroup" layoutDirection="horiz" itemSpacings="[50]">
+            <LayoutGroup id="fishItem" itemSpacings="[30]" horizAlignment="center">
+                <Rectangle
+                    id="fishRect"
+                    color="#FFFFFF"
+                    width="398"
+                    height="398">
+                    <Poster
+                        id="Poster"
+                        width="368"
+                        height="368"
+                        uri="pkg:/images/profiles/bettafish.jpg"
+                        translation="[15, 15]"
+                    />
+                </Rectangle>
+                <SimpleLabel
+                    id="fishLabel"
+                    text="Bettafish"
+                    fontUri="font:BoldSystemFontFile"
+                    fontSize="40"
+                    color="#FFFFFF"
+                    horizOrigin="center"
+                    vertOrigin="center"
+                />
+            </LayoutGroup>
+            <LayoutGroup id="birdItem" itemSpacings="[30]" horizAlignment="center">
+                <Rectangle
+                    id="birdRect"
+                    color="#FFFFFF"
+                    width="398"
+                    height="398">
+                    <Poster
+                        id="Poster"
+                        width="368"
+                        height="368"
+                        uri="pkg:/images/profiles/hummingbird.jpg"
+                        translation="[15, 15]"
+                    />
+                </Rectangle>
+                <SimpleLabel
+                    id="birdLabel"
+                    text="Hummingbird"
+                    fontUri="font:BoldSystemFontFile"
+                    fontSize="40"
+                    color="#FFFFFF"
+                    horizOrigin="center"
+                    vertOrigin="center"
+                />
+            </LayoutGroup>
+        </LayoutGroup>
+    </children>
+</component>
