@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<component name="customItem" extends="group">
+    <script type="text/brightscript" uri="customItem.brs"/>
+    <interface>
+        <!-- rectangle fields -->
+        <field id="rectWidth"  type="integer" alias="rectangle.width"/>
+        <field id="rectHeight" type="integer" alias="rectangle.height"/>
+        <field id="rectColor" type="color" alias="rectangle.color"/>
+        <!-- poster fields -->
+        <field id="posterWidth" type="integer" alias="poster.width"/>
+        <field id="posterHeight" type="integer" alias="poster.height"/>
+        <field id="posterTranslation" type="array" alias="poster.translation"/>
+        <field id="posterUri" type="integer" alias="poster.uri"/>
+        <!-- label fields -->
+        <field id="labelText" type="integer" alias="simpleLabel.text"/>
+    </interface>
+    <children>
+        <layoutGroup id="layoutGroup" itemSpacings="[30]" horizAlignment="center">
+            <rectangle
+                id="rectangle">
+                <poster
+                    id="poster"/>
+            </rectangle>
+            <simpleLabel
+                id="simpleLabel"
+                fontUri="font:BoldSystemFontFile"
+                fontSize="40"/>
+        </layoutGroup>
+    </children>
+</component>

@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<component name="mainScene" extends="Scene">
+    <script type="text/brightscript" uri="mainScene.brs"/>
+    <interface>
+        <field id="index" type="integer" alwaysNotify="true" onChange="onIndexChange"/>
+        <field id="maxIndex" type="integer"/>
+    </interface>
+    <children>
+        <layoutGroup id="layoutGroup" layoutDirection="horiz" itemSpacings="[50]">
+            <customItem 
+                id="fishItem"
+                rectColor="#FFFFFF" 
+                rectWidth="398" 
+                rectHeight="398"
+                posterWidth="368"
+                posterHeight="368"
+                posterTranslation="[15, 15]"
+                posterUri="pkg:/images/profiles/bettafish.jpg" 
+                labelText="Bettafish"
+            />
+            <customItem 
+                id="toucanItem" 
+                rectColor="#FFFFFF" 
+                rectWidth="398" 
+                rectHeight="398" 
+                posterWidth="368" 
+                posterHeight="368" 
+                posterTranslation="[15, 15]" 
+                posterUri="pkg:/images/profiles/toucan.jpg" 
+                labelText="Toucan" 
+            />
+            <customItem 
+                id="rhinoItem" 
+                rectColor="#FFFFFF" 
+                rectWidth="398" 
+                rectHeight="398" 
+                posterWidth="368" 
+                posterHeight="368" 
+                posterTranslation="[15, 15]" 
+                posterUri="pkg:/images/profiles/rhinoceros.jpg" 
+                labelText="Rhinoceros" 
+            />
+            <customItem 
+                id="zebraItem" 
+                rectColor="#FFFFFF" 
+                rectWidth="398" 
+                rectHeight="398" 
+                posterWidth="368" 
+                posterHeight="368" 
+                posterTranslation="[15, 15]" 
+                posterUri="pkg:/images/profiles/zebra.jpg" 
+                labelText="Zebra" 
+            />
+        </layoutGroup>
+    </children>
+</component>
