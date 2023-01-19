@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<component name="abstractNode" extends="Group">
+    <script type="text/brightscript" uri="abstractNode.brs"/>
+    <interface>
+        <field id="content" type="assocarray" onChange="onContentChange"/>
+    </interface >
+    <children>
+        <LayoutGroup id="layoutGroup" itemSpacings="[20]">
+            <SimpleLabel 
+                id="label"  
+                fontUri="font:SystemFontFile" 
+                fontSize="25"
+                horizOrigin="left"
+                vertOrigin="center"
+            />
+            <Rectangle 
+                id="rectangle" 
+                color="#FFFFFF"
+            />
+            <SimpleLabel 
+                id="dateTimeLabel"  
+                fontUri="font:SystemFontFile" 
+                fontSize="25"
+                horizOrigin="left"
+                vertOrigin="center"
+            />
+        </LayoutGroup>
+    </children>
+</component>

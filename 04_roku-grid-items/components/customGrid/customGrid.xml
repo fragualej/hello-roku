@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<component name="customGrid" extends="Group">
+    <script type="text/brightscript" uri="customGrid.brs"/>
+    <script type="text/brightscript" uri="../../source/utils.brs"/>
+    <interface>
+        <field id="numRows" type="integer"/>
+        <field id="numCols" type="integer"/>
+
+        <field id="indexFocused"  value="0" type="integer" onChange="onItemIndexFocused" alwaysNotify="true"/>
+        <field id="indexSelected" value="0" type="integer" onChange="onItemIndexSelected" alwaysNotify="true"/>
+
+        <field id="rowIndex" type="integer" value="0" onChange="onItemIndexSet" alwaysNotify="true"/>
+        <field id="colIndex" type="integer" value="0" onChange="onItemIndexSet" alwaysNotify="true"/>
+    </interface>
+    <children>
+        <group id="group"/>
+    </children>
+</component>
