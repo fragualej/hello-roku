@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<component name="mainScene" extends="Scene">
+    <script type="text/brightscript" uri="mainScene.brs"/>
+    <script type="text/brightscript" uri="../source/app.brs"/>
+    <script type="text/brightscript" uri="../source/utils.brs"/>
+
+    <children>
+        <rowlist id="rowlist"/>
+        <simpleLabel 
+            id="label" 
+            fontUri="font:BoldSystemFontFile" 
+            fontSize="45"
+        />
+    </children>
+</component>

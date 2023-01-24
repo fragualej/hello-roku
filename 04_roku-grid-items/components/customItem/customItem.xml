@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<component name="customItem" extends="group">
+    <script type="text/brightscript" uri="customItem.brs"/>
+    <interface>
+        <field id="content" type="assocarray" onChange="onContentChange"/>
+        <!-- text field -->
+        <field id="text" type="string" alias="label.text"/>
+    </interface>
+    <children>
+        <rectangle id="rectangle">
+            <label id="label" horizAlign="center" vertAlign="center"/>
+        </rectangle> 
+    </children>
+</component>

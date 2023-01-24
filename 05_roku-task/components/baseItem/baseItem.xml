@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<component name="baseItem" extends="Group">
+    <script type="text/brightscript" uri="baseItem.brs"/>
+    <script type="text/brightscript" uri="../../source/app.brs"/>
+    <script type="text/brightscript" uri="../../source/utils.brs"/>
+
+    <interface>
+        <field id="itemContent" type="node" onChange="onContentChange"/>
+        <field id="focusPercent" type="float" onChange="OnFocusPercentChange"/>
+    </interface>
+    <children>
+        <poster id="poster"/>
+    </children>
+</component>
