@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<component name="PlayerBar" extends="Group">
+    <interface>
+        <!-- in -->
+        <field id="duration" type="integer" />
+        <field id="isVisible" type="boolean" alwaysNotify="true" onChange="isVisibleChanged" />
+        <field id="position" type="integer" alwaysNotify="true" onChange="positionChanged" />
+        <field id="status" type="string" onChange="statusChanged" />
+        <!-- out -->
+        <field id="control" type="string" alwaysNotify="true" />
+        <field id="hideMe" type="boolean" alwaysNotify="true" value="false" />
+    </interface>
+    <script type="text/brightscript" uri="PlayerBar.brs" />
+    <children>
+        <Rectangle
+            opacity="0.5"
+            color="0x000000"
+            width="1920"
+            height="180"/>
+        <Button
+            id="playerStatus"
+            text=">"
+            width="40"
+            height="40"
+            translation="[40, 80]" />
+        <Label
+            id="currentTime"
+            font="font:SmallestBoldSystemFont"
+            width="120"
+            translation="[120, 90]" />
+        <Group translation="[245, 100]">
+            <Rectangle
+                id="progressBarBg"
+                width="1440"
+                height="6"
+                color="0x606060"
+                opacity="0.9" />
+            <Rectangle
+                id="progressBar"
+                width="0"
+                height="6"
+                color="0xFFFFFF" />
+        </Group>
+        <Label
+            id="remainingTime"
+            font="font:SmallestBoldSystemFont"
+            width="125"
+            translation="[1700, 90]" />
+    </children>
+</component>
