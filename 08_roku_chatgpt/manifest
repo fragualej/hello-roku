@@ -1,0 +1,18 @@
+title=dev channel
+major_version=1
+major_version=0
+minor_version=0
+build_version=0001
+
+mm_icon_focus_fhd=pkg:/images/channel-poster_fhd.png
+mm_icon_focus_hd=pkg:/images/channel-poster_hd.png
+mm_icon_focus_sd=pkg:/images/channel-poster_sd.png
+
+splash_screen_fhd=pkg:/images/splash-screen_fhd.png
+splash_screen_hd=pkg:/images/splash-screen_hd.png
+splash_screen_sd=pkg:/images/splash-screen_sd.png
+
+splash_color=#000000
+splash_min_time=1000
+
+ui_resolutions=fhd
