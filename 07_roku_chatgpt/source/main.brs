@@ -1,9 +1,9 @@
 sub main()
     screen = createObject("roSGScreen")
     port = createObject("roMessagePort")
+    
     screen.setMessagePort(port)
-
-    scene = screen.createScene("mainScene")
+    screen.createScene("mainScene")
     screen.show()
 
     while(true)
