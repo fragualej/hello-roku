@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<component name="CustomKeyboard" extends="DynamicCustomKeyboard" initialFocus="CustomKeyboard">
+<interface>
+    <function name="keySelected" />
+</interface>
+<children>
+
+</children>
+
+<script type="text/brightscript" uri = "CustomKeyboard.brs"/>
+<script type="text/brightscript" uri="pkg:/components/CustomKeyboard/CustomKeyboardConfig.brs" />
+
+</component>

@@ -1,0 +1,47 @@
+{
+    "keyboardHeightFHD": 260,
+    "keyboardWidthFHD": 800,
+
+    "sections": [
+        {
+            "sectionWidthFHD": 600,
+            "grids": [
+                {
+                    "rows": [
+                        
+                        {
+                            "keys": [
+                                {
+                                    "label":"What are the benefits of donating to PBS?",
+                                    "strOut": "What are the benefits of donating to PBS?"
+                                }
+                            ] 
+                        },
+                        {
+
+                        },
+                        {      
+                            "keys": [
+                                {
+                                    "label": "How to donate to PBS?",
+                                    "strOut": "How to donate to PBS?"
+                                }
+                            ]    
+                        },
+                        {
+
+                        },
+                        {
+                            "keys": [
+                                {
+                                    "label": "Local PBS station's schedule",
+                                    "strOut": "Local PBS station's schedule"
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

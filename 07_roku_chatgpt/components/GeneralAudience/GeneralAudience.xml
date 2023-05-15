@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<component name="GeneralAudience" extends="Group" initialFocus="CustomKeyboard">
+    <children>
+        <Rectangle id="Rectangle1">
+            <Rectangle id="Rectangle2">
+                <Rectangle id="Rectangle4">
+                <Rectangle id="Rectangle3">
+                    <SimpleLabel id="SimpleLabel" />
+                </Rectangle>                 
+                </Rectangle>
+                <CustomKeyboard id="CustomKeyboard" />
+            </Rectangle> 
+        </Rectangle>    
+    </children>
+    <script type="text/brightscript" uri="GeneralAudience.brs"/>
+    <script type="text/brightscript" uri="pkg:/components/CustomKeyboard/CustomKeyboardConfig.brs" />
+</component>  

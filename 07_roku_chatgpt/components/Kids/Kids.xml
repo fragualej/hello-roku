@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<component name="Kids" extends="Group" initialFocus="KidsCustomKeyboard">
+    <children>
+        <Rectangle id="RectangleKids1">
+            <Rectangle id="RectangleKids2">
+                <Rectangle id="RectangleKids4">
+                <Rectangle id="RectangleKids3">
+                    <SimpleLabel id="SimpleLabelKids"/>
+                </Rectangle>                 
+                </Rectangle>
+                <KidsCustomKeyboard id="KidsCustomKeyboard" />
+            </Rectangle> 
+        </Rectangle>    
+    </children>
+<script type="text/brightscript" uri="Kids.brs"/>
+<script type="text/brightscript" uri="pkg:/components/KidsCustomKeyboard/KidsCustomKeyboardConfig.brs" />      
+</component>  

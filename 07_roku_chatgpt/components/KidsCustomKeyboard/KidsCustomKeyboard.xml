@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<component name="KidsCustomKeyboard" extends="DynamicCustomKeyboard" initialFocus="KidsCustomKeyboard">
+<interface>
+    <function name="keySelected" />
+</interface>
+<children>
+
+</children>
+
+<script type="text/brightscript" uri = "KidsCustomKeyboard.brs"/>
+<script type="text/brightscript" uri="pkg:/components/KidsCustomKeyboard/KidsCustomKeyboardConfig.brs" />
+</component>
