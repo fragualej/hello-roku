@@ -7,7 +7,7 @@ sub init()
         method: "GET",
         httpNode: httpNode
     }
-    m.top.repository.callFunc("fetchChatGPT", request)
+    m.top.repository.callFunc("fetchTest", request)
 end sub
 
 sub onHttpResponse(event as object)

@@ -4,7 +4,7 @@ sub init()
     m.httpTask.control = "run"
 end sub
 
-sub fetchChatGPT(request as object)
+sub fetchTest(request as object)
     url = urlMapper("test")
     request.addReplace("url", url)
     request.addReplace("modelType", "baseModel")
