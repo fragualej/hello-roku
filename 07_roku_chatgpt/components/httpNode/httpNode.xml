@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<component name="httpNode" extends="contentNode">
+    <interface>
+        <field id="response" type="assocarray" />
+    </interface>
+</component>

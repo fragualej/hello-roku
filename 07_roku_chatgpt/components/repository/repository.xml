@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<component name="repository" extends="group">
+   <script type="text/brightscript" uri="repository.brs"/>
+   <interface>
+        <function name="fetchTest" />
+    </interface>
+</component>
