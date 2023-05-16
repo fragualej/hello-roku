@@ -3,6 +3,7 @@ sub init()
 
     m.KidsCustomKeyboard = m.top.findNode("KidsCustomKeyboard")
     m.KidsCustomKeyboard.translation = [200, 550]
+    m.KidsCustomKeyboard.text = ""
 
     m.RectangleKids1 = m.top.findNode("RectangleKids1")
     m.RectangleKids1.color = m.appColors.BACKGROUND_COLOR
@@ -33,4 +34,26 @@ sub init()
     m.SimpleLabelKids.translation = [90, 30]
     m.SimpleLabelKids.fontUri = "font:MediumBoldSystemFont"
     m.SimpleLabelKids.text = "ASK PBS KIDS"
-end sub
+end sub   
+
+function onKeyEvent(key as string, press as boolean) as boolean
+    if key = "OK" and m.KidsCustomKeyboard.text.len() > 1 
+        updateQuestionLabel(m.KidsCustomKeyboard.text)
+        return true
+    end if
+end function
+
+function updateQuestionLabel(label as string)
+    m.QuestionKids = m.top.findNode("QuestionKids")
+    m.QuestionKids.text = label
+    m.QuestionKids.color = m.appColors.PINK
+    m.QuestionKids.fontUri = "font:MediumBoldSystemFont"
+    updateAnswerLabel()
+end function    
+
+function updateAnswerLabel()
+    m.AnswerKids = m.top.findNode("AnswerKids")
+    m.AnswerKids.text = "Your answer here"
+    m.AnswerKids.color = m.appColors.BACKGROUND_COLOR
+    m.AnswerKids.fontUri = "font:MediumBoldSystemFont"
+end function

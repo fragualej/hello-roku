@@ -2,6 +2,7 @@ sub init()
     m.appColors = getAppColors()
     m.CustomKeyboard = m.top.findNode("CustomKeyboard")
     m.CustomKeyboard.translation = [ 200 , 550]   
+    m.CustomKeyboard.text = ""
 
     m.Rectangle1 = m.top.findNode("Rectangle1")
     m.Rectangle1.color = m.appColors.BACKGROUND_COLOR
@@ -33,3 +34,24 @@ sub init()
     m.SimpleLabel.fontUri = "font:MediumBoldSystemFont"
     m.SimpleLabel.text = "ASK PBS"
 end sub
+function onKeyEvent(key as string, press as boolean) as boolean
+    if key = "OK" and m.CustomKeyboard.text.len() > 1
+        updateQuestionLabel(m.CustomKeyboard.text)
+        return true
+    end if
+end function
+
+function updateQuestionLabel(label as string)
+    m.Question = m.top.findNode("Question")
+    m.Question.text = label
+    m.Question.color = m.appColors.LIGHT_BLUE
+    m.Question.fontUri = "font:MediumBoldSystemFont"
+    updateAnswerLabel()
+end function
+
+function updateAnswerLabel()
+    m.Answer = m.top.findNode("Answer")
+    m.Answer.text = "Your answer here"
+    m.Answer.color = m.appColors.BACKGROUND_COLOR
+    m.Answer.fontUri = "font:MediumBoldSystemFont"
+end function

@@ -4,6 +4,14 @@
         <Rectangle id="RectangleKids1">
             <Rectangle id="RectangleKids2">
                 <Rectangle id="RectangleKids4">
+                    <SimpleLabel
+                        id="QuestionKids"
+                        translation="[25, 100]">
+                    </SimpleLabel>
+                    <SimpleLabel
+                        id="AnswerKids"
+                        translation="[450, 200]">
+                    </SimpleLabel>
                 <Rectangle id="RectangleKids3">
                     <SimpleLabel id="SimpleLabelKids"/>
                 </Rectangle>                 
