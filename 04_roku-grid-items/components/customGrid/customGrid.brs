@@ -1,7 +1,7 @@
 sub init()
     print "CustomGrid - Init()"
     m.group = m.top.findNode("group")
-    m.top.observeField("focusedChild","onFocusedChild")
+    m.top.observeField("focusedChild", "onFocusedChild")
     setGrid()
 end sub
 
@@ -12,16 +12,16 @@ sub onFocusedChild()
 end sub
 
 sub setGrid()
-    r = getUIResolution()
+    r = deviceUtil_getUIResolution()
 
     gridw = r.height * 0.6
     gridh = r.height * 0.6
 
-    ix = (r.width  - gridw) * 0.5
+    ix = (r.width - gridw) * 0.5
     iy = (r.height - gridh) * 0.95
 
-    rows = 4
-    cols = 4
+    rows = 6
+    cols = 6
 
     numItems = rows * cols
 
@@ -36,7 +36,7 @@ sub setGrid()
 
     setLabels(ix, iy, gridw, gridh)
 
-    numPad = "123+456-789*C0=/".split("")
+    numPad = "B#6A^2!T@H%Y1$U&4J*P5Z#@8C^3V!I%7K&9".split("")
 
     for i = 0 to numItems - 1
         row = fix(i / rows)

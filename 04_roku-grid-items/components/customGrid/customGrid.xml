@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <component name="customGrid" extends="Group">
     <script type="text/brightscript" uri="customGrid.brs"/>
-    <script type="text/brightscript" uri="../../source/utils.brs"/>
+    <script type="text/brightscript" uri="../../source/utils/deviceUtil.brs"/>
     <interface>
         <field id="numRows" type="integer"/>
         <field id="numCols" type="integer"/>
