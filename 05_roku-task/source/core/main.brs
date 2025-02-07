@@ -7,7 +7,7 @@ sub main()
     screen.show()
 
     setTitleSession(scene)
-    
+
     while(true)
         msg = wait(0, port)
         if type(msg) = "roSGScreenEvent"
@@ -19,7 +19,7 @@ end sub
 sub setTitleSession(scene)
     text = "[SceneGraph] Control Nodes: Task"
 
-    r = getUIResolution()
+    r = deviceUtil_getUIResolution()
     x = r.width * 0.03
     y = r.width * 0.03
 
