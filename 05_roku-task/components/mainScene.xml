@@ -5,7 +5,8 @@
     <script type="text/brightscript" uri="pkg:/source/utils/deviceUtils.brs"/>
 
     <children>
+        <rectangle color="#F9F6EE" width="1920" height="1080"/>
         <multiStyleLabel id="label"/>
-        <rowlist id="rowlist"/>
+        <rowlist id="rowlist"/> 
     </children>
 </component>

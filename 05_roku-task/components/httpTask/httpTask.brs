@@ -35,10 +35,14 @@ sub handleResponse(body)
         for i = 0 to cols - 1
             idx = j * cols + i
             result = results[idx]
-            itemContent = rowContent.createChild("ContentNode")
+            itemContent = rowContent.createChild("httpMovie")
             itemContent.id = result.id
             itemContent.title = result.title
             itemContent.description = result.overview
+            itemContent.popularity = result.popularity.toStr()
+            itemContent.releaseDate = result.release_date
+            itemContent.voteAverage = result.vote_average
+            itemContent.originalLanguage = result.original_language
             itemContent.fhdPosterUrl = m.constants.imageUrl + result.backdrop_path
         end for
     end for
