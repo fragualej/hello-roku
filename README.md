@@ -12,3 +12,6 @@ https://github.com/user-attachments/assets/854dad71-6fa1-457f-a5c7-dfade9965a5d
 https://github.com/user-attachments/assets/5491299a-eb2e-43d1-b93f-66ccc158c41a
 
 ## 03 - Grid Items
+
+https://github.com/user-attachments/assets/7e6f9870-b0a2-4144-97ea-133302f702e6
+
