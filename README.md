@@ -15,3 +15,6 @@ https://github.com/user-attachments/assets/5491299a-eb2e-43d1-b93f-66ccc158c41a
 
 https://github.com/user-attachments/assets/7e6f9870-b0a2-4144-97ea-133302f702e6
 
+## 04 - Tasks
+
+https://github.com/user-attachments/assets/808528a7-c992-46b4-98ef-5650fa895e5e
