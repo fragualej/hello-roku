@@ -1,17 +1,17 @@
 function app()
     m.app = m.global.app
 
-    if m.app = invalid 
+    if m.app = invalid
         m.app = {}
 
-        r = getUIResolution()
-        width  = r.width
+        r = deviceUtil_getUIResolution()
+        width = r.width
         height = r.height
 
         rows = 3
         cols = 3
 
-        gridw = width  * 0.8
+        gridw = width * 0.8
         gridh = height * 0.8
 
         cellw = gridw / cols
@@ -23,8 +23,8 @@ function app()
         itemw = cellw - gapx
         itemh = cellh - gapy
 
-        ix = (width  - gridw) * 1.5
-        iy = (height - gridh) * 1.25
+        ix = (width - gridw) * 1.5
+        iy = (height - gridh) * 2.5
 
 
         gridFields = {
@@ -49,16 +49,17 @@ function app()
         }
 
         labelFields = {
-            width: gridw
+            width: gridw * 0.75
             heigth: cellh * 0.5
-            translation: [ix, iy - cellh * 0.5]
+            translation: [ix, height * 0.1]
+            wrap: true
         }
 
 
-        m.app.append({ 
-            gridFields: gridFields, 
-            itemFields: itemFields, 
-            labelFields: labelFields 
+        m.app.append({
+            gridFields: gridFields,
+            itemFields: itemFields,
+            labelFields: labelFields
         })
 
         m.global.addFields({ app: m.app })

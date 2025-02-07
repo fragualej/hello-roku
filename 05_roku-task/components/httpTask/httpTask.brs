@@ -17,14 +17,15 @@ sub initHttpTask()
     urlTransfer.initClientCertificates()
     urlTransfer.setUrl(url)
     urlTransfer.setMessagePort(m.port)
-    
+
     handleResponse(urlTransfer.getToString())
 end sub
 
 sub handleResponse(body)
     data = parseJson(body)
     results = data.results
-    
+    print formatJson(results)
+
     rows = 4
     cols = 5
 
@@ -45,7 +46,7 @@ sub handleResponse(body)
     rowChildren = content.getChildren(-1, 0)
     itemChildren = rowChildren[0].getChildren(-1, 0)
     print rowChildren, itemChildren
-    
+
     response = {}
     response.content = content
     m.top.response = response

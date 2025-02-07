@@ -4,8 +4,10 @@ sub init()
     m.poster.update(m.app.itemFields.posterFields, true)
 end sub
 
-sub onContentChange(event as object)
+sub onContentChanged(event as object)
     content = event.getData()
     m.poster.uri = content.fhdPosterUrl
 end sub
 
+sub onFocusPercentChanged(event as object)
+end sub
