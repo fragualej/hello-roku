@@ -17,4 +17,5 @@ https://github.com/user-attachments/assets/7e6f9870-b0a2-4144-97ea-133302f702e6
 
 ## 04 - Tasks
 
-https://github.com/user-attachments/assets/808528a7-c992-46b4-98ef-5650fa895e5e
+https://github.com/user-attachments/assets/a0e97eb5-3b9f-48f7-9d06-475bb39abdff
+
