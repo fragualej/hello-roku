@@ -8,7 +8,8 @@
             width="1920"
             height="1080"
             horizAlign="center"
-            vertAlign="center"
-        />
+            vertAlign="center">
+            <font  role="font" uri="font:SystemFontFile" size = "200"/>
+        </label>
     </children>
 </component>
