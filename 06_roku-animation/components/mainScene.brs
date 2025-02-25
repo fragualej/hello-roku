@@ -1,28 +1,27 @@
 sub init()
     print "MainScene - Init()"
     m.app = app()
-    m.constants = constantsUtil_get()
-    print "constants", m.constants
-
+    constants = constantsUtil_get()
+    print "constants" constants.tts
     m.rowlist = m.top.findNode("rowlist")
     m.label = m.top.findNode("label")
 
     m.rowlist.update(m.app.gridFields)
     m.label.drawingStyles = {
         "h1": {
-            "fontSize": 55
-            "fontUri": "font:BoldSystemFontFile"
-            "color": "#00000"
+            "fontSize": constants.fonts.size.LARGE
+            "fontUri": constants.fonts.uri.BOLD
+            "color": constants.colors.BLACK
         }
         "h2": {
-            "fontSize": 30
-            "fontUri": "font:SystemFontFile"
-            "color": "#00000"
+            "fontSize": constants.fonts.size.MEDIUM
+            "fontUri": constants.fonts.uri.SYSTEM
+            "color": constants.colors.BLACK
         }
         "h3": {
-            "fontSize": 24
-            "fontUri": "font:SystemFontFile"
-            "color": "#00000"
+            "fontSize": constants.fonts.size.SMALL
+            "fontUri": constants.fonts.uri.SYSTEM
+            "color": constants.colors.BLACK
         }
     }
     m.label.update(m.app.labelFields)

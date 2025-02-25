@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<component name="colors" extends="contentNode">
+    <interface>
+        <field id="FONT_SIZE_LARGE" type="integer" value="32"/>
+        <field id="FONT_SIZE_MEDIUM" type="integer" value="24"/>
+        <field id="FONT_SIZE_SMALL" type="integer" value="18"/>
+    </interface>
+</component>

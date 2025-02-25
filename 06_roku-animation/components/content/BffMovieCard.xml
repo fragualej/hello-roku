@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<component name="BffMovieCard" extends="contentNode">
+    <interface>
+        <field id="releaseDate" type="string"/>
+        <field id="popularity" type="float"/>
+        <field id="originalLanguage" type="string"/>
+        <field id="voteAverage" type="string"/>
+    </interface>
+</component>
