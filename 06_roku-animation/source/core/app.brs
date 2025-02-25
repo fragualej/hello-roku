@@ -23,13 +23,13 @@ function app()
         itemw = cellw - gapx
         itemh = cellh - gapy
 
-        ix = (width - gridw) * 1.5
+        ix = (width - gridw) * 0.5
         iy = (height - gridh) * 2.5
 
 
         gridFields = {
             id: "rowList"
-            itemComponentName: "baseItem"
+            itemComponentName: "movieItem"
             rowFocusAnimationStyle: "fixedFocus"
             drawFocusFeedback: true
             numRows: rows
@@ -40,26 +40,27 @@ function app()
             itemSpacing: [0, gapy]
         }
 
-        itemFields = {
-            posterFields: {
-                id: "poster"
-                width: itemw
-                height: itemh
-            }
+        movieItemFields = {
+            itemw: itemw
+            itemh: itemh
+        }
+
+        navItemFields = {
+
         }
 
         labelFields = {
             width: gridw * 0.75
-            heigth: cellh * 0.5
-            translation: [ix, height * 0.1]
+            translation: [ix, height * 0.2]
             wrap: true
         }
 
 
         m.app.append({
             gridFields: gridFields,
-            itemFields: itemFields,
-            labelFields: labelFields
+            movieItemFields: movieItemFields,
+            labelFields: labelFields,
+            navItemFields: navItemFields
         })
 
         m.global.addFields({ app: m.app })

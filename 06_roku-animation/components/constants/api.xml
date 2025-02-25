@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<component name="api" extends="node">
-    <interface>
-        <field id="TEST_API_ENDPOINT" type="string" value="https://api.themoviedb.org/3/trending/movie/week?api_key="/>
-        <field id="TEST_API_KEY" type="string" value="558e2410c2be44f6e971c2b2c8cf64d0"/>
-        <field id="TEST_API_IMAGE_URL" type="string" value="https://image.tmdb.org/t/p/w500"/>
-    </interface>
-</component>

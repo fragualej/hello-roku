@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<component name="navItem" extends="baseComponent">
+    <script type="text/brightscript" uri="navItem.brs"/>
+    <interface>
+        <field id="itemContent" type="node" onChange="onContentChanged"/>
+        <field id="focusPercent" type="float" onChange="onFocusPercentChanged"/>
+    </interface>
+    <children>
+        <layoutGroup horizAlignment="center" translation="[153.6, 0]">
+            <multiStyleLabel id="label"/>
+            <rectangle id="rectangle" color="#000000" width="307.2" height="10"/>
+        </layoutGroup>
+    </children>
+</component>

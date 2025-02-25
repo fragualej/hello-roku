@@ -4,6 +4,7 @@
     <script type="text/brightscript" uri="pkg:/source/utils/constantsUtils.brs"/>
     <script type="text/brightscript" uri="pkg:/source/utils/deviceUtils.brs"/>
     <interface>
+        <field id="request" type="assocarray"/>
         <field id="response" type="assocarray"/>
     </interface>
 </component>

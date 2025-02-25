@@ -5,37 +5,63 @@ sub init()
         apiKey: "558e2410c2be44f6e971c2b2c8cf64d0"
 
     }
+
+    m.jobs = {}
+    m.port = createObject("roMessagePort")
+    m.top.observeField("request", m.port)
     m.top.functionName = "initHttpTask"
 end sub
 
 sub initHttpTask()
-    url = m.constants.baseUrl + m.constants.apiKey
-
-    'handle request
-    urlTransfer = createObject("roUrlTransfer")
-    urlTransfer.setCertificatesFile("common:/certs/ca-bundle.crt")
-    urlTransfer.initClientCertificates()
-    urlTransfer.setUrl(url)
-    urlTransfer.setMessagePort(m.port)
-
-    handleResponse(urlTransfer.getToString())
+    while (true)
+        msg = wait(0, m.port)
+        if type(msg) = "roSGNodeEvent"
+            handleRequest()
+        else if type(msg) = "roUrlEvent"
+            handleResponse(msg)
+        end if
+    end while
 end sub
 
-sub handleResponse(body)
-    data = parseJson(body)
-    results = data.results
-    print formatJson(results)
+sub handleRequest(event = {} as object)
+    url = m.constants.baseUrl + m.constants.apiKey
+    job = createObject("roUrlTransfer")
+    job.setUrl(url)
+    job.setCertificatesFile("common:/certs/ca-bundle.crt")
+    job.initClientCertificates()
+    job.setMessagePort(m.port)
+    job.asyncGetToString()
+    requestId = job.getIdentity().toStr()
+    m.jobs[requestId] = job
+end sub
 
+sub handleResponse(event as object)
+    requestId = event.getSourceIdentity().toStr()
+    job = m.jobs[requestId]
+
+    if job <> invalid
+        code = event.getResponseCode()
+        if code <= 200 and code < 300
+            print code, requestId
+            body = event.getString()
+            data = parseJson(body)
+            m.top.response = buildResponse(data)
+        end if
+    end if
+end sub
+
+function buildResponse(data as object)
+    results = data.results
     rows = 4
     cols = 5
 
-    content = createObject("roSGNode", "ContentNode")
+    content = createObject("roSGNode", "contentNode")
     for j = 0 to rows - 1
-        rowContent = content.createChild("ContentNode")
+        rowContent = content.createChild("contentNode")
         for i = 0 to cols - 1
             idx = j * cols + i
             result = results[idx]
-            itemContent = rowContent.createChild("BffMovieCard")
+            itemContent = rowContent.createChild("movieCardNode")
             itemContent.id = result.id
             itemContent.title = result.title
             itemContent.description = result.overview
@@ -47,11 +73,8 @@ sub handleResponse(body)
         end for
     end for
 
-    rowChildren = content.getChildren(-1, 0)
-    itemChildren = rowChildren[0].getChildren(-1, 0)
-
     response = {}
     response.content = content
-    m.top.response = response
-end sub
+    return response
+end function
 

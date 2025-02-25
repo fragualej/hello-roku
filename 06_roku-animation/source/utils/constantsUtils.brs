@@ -2,13 +2,17 @@ function constantsUtil_get()
     constants = m.global.constants
     if constants = invalid
         constants = createObject("roSGNode", "node")
+        api = _setApi()
+        colors = _setColors()
+        fonts = _setFonts()
+        styles = _setStyles(fonts, colors)
         constants.addFields({
             api: _setApi(),
-            colors: _setColors(),
-            fonts: _setFonts(),
-            styles: _setStyles(),
-            tts: _setTTS()
+            colors: colors,
+            fonts: fonts,
+            styles: styles
         })
+
         m.global.addFields({ constants: constants })
     end if
     return constants
@@ -18,9 +22,9 @@ function _setColors()
     colors = createObject("roSGNode", "node")
     colors.addFields({
         "BLACK": "#000000"
-        "RED": "#FF0000",
-        "GREEN": "#00FF00",
         "BLUE": "#0000FF",
+        "GREEN": "#00FF00",
+        "RED": "#FF0000",
         "YELLOW": "#FFFF00",
         "ORANGE": "#FFA500",
         "PURPLE": "#800080",
@@ -36,43 +40,75 @@ end function
 function _setApi()
     api = createObject("roSGNode", "node")
     api.addFields({
-        "TEST_API_ENDPOINT": "https://api.themoviedb.org/3/trending/movie/week?api_key=",
-        "TEST_API_IMAGE_URL": "https://image.tmdb.org/t/p/w500",
-        "TEST_API_KEY": "558e2410c2be44f6e971c2b2c8cf64d0"
+        "TMDB_API_ENDPOINT": "https://api.themoviedb.org/3/trending/movie/week?api_key=",
+        "TMDB_API_IMAGE_URL": "https://image.tmdb.org/t/p/w500",
+        "TMDB_API_KEY": "558e2410c2be44f6e971c2b2c8cf64d0"
     })
     return api
 end function
 
 function _setFonts()
     fonts = createObject("roSGNode", "node")
-    size = createObject("roSGNode", "node")
     uri = createObject("roSGNode", "node")
-    size.addFields({
-        "LARGE": 54,
-        "MEDIUM": 40,
-        "SMALL": 27
-    })
+    size = createObject("roSGNode", "node")
+
     uri.addFields({
         "BOLD": "font:BoldSystemFontFile",
-        "SYSTEM": "font:SystemFontFile",
+        "DEFAULT": "font:SystemFontFile"
     })
+    x = 8
+    size.addFields({
+        "H1": x * Sqr(2) ^ 6
+        "H2": x * Sqr(2) ^ 5
+        "H3": x * Sqr(2) ^ 4
+        "H4": x * Sqr(2) ^ 3
+        "H5": x * Sqr(2) ^ 2
+        "H6": x * Sqr(2) ^ 1
+    })
+
     fonts.addFields({
-        size: size,
-        uri: uri
+        uri: uri,
+        size: size
     })
+
     return fonts
 end function
 
-function _setStyles()
+function _setStyles(fonts, colors)
     styles = createObject("roSGNode", "node")
     styles.addFields({
-        width: 1920
-        height: 1080
+        multiStyles: {
+            "h1": {
+                "fontSize": fonts.size.H1
+                "fontUri": fonts.uri.DEFAULT
+                "color": colors.BLACK
+            }
+            "h2": {
+                "fontSize": fonts.size.H2
+                "fontUri": fonts.uri.DEFAULT
+                "color": colors.BLACK
+            }
+            "h3": {
+                "fontSize": fonts.size.H3
+                "fontUri": fonts.uri.DEFAULT
+                "color": colors.BLACK
+            }
+            "h4": {
+                "fontSize": fonts.size.H4
+                "fontUri": fonts.uri.DEFAULT
+                "color": colors.BLACK
+            }
+            "h5": {
+                "fontSize": fonts.size.H5
+                "fontUri": fonts.uri.DEFAULT
+                "color": colors.BLACK
+            }
+            "h6": {
+                "fontSize": fonts.size.H6
+                "fontUri": fonts.uri.DEFAULT
+                "color": colors.BLACK
+            }
+        }
     })
     return styles
-end function
-
-function _setTTS()
-    ttsTexts = createObject("roSGNode", "tts")
-    return ttsTexts
 end function
