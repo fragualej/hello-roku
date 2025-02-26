@@ -6,7 +6,6 @@
     </interface>
     <children>
         <timer id="timer" repeat="false" duration="10"/>
-        <label text="Splash View" width="1920" height="1080" horizAlign="center" vertAlign="center"/>
-        <layoutGroup id="layoutGroup" layoutDirection="horiz"/>
+        <rectangle id="rectangle" color="#888888"/>
     </children>
 </component>

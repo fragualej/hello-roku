@@ -15,9 +15,9 @@ function app()
 end function
 
 function _setGridFields(p_resolution)
-    return gridUtil_getGridValues(3, 3, p_resolution)
+    return gridUtil_getGridValues(3, 3)
 end function
 
 function _setNavFields(p_resolution)
-    return gridUtil_getGridValues(1, 7, p_resolution)
+    return gridUtil_getGridValues(1, 7)
 end function

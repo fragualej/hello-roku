@@ -4,7 +4,7 @@ sub init()
     m.poster = m.top.findNode("poster")
 
     constants = constantsUtil_get()
-    grid = gridUtil_getGridValues(1, 2, deviceUtil_getUIResolution())
+    grid = gridUtil_getGridValues(1, 2)
     print grid
     m.layoutGroup.setFields({
         translation: [grid.ix, grid.iy]

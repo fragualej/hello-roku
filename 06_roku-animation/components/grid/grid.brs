@@ -3,7 +3,7 @@ sub init()
     m.rowlist = m.top.findNode("rowlist")
     rows = 3
     cols = 3
-    grid = gridUtil_getGridValues(rows, cols, deviceUtil_getUIResolution())
+    grid = gridUtil_getGridValues(rows, cols)
     m.rowlist.update({
         itemComponentName: "movieItem",
         vertFocusAnimationStyle: "fixedFocus",

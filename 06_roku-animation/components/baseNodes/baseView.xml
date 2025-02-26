@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <component name="baseView" extends="baseComponent">
     <children>
-        <rectangle color="#888888" width="1920" height="1080" opacity="0.5"/>
+        <rectangle color="#888888" width="1920" height="1080" />
     </children>
 </component>
