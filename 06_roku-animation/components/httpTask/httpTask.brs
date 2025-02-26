@@ -70,11 +70,9 @@ function buildResponse(model as string, data as object)
             itemContent = rowContent.createChild(model)
             itemContent.genreId = genre.id
             itemContent.genreName = genre.name
-            itemContent.genres = genres
         end for
     else if model = "moviesModel"
         results = data.results
-        print "results", results.count()
         rows = 4
         cols = 5
         for j = 0 to rows - 1
@@ -90,6 +88,7 @@ function buildResponse(model as string, data as object)
                 itemContent.releaseDate = left(result.release_date, 4)
                 itemContent.voteAverage = left(result.vote_average.toStr(), 3)
                 itemContent.originalLanguage = result.original_language
+                itemContent.genresIds = result.genre_ids
 
                 if result.poster_path <> invalid and result.poster_path <> "" then posterUrlPortrait = result.poster_path
                 if result.backdrop_path <> invalid and result.backdrop_path <> "" then posterUrlLandscape = result.backdrop_path

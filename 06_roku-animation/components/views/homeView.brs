@@ -41,7 +41,23 @@ sub onHttpMoviesResponse(event as object)
 end sub
 
 sub onItemSelected(event as object)
-    m.top.itemSelected = event.getData()
+    itemSelected = event.getData()
+    genres = m.navBar.content.getChild(0).genres
+    genresIds = itemSelected.genresIds
+
+    text = ""
+    for each genreId in genresIds
+        for each genre in genres
+            print genreId, genre
+            if genreId = genre.id
+                text += " | " + genre.name
+                exit for
+            end if
+        end for
+    end for
+
+    itemSelected.genresText = text
+    m.top.itemSelected = itemSelected
 end sub
 
 function onKeyEvent(key as string, press as boolean) as boolean

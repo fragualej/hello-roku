@@ -26,7 +26,7 @@ sub onContentChanged(event as object)
     m.poster.uri = content.posterUrlPortrait
     text = ""
     text += substitute("<h2>{0}{1}</h2>", content.title, chr(10))
-    text += substitute("<h3>{0}{1}{1}</h3>", content.releaseDate, chr(10))
+    text += substitute("<h4>{0} {1}{2}{2}</h4>", content.releaseDate, content.genresText, chr(10))
     text += substitute("<h3>{0}</h3>", content.description)
     m.label.text = text
 end sub
