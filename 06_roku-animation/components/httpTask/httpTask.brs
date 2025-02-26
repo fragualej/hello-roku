@@ -85,11 +85,14 @@ function buildResponse(model as string, data as object)
                 itemContent.description = result.overview
                 itemContent.popularity = result.popularity.toStr()
                 itemContent.releaseDate = result.release_date
-                itemContent.voteAverage = result.vote_average
+                itemContent.voteAverage = right(result.vote_average.toStr(), 3)
                 itemContent.originalLanguage = result.original_language
-                if result.backdrop_path <> invalid
-                    itemContent.fhdPosterUrl = m.constants.imageUrl + result.backdrop_path
-                end if
+
+                if result.poster_path <> invalid and result.poster_path <> "" then posterUrlPortrait = result.poster_path
+                if result.backdrop_path <> invalid and result.backdrop_path <> "" then posterUrlLandscape = result.backdrop_path
+
+                itemContent.posterUrlPortrait = m.constants.imageUrl + posterUrlPortrait
+                itemContent.posterUrlLandscape = m.constants.imageUrl + posterUrlLandscape
             end for
         end for
     end if

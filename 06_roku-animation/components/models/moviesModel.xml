@@ -4,6 +4,8 @@
         <field id="releaseDate" type="string"/>
         <field id="popularity" type="float"/>
         <field id="originalLanguage" type="string"/>
+        <field id="posterUrlPortrait" type="string"/>
+        <field id="posterUrlLandscape" type="string"/>
         <field id="voteAverage" type="string"/>
     </interface>
 </component>

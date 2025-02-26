@@ -28,7 +28,7 @@ end sub
 
 sub onContentChanged(event as object)
     itemContent = event.getData()
-    m.poster.uri = itemContent.fhdPosterUrl
+    m.poster.uri = itemContent.posterUrlLandscape
     text = ""
     text += Substitute("<h3>{0}</h3>", itemContent.title)
     text += Substitute("<h4>{0}{1} | {2}</h4>", chr(10), itemContent.releaseDate, itemContent.voteAverage)
