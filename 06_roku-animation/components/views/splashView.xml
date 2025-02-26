@@ -7,5 +7,6 @@
     <children>
         <timer id="timer" repeat="false" duration="10"/>
         <rectangle id="rectangle" color="#888888"/>
+        <multiStyleLabel id="label" wrap="true"/>
     </children>
 </component>

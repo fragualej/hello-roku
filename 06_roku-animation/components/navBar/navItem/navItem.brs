@@ -24,12 +24,31 @@ sub onContentChanged(event as object)
 end sub
 
 sub onFocusPercentChanged(event as object)
-    focusPercent = event.getData()
-    if focusPercent > 0.5
-        m.label.text = substitute("<h2>{0}</h2>", m.top.itemContent.genreName)
-        m.rectangle.visible = true
+    focusPercent = m.top.focusPercent
+    if m.top.rowHasFocus
+        if focusPercent > 0.5
+            focusedState()
+        else
+            unFocusedState()
+        end if
     else
-        m.label.text = substitute("<h3>{0}</h3>", m.top.itemContent.genreName)
-        m.rectangle.visible = false
+        if focusPercent > 0.5
+            selectedState()
+        end if
     end if
+end sub
+
+sub focusedState()
+    m.label.text = substitute("<h2>{0}</h2>", m.top.itemContent.genreName)
+    m.rectangle.visible = true
+end sub
+
+sub unFocusedState()
+    m.label.text = substitute("<h3>{0}</h3>", m.top.itemContent.genreName)
+    m.rectangle.visible = false
+end sub
+
+sub selectedState()
+    m.label.text = substitute("<h2>{0}</h2>", m.top.itemContent.genreName)
+    m.rectangle.visible = false
 end sub

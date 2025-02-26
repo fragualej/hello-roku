@@ -3,5 +3,6 @@
     <interface>
         <field id="genreId" type="integer"/>
         <field id="genreName" type="string"/>
+        <field id="genres" type="array"/>
     </interface>
 </component>

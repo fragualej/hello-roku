@@ -62,16 +62,19 @@ end sub
 function buildResponse(model as string, data as object)
     content = createObject("roSGNode", "contentNode")
     if model = "genresModel"
-        results = data.genres
+        genres = data.genres
         rowContent = content.createChild("contentNode")
+        rowContent.addFields({ genres: genres })
         for i = 0 to 6
-            result = results[i]
+            genre = genres[i]
             itemContent = rowContent.createChild(model)
-            itemContent.genreId = result.id
-            itemContent.genreName = result.name
+            itemContent.genreId = genre.id
+            itemContent.genreName = genre.name
+            itemContent.genres = genres
         end for
     else if model = "moviesModel"
         results = data.results
+        print "results", results.count()
         rows = 4
         cols = 5
         for j = 0 to rows - 1
@@ -84,8 +87,8 @@ function buildResponse(model as string, data as object)
                 itemContent.title = result.title
                 itemContent.description = result.overview
                 itemContent.popularity = result.popularity.toStr()
-                itemContent.releaseDate = result.release_date
-                itemContent.voteAverage = right(result.vote_average.toStr(), 3)
+                itemContent.releaseDate = left(result.release_date, 4)
+                itemContent.voteAverage = left(result.vote_average.toStr(), 3)
                 itemContent.originalLanguage = result.original_language
 
                 if result.poster_path <> invalid and result.poster_path <> "" then posterUrlPortrait = result.poster_path

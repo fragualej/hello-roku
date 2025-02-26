@@ -4,6 +4,7 @@ sub init()
     m.poster = m.top.findNode("poster")
     m.rectangle = m.top.findNode("rectangle")
     m.label = m.top.findNode("label")
+    m.group = m.top.findNode("group")
 
     m.label.drawingStyles = constants.styles.multiStyles
 
@@ -35,4 +36,5 @@ sub onContentChanged(event as object)
 end sub
 
 sub onFocusPercentChanged(event as object)
+    focusPercent = event.getData()
 end sub

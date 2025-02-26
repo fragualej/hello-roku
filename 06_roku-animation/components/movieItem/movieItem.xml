@@ -7,8 +7,10 @@
     </interface>
     <children>
     <poster id="poster" loadDisplayMode="scaleToFit">
-        <rectangle id="rectangle" color="#E5E4E2" opacity="0.7"/>
-        <multiStyleLabel id="label"/>
+        <group id="group">
+            <rectangle id="rectangle" color="#E5E4E2" opacity="0.7"/>
+            <multiStyleLabel id="label"/>
+        </group>
     </poster>
     </children>
 </component>

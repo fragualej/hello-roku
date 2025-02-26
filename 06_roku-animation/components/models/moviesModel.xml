@@ -7,5 +7,6 @@
         <field id="posterUrlPortrait" type="string"/>
         <field id="posterUrlLandscape" type="string"/>
         <field id="voteAverage" type="string"/>
+        <field id="genres" type="array"/>
     </interface>
 </component>

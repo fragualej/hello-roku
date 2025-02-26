@@ -1,4 +1,23 @@
 sub init()
+    m.PI = mathUtils_PI()
+    m.frameCount = 0
+    m.freq = 0.25
+    m.amp = 1
+
+    c = constantsUtil_get()
+    m.label = m.top.findNode("label")
+    m.label.drawingStyles = c.styles.multiStyles
+
+    setGrid()
+
+    m.timer = m.top.findNode("timer")
+    m.timer.ObserveField("fire", "onFire")
+    m.timer.duration = 1 / 30
+    m.timer.repeat = true
+    m.timer.control = "start"
+end sub
+
+sub setGrid()
     rows = 7
     cols = 7
     grid = gridUtil_getGridValues(rows, cols, true)
@@ -12,11 +31,13 @@ sub init()
     ix = grid.ix
     iy = grid.iy
 
-    m.PI = mathUtils_PI()
-    m.frameCount = 0
-    m.freq = 0.25
-    m.amp = 1
-
+    m.label.setFields({
+        width: gridw
+        height: gridh * 0.1
+        horizAlign: "center"
+        translation: [ix, iy]
+        text: "<h2>Loading...</h2>"
+    })
     m.rectangle = m.top.findNode("rectangle")
     m.rectangle.width = gridw
     m.rectangle.height = gridh
@@ -38,11 +59,6 @@ sub init()
         rectangle.rotation = m.PI * 0.25
     end for
 
-    m.timer = m.top.findNode("timer")
-    m.timer.ObserveField("fire", "onFire")
-    m.timer.duration = 1 / 30
-    m.timer.repeat = true
-    m.timer.control = "start"
 end sub
 
 sub onFire()
