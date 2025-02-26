@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<component name="grid" extends="baseComponent">
+    <script type="text/brightscript" uri="grid.brs"/>
+    <interface>
+        <field id="content" type="node" />
+    </interface>
+    <children>
+        <rowlist id="rowlist"/> 
+    </children>
+</component>

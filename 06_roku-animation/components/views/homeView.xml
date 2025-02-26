@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<component name="homeView" extends="baseView">
+<component name="homeView" extends="baseComponent">
     <script type="text/brightscript" uri="homeView.brs"/>
     <interface>
         <field id="content" type="node" />
     </interface>
     <children>
-        <rowlist id="rowlist"/> 
+        <navBar id="navBar"/>
+        <grid id="grid"/>
     </children>
 </component>

@@ -1,32 +1,34 @@
 sub init()
-    m.constants = constantsUtil_get()
-    m.rowlist = m.top.findNode("rowlist")
-    rows = 3
-    cols = 3
-    grid = gridUtil_getGridValues(rows, cols, deviceUtil_getUIResolution())
-    m.rowlist.update({
-        itemComponentName: "movieItem",
-        rowFocusAnimationStyle: "fixedFocus",
-        drawFocusFeedback: true,
-        numRows: rows,
-        translation: [grid.ix, grid.iy * 2.25],
-        itemSize: [grid.gridw, grid.cellh],
-        rowItemSize: [grid.itemw, grid.itemh],
-        rowItemSpacing: [grid.gapx, 0],
-        itemSpacing: [0, grid.gapy]
-    })
-    m.top.observeField("content", "onContentChange")
+    m.repository = m.top.getScene().repository
+    m.navBar = m.top.findNode("navBar")
+    m.grid = m.top.findNode("grid")
+    getGenres()
 end sub
 
-sub onContentChange(event as object)
-    content = event.getData()
-    m.rowlist.content = content
-    restartObservers()
+sub getGenres()
+    httpNode = createObject("roSGNode", "httpNode")
+    httpNode.observeField("response", "onHttpGenresResponse")
+
+    m.repository.callFunc("getGenres", { httpNode: httpNode })
 end sub
 
-sub restartObservers()
-    m.rowlist.unobserveField("rowItemFocused")
-    m.rowlist.unobserveField("rowItemSelected")
-    m.rowlist.observeField("rowItemFocused", "onRowItemFocused")
-    m.rowlist.observeField("rowItemFocused", "onRowItemSelected")
+sub onHttpGenresResponse(event as object)
+    response = event.getData()
+
+    m.navBar.content = response.content
+    m.navBar.setFocus(true)
+    m.navBar.observeField("itemFocused", "onItemFocused")
+end sub
+
+sub onItemFocused(event as object)
+    data = event.getData()
+    httpNode = createObject("roSGNode", "httpNode")
+    httpNode.observeField("response", "onHttpMoviesResponse")
+
+    m.repository.callFunc("getMoviesByGenre", { httpNode: httpNode, genreId: data.genreId })
+end sub
+
+sub onHttpMoviesResponse(event as object)
+    response = event.getData()
+    m.grid.content = response.content
 end sub

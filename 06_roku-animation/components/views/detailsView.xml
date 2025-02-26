@@ -1,4 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-<component name="detailsView" extends="baseView">
+<component name="detailsView" extends="baseComponent">
     <script type="text/brightscript" uri="detailsView.brs"/>
 </component>

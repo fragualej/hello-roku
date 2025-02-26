@@ -1,15 +1,14 @@
 sub init()
-    m.app = app()
-    m.constants = constantsUtil_get()
+    constants = constantsUtil_get()
 
     m.poster = m.top.findNode("poster")
     m.rectangle = m.top.findNode("rectangle")
     m.label = m.top.findNode("label")
 
-    m.label.drawingStyles = m.constants.styles.multiStyles
+    m.label.drawingStyles = constants.styles.multiStyles
 
-    itemw = m.app.gridFields.itemw
-    itemh = m.app.gridFields.itemh
+    itemw = app().gridFields.itemw
+    itemh = app().gridFields.itemh
 
     labelFields = {
         width: itemw,

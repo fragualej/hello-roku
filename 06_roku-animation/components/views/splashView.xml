@@ -1,4 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<component name="splashView" extends="baseView">
+<component name="splashView" extends="baseComponent">
     <script type="text/brightscript" uri="splashView.brs"/>
+    <children>
+        <label text="Loading..." width="1920" height="1080" horizAlign="center" vertAlign="center"/>
+    </children>
 </component>
