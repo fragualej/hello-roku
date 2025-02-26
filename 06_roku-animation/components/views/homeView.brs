@@ -2,7 +2,14 @@ sub init()
     m.repository = m.top.getScene().repository
     m.navBar = m.top.findNode("navBar")
     m.grid = m.top.findNode("grid")
+    m.top.observeField("focusedChild", "onFocusChanged")
     getGenres()
+end sub
+
+sub onFocusChanged()
+    if m.top.hasFocus()
+        m.navBar.setFocus(true)
+    end if
 end sub
 
 sub getGenres()
@@ -16,7 +23,6 @@ sub onHttpGenresResponse(event as object)
     response = event.getData()
 
     m.navBar.content = response.content
-    m.navBar.setFocus(true)
     m.navBar.observeField("itemFocused", "onItemFocused")
 end sub
 
@@ -44,10 +50,17 @@ function onKeyEvent(key as string, press as boolean) as boolean
         if key = "down"
             if m.navBar.isInFocusChain()
                 m.grid.setFocus(true)
+                handled = true
             end if
         else if key = "up"
             if m.grid.isInFocusChain()
                 m.navBar.setFocus(true)
+                handled = true
+            end if
+        else if key = "back"
+            if m.grid.isInFocusChain()
+                m.grid.jumpToRowItem = [0, 0]
+                handled = true
             end if
         end if
     end if

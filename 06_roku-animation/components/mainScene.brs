@@ -16,3 +16,14 @@ sub onSplashStateChanged()
     closeView()
     showHomeView()
 end sub
+
+function onKeyEvent(key as string, press as boolean) as boolean
+    handled = false
+    if press
+        if key = "back"
+            closeView()
+            handled = true
+        end if
+    end if
+    return handled
+end function

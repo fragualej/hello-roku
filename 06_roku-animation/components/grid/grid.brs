@@ -6,18 +6,21 @@ sub init()
     grid = gridUtil_getGridValues(rows, cols, deviceUtil_getUIResolution())
     m.rowlist.update({
         itemComponentName: "movieItem",
-        rowFocusAnimationStyle: "fixedFocus",
+        vertFocusAnimationStyle: "fixedFocus",
+        horizFocusAnimationStyle: "fixedFocus"
         drawFocusFeedback: true,
         numRows: rows,
         translation: [grid.ix, grid.iy * 2.25],
-        itemSize: [grid.gridw, grid.cellh],
+        itemSize: [grid.gridw * 1.2, grid.cellh],
         rowItemSize: [grid.itemw, grid.itemh],
         rowItemSpacing: [grid.gapx, 0],
-        itemSpacing: [0, grid.gapy]
+        itemSpacing: [0, grid.gapy],
     })
 
     m.top.observeField("focusedChild", "onFocusChanged")
     m.top.observeField("content", "onContentChanged")
+    m.top.observeField("jumpToRowItem", "onJumpToRowItemChanged")
+
     m.rowlist.observeField("rowItemSelected", "onRowItemSelected")
 end sub
 
@@ -38,4 +41,10 @@ sub onRowItemSelected(event as object)
     itemContent = rowContent.getChild(rowItemIndex[1])
 
     m.top.itemSelected = itemContent
+end sub
+
+sub onJumpToRowItemChanged(event as object)
+    rowItemIndex = event.getData()
+    print "[DEBUG] ", formatJson(rowItemIndex)
+    m.rowlist.jumpToRowItem = rowItemIndex
 end sub

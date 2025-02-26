@@ -8,7 +8,7 @@
     <children>
         <layoutGroup id="layoutGroup" horizAlignment="center" itemSpacings="[20]">
             <multiStyleLabel id="label"/>
-            <rectangle id="rectangle" color="#0000FF" visible="false"/>
+            <rectangle id="rectangle" color="#ffffff" visible="false"/>
         </layoutGroup>
     </children>
 </component>

@@ -83,32 +83,32 @@ function _setStyles(fonts, colors)
             "h1": {
                 "fontSize": fonts.size.H1
                 "fontUri": fonts.uri.DEFAULT
-                "color": colors.BLACK
+                "color": colors.WHITE
             }
             "h2": {
                 "fontSize": fonts.size.H2
                 "fontUri": fonts.uri.DEFAULT
-                "color": colors.BLACK
+                "color": colors.WHITE
             }
             "h3": {
                 "fontSize": fonts.size.H3
                 "fontUri": fonts.uri.DEFAULT
-                "color": colors.BLACK
+                "color": colors.WHITE
             }
             "h4": {
                 "fontSize": fonts.size.H4
                 "fontUri": fonts.uri.DEFAULT
-                "color": colors.BLACK
+                "color": colors.WHITE
             }
             "h5": {
                 "fontSize": fonts.size.H5
                 "fontUri": fonts.uri.DEFAULT
-                "color": colors.BLACK
+                "color": colors.WHITE
             }
             "h6": {
                 "fontSize": fonts.size.H6
                 "fontUri": fonts.uri.DEFAULT
-                "color": colors.BLACK
+                "color": colors.WHITE
             }
         }
     })
