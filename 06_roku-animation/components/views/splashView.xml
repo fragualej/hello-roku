@@ -1,7 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <component name="splashView" extends="baseComponent">
     <script type="text/brightscript" uri="splashView.brs"/>
+    <interface>
+        <field id="state" type="string" />
+    </interface>
     <children>
-        <label text="Loading..." width="1920" height="1080" horizAlign="center" vertAlign="center"/>
+        <timer id="timer" repeat="false" duration="1"/>
+        <label text="Splash View" width="1920" height="1080" horizAlign="center" vertAlign="center"/>
     </children>
 </component>

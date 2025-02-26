@@ -31,4 +31,25 @@ end sub
 sub onHttpMoviesResponse(event as object)
     response = event.getData()
     m.grid.content = response.content
+    m.grid.observeField("itemSelected", "onItemSelected")
 end sub
+
+sub onItemSelected(event as object)
+    m.top.itemSelected = event.getData()
+end sub
+
+function onKeyEvent(key as string, press as boolean) as boolean
+    handled = false
+    if press
+        if key = "down"
+            if m.navBar.isInFocusChain()
+                m.grid.setFocus(true)
+            end if
+        else if key = "up"
+            if m.grid.isInFocusChain()
+                m.navBar.setFocus(true)
+            end if
+        end if
+    end if
+    return handled
+end function

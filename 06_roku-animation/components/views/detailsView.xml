@@ -1,4 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <component name="detailsView" extends="baseComponent">
     <script type="text/brightscript" uri="detailsView.brs"/>
+    <interface>
+    <field id="content" type="node" />
+    </interface>
+    <children>
+        <layoutGroup layoutDirection="horiz">
+            <multiStyleLabel id="label" wrap="true" width="768"/>
+            <poster id="poster"  width="768"/>
+        </layoutGroup>
+    </children>
 </component>

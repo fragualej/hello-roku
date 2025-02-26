@@ -1,9 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <component name="mainScene" extends="Scene">
-    <!-- View Logic -->
-    <script type="text/brightscript" uri="viewStack.brs"/>
-    <!-- Utils -->
     <script type="text/brightscript" uri="mainScene.brs"/>
+    
+    <!-- ViewStack -->
+    <script type="text/brightscript" uri="viewStack.brs"/>
+
+    <!-- UILogic -->
+    <script type="text/brightscript" uri="uiLogic/homeViewLogic.brs"/>
+    <script type="text/brightscript" uri="uiLogic/detailsViewLogic.brs"/>
+
+    <!-- Utils -->
     <script type="text/brightscript" uri="pkg:/source/core/app.brs"/>
     <script type="text/brightscript" uri="pkg:/source/utils/constantsUtils.brs"/>
     <script type="text/brightscript" uri="pkg:/source/utils/deviceUtils.brs"/>
@@ -14,10 +20,6 @@
     </interface>
 
     <children>
-        <!-- <rectangle color="#F9F6EE" width="1920" height="1080" visible="true"/> -->
         <group id="views"/>
-        <timer id="timer" repeat="false" duration="3"/>
-        <!-- <navBar id="navBar"/>
-        <homeView id="homeView"/> -->
     </children>
 </component>

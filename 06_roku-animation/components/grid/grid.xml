@@ -3,6 +3,7 @@
     <script type="text/brightscript" uri="grid.brs"/>
     <interface>
         <field id="content" type="node" />
+        <field id="itemSelected" type="node" />
     </interface>
     <children>
         <rowlist id="rowlist"/> 

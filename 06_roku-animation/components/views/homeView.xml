@@ -3,8 +3,10 @@
     <script type="text/brightscript" uri="homeView.brs"/>
     <interface>
         <field id="content" type="node" />
+        <field id="itemSelected" type="node" />
     </interface>
     <children>
+        <rectangle color="#353935" width="1920" height="1080" visible="true"/>
         <navBar id="navBar"/>
         <grid id="grid"/>
     </children>

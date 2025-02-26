@@ -2,21 +2,12 @@ sub initViewStack()
     m.viewStack = []
 end sub
 
-sub initView()
-    navToView({ view: "splashView" })
-end sub
+sub navToView(config as object)
+    view = config.view
+    view.setFocus(true)
 
-sub navToView(event as object)
-    if type(event) = "roSGNodeEvent"
-        data = event.getData()
-    else
-        data = event
-    end if
-
-    view = createObject("roSGNode", data.view)
-
-    if data.content <> invalid
-        view.content = data.content
+    if config.content <> invalid
+        view.content = config.content
     end if
 
     showView(view)

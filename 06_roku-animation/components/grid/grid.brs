@@ -15,18 +15,27 @@ sub init()
         rowItemSpacing: [grid.gapx, 0],
         itemSpacing: [0, grid.gapy]
     })
-    m.top.observeField("content", "onContentChange")
+
+    m.top.observeField("focusedChild", "onFocusChanged")
+    m.top.observeField("content", "onContentChanged")
+    m.rowlist.observeField("rowItemSelected", "onRowItemSelected")
 end sub
 
-sub onContentChange(event as object)
+sub onFocusChanged()
+    if m.top.hasFocus()
+        m.rowlist.setFocus(true)
+    end if
+end sub
+
+sub onContentChanged(event as object)
     content = event.getData()
     m.rowlist.content = content
-    restartObservers()
 end sub
 
-sub restartObservers()
-    m.rowlist.unobserveField("rowItemFocused")
-    m.rowlist.unobserveField("rowItemSelected")
-    m.rowlist.observeField("rowItemFocused", "onRowItemFocused")
-    m.rowlist.observeField("rowItemFocused", "onRowItemSelected")
+sub onRowItemSelected(event as object)
+    rowItemIndex = event.getData()
+    rowContent = m.rowlist.content.getChild(rowItemIndex[0])
+    itemContent = rowContent.getChild(rowItemIndex[1])
+
+    m.top.itemSelected = itemContent
 end sub
