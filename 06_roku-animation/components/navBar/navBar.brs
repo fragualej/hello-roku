@@ -1,39 +1,34 @@
 sub init()
     m.rowlist = m.top.findNode("rowlist")
 
-    items = ["Action", "Adventure", "Animation", "Comedy", "Horror"]
-    content = createObject("roSGNode", "contentNode")
-    rowContent = content.createChild("contentNode")
+    m.top.observeField("content", "onContentChanged")
+    m.top.observeField("focusedChild", "onFocusChanged")
+end sub
 
-    for each item in items
-        itemContent = rowContent.createChild("contentNode")
-        itemContent.title = item
-    end for
+sub onFocusChanged()
+    if m.top.hasFocus()
+        m.rowlist.setFocus(true)
+    end if
+end sub
 
-    res = deviceUtil_getUIResolution()
-    width = res.width
-    height = res.height
-
-    navw = width * 0.8
-    navh = width * 0.1
-
-    itemw = (navw / 5) * 0.9
-    itemh = navh * 0.9
-
-    ix = (width - navw) * 0.5
-    iy = (height - navh) * 0.1
-
-    gapx = itemw * 0.1
+sub onContentChanged(event as object)
+    content = event.getData()
+    navFields = app().navFields
 
     m.rowlist.setFields({
         itemComponentName: "navItem"
-        drawFocusFeedback: true
-        translation: [ix, iy]
-        itemSize: [navw, navh]
-        rowItemSize: [itemw, itemh]
-        rowItemSpacing: [gapx, 0]
-        content: content
+        drawFocusFeedback: false
+        translation: [navFields.ix, navFields.iy]
+        itemSize: [navFields.gridw, navFields.gridh]
+        rowItemSize: [navFields.itemw, navFields.itemh]
+        rowItemSpacing: [navFields.gapx, 0]
     })
+    m.rowlist.content = content
+    m.rowlist.observeField("rowItemFocused", "onItemFocused")
+end sub
 
-    print "[DEBUG] navBar:", content
+sub onItemFocused(event as object)
+    rowItemIndex = event.getData()
+    itemContent = m.rowlist.content.getChild(rowItemIndex[0]).getChild(rowItemIndex[1])
+    m.top.itemFocused = { genreId: itemContent.genreId, genreName: itemContent.genreName }
 end sub

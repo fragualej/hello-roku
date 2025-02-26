@@ -6,9 +6,9 @@
         <field id="focusPercent" type="float" onChange="onFocusPercentChanged"/>
     </interface>
     <children>
-        <layoutGroup horizAlignment="center" translation="[153.6, 0]">
+        <layoutGroup id="layoutGroup" horizAlignment="center" itemSpacings="[20]">
             <multiStyleLabel id="label"/>
-            <rectangle id="rectangle" color="#000000" width="307.2" height="10"/>
+            <rectangle id="rectangle" color="#0000FF" visible="false"/>
         </layoutGroup>
     </children>
 </component>

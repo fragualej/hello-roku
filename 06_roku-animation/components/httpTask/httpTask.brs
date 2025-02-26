@@ -3,7 +3,6 @@ sub init()
         baseUrl: "https://api.themoviedb.org/3/trending/movie/week?api_key="
         imageUrl: "https://image.tmdb.org/t/p/w500"
         apiKey: "558e2410c2be44f6e971c2b2c8cf64d0"
-
     }
 
     m.jobs = {}
@@ -16,65 +15,85 @@ sub initHttpTask()
     while (true)
         msg = wait(0, m.port)
         if type(msg) = "roSGNodeEvent"
-            handleRequest()
+            handleRequest(msg)
         else if type(msg) = "roUrlEvent"
             handleResponse(msg)
         end if
     end while
 end sub
 
-sub handleRequest(event = {} as object)
-    url = m.constants.baseUrl + m.constants.apiKey
+sub handleRequest(event as object)
+    request = event.getData()
+
     job = createObject("roUrlTransfer")
-    job.setUrl(url)
+    job.setUrl(request.url)
+    job.setHeaders(request.headers)
     job.setCertificatesFile("common:/certs/ca-bundle.crt")
     job.initClientCertificates()
     job.setMessagePort(m.port)
     job.asyncGetToString()
+
     requestId = job.getIdentity().toStr()
-    m.jobs[requestId] = job
+    m.jobs[requestId] = { job: job, request: request }
 end sub
 
 sub handleResponse(event as object)
+    code = event.getResponseCode()
     requestId = event.getSourceIdentity().toStr()
-    job = m.jobs[requestId]
 
-    if job <> invalid
-        code = event.getResponseCode()
-        if code <= 200 and code < 300
-            print code, requestId
+    if (code >= 200 and code < 300)
+        job = m.jobs[requestId].job
+        request = m.jobs[requestId].request
+        if job <> invalid
+            print "[DEBUG] HTTPTask - Success: ", "id: " requestId, "status: " code, "url: " request.url
             body = event.getString()
             data = parseJson(body)
-            m.top.response = buildResponse(data)
+            content = buildResponse(request.model, data)
+            request.httpNode.response = {
+                status: code,
+                content: content
+            }
         end if
+    else
+        print "[DEBUG] HTTPTask - Error: ", code, requestId, formatJson(request)
     end if
 end sub
 
-function buildResponse(data as object)
-    results = data.results
-    rows = 4
-    cols = 5
-
+function buildResponse(model as string, data as object)
     content = createObject("roSGNode", "contentNode")
-    for j = 0 to rows - 1
+    if model = "genresModel"
+        results = data.genres
         rowContent = content.createChild("contentNode")
-        for i = 0 to cols - 1
-            idx = j * cols + i
-            result = results[idx]
-            itemContent = rowContent.createChild("movieCardNode")
-            itemContent.id = result.id
-            itemContent.title = result.title
-            itemContent.description = result.overview
-            itemContent.popularity = result.popularity.toStr()
-            itemContent.releaseDate = result.release_date
-            itemContent.voteAverage = result.vote_average
-            itemContent.originalLanguage = result.original_language
-            itemContent.fhdPosterUrl = m.constants.imageUrl + result.backdrop_path
+        for i = 0 to 6
+            result = results[i]
+            itemContent = rowContent.createChild(model)
+            itemContent.genreId = result.id
+            itemContent.genreName = result.name
         end for
-    end for
+    else if model = "moviesModel"
+        results = data.results
+        rows = 4
+        cols = 5
+        for j = 0 to rows - 1
+            rowContent = content.createChild("contentNode")
+            for i = 0 to cols - 1
+                idx = j * cols + i
+                result = results[idx]
+                itemContent = rowContent.createChild(model)
+                itemContent.id = result.id
+                itemContent.title = result.title
+                itemContent.description = result.overview
+                itemContent.popularity = result.popularity.toStr()
+                itemContent.releaseDate = result.release_date
+                itemContent.voteAverage = result.vote_average
+                itemContent.originalLanguage = result.original_language
+                if result.backdrop_path <> invalid
+                    itemContent.fhdPosterUrl = m.constants.imageUrl + result.backdrop_path
+                end if
+            end for
+        end for
+    end if
 
-    response = {}
-    response.content = content
-    return response
+    return content
 end function
 

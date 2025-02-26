@@ -1,45 +1,34 @@
 sub init()
-    m.app = app()
-    m.constants = constantsUtil_get()
-    m.rowlist = m.top.findNode("rowlist")
-    m.label = m.top.findNode("label")
+    m.top.repository = createObject("roSGNode", "repository")
+    m.navBar = m.top.findNode("navBar")
     m.homeView = m.top.findNode("homeView")
 
-    m.rowlist.update(m.app.gridFields)
-    m.label.update(m.app.labelFields)
-    m.label.drawingStyles = m.constants.styles.multiStyles
-
-    m.rowlist.observeField("rowItemFocused", "onRowItemFocused")
-    m.rowlist.observeField("rowItemFocused", "onRowItemSelected")
-
-    m.httpTask = createObject("roSGNode", "httpTask")
-    m.httpTask.control = "run"
-    m.httpTask.observeField("response", "onHttpResponse")
-    m.httpTask.request = {}
+    getGenres()
 end sub
 
-sub onHttpResponse(event as object)
+sub getGenres()
+    httpNode = createObject("roSGNode", "httpNode")
+    httpNode.observeField("response", "onHttpGenresResponse")
+
+    m.top.repository.callFunc("getGenres", { httpNode: httpNode })
+end sub
+
+sub onHttpGenresResponse(event as object)
+    response = event.getData()
+    m.navBar.content = response.content
+    m.navBar.setFocus(true)
+    m.navBar.observeField("itemFocused", "onItemFocused")
+end sub
+
+sub onItemFocused(event as object)
+    data = event.getData()
+    httpNode = createObject("roSGNode", "httpNode")
+    httpNode.observeField("response", "onHttpMoviesResponse")
+
+    m.top.repository.callFunc("getMoviesByGenre", { httpNode: httpNode, genreId: data.genreId })
+end sub
+
+sub onHttpMoviesResponse(event as object)
     response = event.getData()
     m.homeView.content = response.content
 end sub
-
-sub onRowItemFocused(event as object)
-    rowItemIndex = event.getData()
-
-    content = m.rowlist.content
-    rowContent = content.getChild(rowItemIndex[0])
-    itemContent = rowContent.getChild(rowItemIndex[1])
-
-    text = ""
-    text += Substitute("<h2>{0}</h2>", itemContent.title)
-    text += chr(10)
-    text += Substitute("<h2> {0} | {1}</h2>", itemContent.releaseDate, itemContent.voteAverage)
-    text += chr(10)
-    text += Substitute("<h3>{0}</h3>", itemContent.description)
-    m.label.text = text
-end sub
-
-sub onRowItemSelected(event as object)
-
-end sub
-

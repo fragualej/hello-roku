@@ -1,0 +1,31 @@
+sub init()
+    constants = constantsUtil_get()
+    m.baseUrl = constants.api.TMDB_API_BASE_URL
+    m.token = constants.api.TMDB_TOKEN
+    m.httpTask = createObject("roSGNode", "httpTask")
+    m.httpTask.control = "RUN"
+    print "[DEBUG] repository"
+end sub
+
+function getGenres(request as object)
+    url = substitute("{0}/genre/movie/list", m.baseUrl)
+    request.addReplace("url", url)
+    request.addReplace("model", "genresModel")
+    enqueue(request)
+end function
+
+function getMoviesByGenre(request as object)
+    url = substitute("{0}/discover/movie?include_adult=false&include_video=false&language=en-US&page=1&sort_by=popularity.desc&with_genres={1}", m.baseUrl, request.genreId.toStr())
+    request.addReplace("url", url)
+    request.addReplace("model", "moviesModel")
+    enqueue(request)
+end function
+
+sub enqueue(request as object)
+    headers = {
+        "Authorization": "Bearer " + m.token
+        "accept": "application/json"
+    }
+    request.addReplace("headers", headers)
+    m.httpTask.request = request
+end sub

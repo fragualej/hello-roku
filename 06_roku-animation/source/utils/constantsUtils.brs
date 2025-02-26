@@ -40,9 +40,11 @@ end function
 function _setApi()
     api = createObject("roSGNode", "node")
     api.addFields({
+        "TMDB_API_BASE_URL": "https://api.themoviedb.org/3",
         "TMDB_API_ENDPOINT": "https://api.themoviedb.org/3/trending/movie/week?api_key=",
         "TMDB_API_IMAGE_URL": "https://image.tmdb.org/t/p/w500",
         "TMDB_API_KEY": "558e2410c2be44f6e971c2b2c8cf64d0"
+        "TMDB_TOKEN": "eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI1NThlMjQxMGMyYmU0NGY2ZTk3MWMyYjJjOGNmNjRkMCIsIm5iZiI6MTYyNjM3Nzg0OC44OTIsInN1YiI6IjYwZjA4ZTc4NmNmM2Q1MDA1ZGE0OGM1YiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.n0CtmS2w8DLLI9nS_u159kw6LbEdDPqWzjgEtidf9Nk"
     })
     return api
 end function

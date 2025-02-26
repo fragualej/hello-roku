@@ -9,7 +9,7 @@ sub init()
         rowFocusAnimationStyle: "fixedFocus",
         drawFocusFeedback: true,
         numRows: rows,
-        translation: [grid.ix, grid.iy],
+        translation: [grid.ix, grid.iy * 2.25],
         itemSize: [grid.gridw, grid.cellh],
         rowItemSize: [grid.itemw, grid.itemh],
         rowItemSpacing: [grid.gapx, 0],
