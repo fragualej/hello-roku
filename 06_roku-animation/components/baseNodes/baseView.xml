@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<component name="baseView" extends="baseComponent">
+    <script type="text/brightscript" uri="baseView.brs"/>
+    <children>
+        <rectangle color="#28282B" width="1920" height="1080" />
+    </children>
+</component>

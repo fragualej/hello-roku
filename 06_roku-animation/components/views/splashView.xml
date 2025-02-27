@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<component name="splashView" extends="baseView">
+    <script type="text/brightscript" uri="splashView.brs"/>
+    <interface>
+        <field id="state" type="string" />
+    </interface>
+    <children>
+        <timer id="timer" repeat="false" duration="10"/>
+        <rectangle id="rectangle" color="#28282B"/>
+        <multiStyleLabel id="label" wrap="true"/>
+    </children>
+</component>

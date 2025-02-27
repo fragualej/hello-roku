@@ -1,13 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<component name="mainScene" extends="Scene">
-    <script type="text/brightscript" uri="mainScene.brs"/>
+<component name="baseComponent" extends="group">
+    <script type="text/brightscript" uri="baseComponent.brs"/>
     <script type="text/brightscript" uri="pkg:/source/core/app.brs"/>
     <script type="text/brightscript" uri="pkg:/source/utils/constantsUtils.brs"/>
     <script type="text/brightscript" uri="pkg:/source/utils/deviceUtils.brs"/>
-
-    <children>
-        <rectangle color="#F9F6EE" width="1920" height="1080"/>
-        <multiStyleLabel id="label"/>
-        <rowlist id="rowlist"/> 
-    </children>
+    <script type="text/brightscript" uri="pkg:/source/utils/gridUtils.brs"/>
+    <script type="text/brightscript" uri="pkg:/source/utils/mathUtils.brs"/>
 </component>

@@ -12,10 +12,11 @@
                 fontSize="25"
                 horizOrigin="left"
                 vertOrigin="center"
+                color="#000000"
             />
             <Rectangle 
                 id="rectangle" 
-                color="#FFFFFF"
+                color="#000000"
             />
             <SimpleLabel 
                 id="dateTimeLabel"  
@@ -23,6 +24,7 @@
                 fontSize="25"
                 horizOrigin="left"
                 vertOrigin="center"
+                color="#000000"
             />
         </LayoutGroup>
     </children>
