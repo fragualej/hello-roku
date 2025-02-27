@@ -5,7 +5,7 @@ sub init()
 
     constants = constantsUtil_get()
     grid = gridUtil_getGridValues(1, 2)
-    print grid
+
     m.layoutGroup.setFields({
         translation: [grid.ix, grid.iy]
         itemSpacings: [grid.gapx]

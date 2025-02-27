@@ -48,7 +48,7 @@ sub handleResponse(event as object)
             print "[DEBUG] HTTPTask - Success: ", "id: " requestId, "status: " code, "url: " request.url
             body = event.getString()
             data = parseJson(body)
-            content = buildResponse(request.model, data)
+            content = buildResponse(request.model, data, request)
             request.httpNode.response = {
                 status: code,
                 content: content
@@ -59,9 +59,9 @@ sub handleResponse(event as object)
     end if
 end sub
 
-function buildResponse(model as string, data as object)
+function buildResponse(model as string, data as object, request as object)
     content = createObject("roSGNode", "contentNode")
-    if model = "genresModel"
+    if model = "genres"
         genres = data.genres
         rowContent = content.createChild("contentNode")
         rowContent.addFields({ genres: genres })
@@ -71,10 +71,11 @@ function buildResponse(model as string, data as object)
             itemContent.genreId = genre.id
             itemContent.genreName = genre.name
         end for
-    else if model = "moviesModel"
+    else if model = "movies"
+        pageIndex = request.pageIndex
         results = data.results
-        rows = 4
-        cols = 5
+        rows = 2
+        cols = 10
         for j = 0 to rows - 1
             rowContent = content.createChild("contentNode")
             for i = 0 to cols - 1
@@ -89,6 +90,9 @@ function buildResponse(model as string, data as object)
                 itemContent.voteAverage = left(result.vote_average.toStr(), 3)
                 itemContent.originalLanguage = result.original_language
                 itemContent.genresIds = result.genre_ids
+
+                posterUrlPortrait = ""
+                posterUrlLandscape = ""
 
                 if result.poster_path <> invalid and result.poster_path <> "" then posterUrlPortrait = result.poster_path
                 if result.backdrop_path <> invalid and result.backdrop_path <> "" then posterUrlLandscape = result.backdrop_path

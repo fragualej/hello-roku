@@ -4,6 +4,7 @@
     <interface>
         <field id="content" type="node" />
         <field id="itemSelected" type="node" />
+        <field id="itemFocusedIndex " type="array" />
         <field id="jumpToRowItem" type="array" />
     </interface>
     <children>

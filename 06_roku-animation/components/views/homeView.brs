@@ -1,8 +1,14 @@
 sub init()
+    m.pageIndex = 1
     m.repository = m.top.getScene().repository
     m.navBar = m.top.findNode("navBar")
     m.grid = m.top.findNode("grid")
+
     m.top.observeField("focusedChild", "onFocusChanged")
+    m.grid.observeField("itemSelected", "onGridItemSelected")
+    m.grid.observeField("rowFocusedIndex", "onGridRowFocused")
+
+    m.navBar.observeField("itemFocused", "onItemFocused")
     getGenres()
 end sub
 
@@ -23,24 +29,41 @@ sub onHttpGenresResponse(event as object)
     response = event.getData()
 
     m.navBar.content = response.content
-    m.navBar.observeField("itemFocused", "onItemFocused")
 end sub
 
 sub onItemFocused(event as object)
     data = event.getData()
+    m.grid.content = invalid
+    getMovies(data.genreId, m.pageIndex)
+end sub
+
+sub getMovies(genreId, pageIndex)
     httpNode = createObject("roSGNode", "httpNode")
     httpNode.observeField("response", "onHttpMoviesResponse")
 
-    m.repository.callFunc("getMoviesByGenre", { httpNode: httpNode, genreId: data.genreId })
+    m.repository.callFunc("getMoviesByGenre", { httpNode: httpNode, genreId: genreId, pageIndex: pageIndex })
 end sub
 
 sub onHttpMoviesResponse(event as object)
     response = event.getData()
-    m.grid.content = response.content
-    m.grid.observeField("itemSelected", "onItemSelected")
+    if m.pageIndex = 1
+        m.grid.content = response.content
+        m.pageIndex++
+        getMovies(m.navBar.itemFocused.genreId, m.pageIndex)
+    else if m.pageIndex = 2
+        content = response.content
+        children = content.getChildren(-1, 0)
+        m.grid.content.appendChildren(children)
+    else
+        content = response.content
+        children = content.getChildren(-1, 0)
+        m.grid.content.appendChildren(children)
+        rowIndex = m.grid.content.getChildCount()
+        m.grid.jumpToRowItem = [rowIndex - 2, 0]
+    end if
 end sub
 
-sub onItemSelected(event as object)
+sub onGridItemSelected(event as object)
     itemSelected = event.getData()
     genres = m.navBar.content.getChild(0).genres
     genresIds = itemSelected.genresIds
@@ -48,7 +71,6 @@ sub onItemSelected(event as object)
     text = ""
     for each genreId in genresIds
         for each genre in genres
-            print genreId, genre
             if genreId = genre.id
                 text += " | " + genre.name
                 exit for
@@ -60,6 +82,11 @@ sub onItemSelected(event as object)
     m.top.itemSelected = itemSelected
 end sub
 
+sub onGridRowFocused(event as object)
+    rowFocusedIndex = event.getData()
+    print "[DEBUG] homeView", rowFocusedIndex
+end sub
+
 function onKeyEvent(key as string, press as boolean) as boolean
     handled = false
     if press
@@ -67,6 +94,10 @@ function onKeyEvent(key as string, press as boolean) as boolean
             if m.navBar.isInFocusChain()
                 m.grid.setFocus(true)
                 handled = true
+            else
+                m.pageIndex++
+                genreId = m.navBar.itemFocused.genreId
+                getMovies(genreId, m.pageIndex)
             end if
         else if key = "up"
             if m.grid.isInFocusChain()

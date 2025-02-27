@@ -6,12 +6,13 @@ sub init()
     grid = gridUtil_getGridValues(rows, cols)
     m.rowlist.update({
         itemComponentName: "movieItem",
-        vertFocusAnimationStyle: "fixedFocus",
+        vertFocusAnimationStyle: "floatingFocus",
         horizFocusAnimationStyle: "fixedFocus"
         drawFocusFeedback: true,
-        numRows: rows,
+        numRows: rows - 1,
         translation: [grid.ix, grid.iy * 2.25],
         itemSize: [grid.gridw * 1.2, grid.cellh],
+        itemClippingRect: [0, 0, grid.gridw * 1.2, grid.cellh * 3]
         rowItemSize: [grid.itemw, grid.itemh],
         rowItemSpacing: [grid.gapx, 0],
         itemSpacing: [0, grid.gapy],
@@ -19,9 +20,7 @@ sub init()
 
     m.top.observeField("focusedChild", "onFocusChanged")
     m.top.observeField("content", "onContentChanged")
-    m.top.observeField("jumpToRowItem", "onJumpToRowItemChanged")
-
-    m.rowlist.observeField("rowItemSelected", "onRowItemSelected")
+    m.top.observeField("jumpToRowItem", "onJumpToItem")
 end sub
 
 sub onFocusChanged()
@@ -33,6 +32,8 @@ end sub
 sub onContentChanged(event as object)
     content = event.getData()
     m.rowlist.content = content
+    m.rowlist.observeField("rowItemSelected", "onRowItemSelected")
+    m.rowlist.observeField("itemFocused", "onItemFocused")
 end sub
 
 sub onRowItemSelected(event as object)
@@ -43,8 +44,11 @@ sub onRowItemSelected(event as object)
     m.top.itemSelected = itemContent
 end sub
 
-sub onJumpToRowItemChanged(event as object)
+sub onItemFocused(event as object)
+    m.top.itemFocusedIndex = [event.getData()]
+end sub
+
+sub onJumpToItem(event as object)
     rowItemIndex = event.getData()
-    print "[DEBUG] ", formatJson(rowItemIndex)
     m.rowlist.jumpToRowItem = rowItemIndex
 end sub
