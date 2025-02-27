@@ -2,7 +2,7 @@ sub init()
     m.rowlist = m.top.findNode("rowlist")
     rows = 3
     cols = 3
-    grid = gridUtil_getGridValues(rows, cols)
+    grid = gridUtil_setGrid(rows, cols)
     m.rowlist.update({
         itemComponentName: "movieItem",
         vertFocusAnimationStyle: "floatingFocus",

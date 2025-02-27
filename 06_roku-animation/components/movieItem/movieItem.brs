@@ -1,12 +1,10 @@
 sub init()
-    constants = constantsUtil_get()
-
     m.poster = m.top.findNode("poster")
     m.rectangle = m.top.findNode("rectangle")
     m.label = m.top.findNode("label")
     m.group = m.top.findNode("group")
 
-    m.label.drawingStyles = constants.styles.multiStyles
+    m.label.drawingStyles = m.constants.styles.multiStyles
 
     itemw = app().gridFields.itemw
     itemh = app().gridFields.itemh

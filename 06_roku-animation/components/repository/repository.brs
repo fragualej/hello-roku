@@ -1,7 +1,6 @@
 sub init()
-    constants = constantsUtil_get()
-    m.baseUrl = constants.api.TMDB_API_BASE_URL
-    m.token = constants.api.TMDB_TOKEN
+    m.baseUrl = m.constants.api.TMDB_API_BASE_URL
+    m.token = m.constants.api.TMDB_TOKEN
     m.httpTask = createObject("roSGNode", "httpTask")
     m.httpTask.control = "RUN"
 end sub

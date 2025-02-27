@@ -4,9 +4,8 @@ sub init()
     m.freq = 0.25
     m.amp = 1
 
-    c = constantsUtil_get()
     m.label = m.top.findNode("label")
-    m.label.drawingStyles = c.styles.multiStyles
+    m.label.drawingStyles = m.constants.styles.multiStyles
 
     setGrid()
 
@@ -20,7 +19,7 @@ end sub
 sub setGrid()
     rows = 7
     cols = 7
-    grid = gridUtil_getGridValues(rows, cols, true)
+    grid = gridUtil_setGrid(rows, cols, true)
 
     gridw = grid.gridw
     gridh = grid.gridh
@@ -48,7 +47,7 @@ sub setGrid()
         gapx = cellw * 0.25
 
         x = col * cellw + gapx
-        y = 3 * cellh + gapx
+        y = (3 * cellh) + gapx
 
         rectangle = m.rectangle.createChild("rectangle")
         rectangle.color = "#eeeeee"

@@ -1,6 +1,5 @@
 sub init()
     navFields = app().navFields
-    constants = constantsUtil_get()
 
     m.layoutGroup = m.top.findNode("layoutGroup")
     m.label = m.top.findNode("label")
@@ -9,7 +8,7 @@ sub init()
     itemw = navFields.itemw
     itemh = navFields.itemh
 
-    m.label.drawingStyles = constants.styles.multiStyles
+    m.label.drawingStyles = m.constants.styles.multiStyles
 
     m.rectangle.width = itemw
     m.rectangle.height = itemh * 0.01

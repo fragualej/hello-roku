@@ -1,22 +1,31 @@
 sub init()
+    setComponents()
+    setObservers()
+    setLocalVariables()
+    getGenres()
+end sub
+
+sub setComponents()
     m.navBar = m.top.findNode("navBar")
     m.grid = m.top.findNode("grid")
+end sub
 
+sub setObservers()
     m.top.observeField("focusedChild", "onFocusChanged")
 
     m.grid.observeField("itemSelected", "onGridItemSelected")
     m.grid.observeField("rowFocusedIndex", "onGridRowFocused")
 
     m.navBar.observeField("itemFocused", "onItemFocused")
+end sub
 
+sub setLocalVariables()
     m.pageIndexMax = 15
     m.pageIndex = 1
     m.currIndex = 0
     m.prevIndex = 0
     m.currGenreId = 0
     m.lastFocusedNode = m.navBar
-
-    getGenres()
 end sub
 
 sub onFocusChanged()

@@ -3,15 +3,14 @@ sub init()
     m.label = m.top.findNode("label")
     m.poster = m.top.findNode("poster")
 
-    constants = constantsUtil_get()
-    grid = gridUtil_getGridValues(1, 2)
+    grid = gridUtil_setGrid(1, 2)
 
     m.layoutGroup.setFields({
         translation: [grid.ix, grid.iy]
         itemSpacings: [grid.gapx]
     })
     m.label.setFields({
-        drawingStyles: constants.styles.multiStyles,
+        drawingStyles: m.constants.styles.multiStyles,
         width: grid.itemw
     })
     m.poster.setFields({
