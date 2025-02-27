@@ -13,7 +13,7 @@ end sub
 
 sub onContentChanged(event as object)
     content = event.getData()
-    navFields = app().navFields
+    navFields = m.app.navFields
 
     m.rowlist.setFields({
         itemComponentName: "navItem"

@@ -6,8 +6,8 @@ sub init()
 
     m.label.drawingStyles = m.constants.styles.multiStyles
 
-    itemw = app().gridFields.itemw
-    itemh = app().gridFields.itemh
+    itemw = m.app.gridFields.itemw
+    itemh = m.app.gridFields.itemh
 
     labelFields = {
         width: itemw,

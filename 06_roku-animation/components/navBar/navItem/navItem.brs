@@ -1,5 +1,5 @@
 sub init()
-    navFields = app().navFields
+    navFields = m.app.navFields
 
     m.layoutGroup = m.top.findNode("layoutGroup")
     m.label = m.top.findNode("label")
