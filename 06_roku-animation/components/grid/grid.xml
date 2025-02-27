@@ -3,8 +3,8 @@
     <script type="text/brightscript" uri="grid.brs"/>
     <interface>
         <field id="content" type="node" />
-        <field id="itemSelected" type="node" />
-        <field id="rowFocusedIndex" type="integer"/>
+        <field id="itemSelected" type="node" alwaysNotify="true"/>
+        <field id="rowFocusedIndex" type="integer" alwaysNotify="true"/>
         <field id="jumpToRowItem" type="array" />
     </interface>
     <children>

@@ -6,7 +6,7 @@ sub init()
     m.rowlist.update({
         itemComponentName: "movieItem",
         vertFocusAnimationStyle: "floatingFocus",
-        horizFocusAnimationStyle: "fixedFocus"
+        rowFocusAnimationStyle: "fixedFocusWrap"
         drawFocusFeedback: true,
         numRows: rows - 1,
         translation: [grid.ix, grid.iy * 2.25],
@@ -45,7 +45,10 @@ sub onRowItemSelected(event as object)
 end sub
 
 sub onRowFocused(event as object)
-    m.top.rowFocusedIndex = event.getData()
+    rowFocusedIndex = event.getData()
+    if rowFocusedIndex <> 0
+        m.top.rowFocusedIndex = event.getData()
+    end if
 end sub
 
 sub onJumpToItem(event as object)
