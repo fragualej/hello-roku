@@ -43,7 +43,7 @@ sub handleResponse(event as object)
             print "[DEBUG] HTTPTask - Success: ", "id: " requestId, "status: " code, "url: " request.url
             body = event.getString()
             data = parseJson(body)
-            content = buildResponse(request.model, data, request)
+            content = buildResponse(request.model, data)
             request.httpNode.response = {
                 status: code,
                 content: content
@@ -54,7 +54,7 @@ sub handleResponse(event as object)
     end if
 end sub
 
-function buildResponse(model as string, data as object, request as object)
+function buildResponse(model as string, data as object)
     content = createObject("roSGNode", "contentNode")
     if model = "genres"
         genres = data.genres
@@ -67,7 +67,6 @@ function buildResponse(model as string, data as object, request as object)
             itemContent.genreName = genre.name
         end for
     else if model = "movies"
-        pageIndex = request.pageIndex
         results = data.results
         rows = 2
         cols = 10
