@@ -71,14 +71,14 @@ sub onHttpMoviesResponse(event as object)
         m.pageIndex++
         getMovies(m.navBar.itemFocused.genreId, m.pageIndex)
     else if m.pageIndex = 2
-        appendContent(response.content)
+        appendRowContent(response.content)
     else
-        appendContent(response.content)
+        appendRowContent(response.content)
         m.grid.jumpToRowItem = [m.currIndex, 0]
     end if
 end sub
 
-sub appendContent(content)
+sub appendRowContent(content)
     children = content.getChildren(-1, 0)
     if m.grid.content <> invalid
         m.grid.content.appendChildren(children)
