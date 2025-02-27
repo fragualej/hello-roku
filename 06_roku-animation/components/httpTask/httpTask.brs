@@ -82,23 +82,25 @@ function buildResponse(model as string, data as object, request as object)
                 idx = j * cols + i
                 result = results[idx]
                 itemContent = rowContent.createChild(model)
-                itemContent.id = result.id
-                itemContent.title = result.title
-                itemContent.description = result.overview
-                itemContent.popularity = result.popularity.toStr()
-                itemContent.releaseDate = left(result.release_date, 4)
-                itemContent.voteAverage = left(result.vote_average.toStr(), 3)
-                itemContent.originalLanguage = result.original_language
-                itemContent.genresIds = result.genre_ids
+                if result <> invalid
+                    itemContent.id = result.id
+                    itemContent.title = result.title
+                    itemContent.description = result.overview
+                    itemContent.popularity = result.popularity.toStr()
+                    itemContent.releaseDate = left(result.release_date, 4)
+                    itemContent.voteAverage = left(result.vote_average.toStr(), 3)
+                    itemContent.originalLanguage = result.original_language
+                    itemContent.genresIds = result.genre_ids
 
-                posterUrlPortrait = ""
-                posterUrlLandscape = ""
+                    posterUrlPortrait = ""
+                    posterUrlLandscape = ""
 
-                if result.poster_path <> invalid and result.poster_path <> "" then posterUrlPortrait = result.poster_path
-                if result.backdrop_path <> invalid and result.backdrop_path <> "" then posterUrlLandscape = result.backdrop_path
+                    if result.poster_path <> invalid and result.poster_path <> "" then posterUrlPortrait = result.poster_path
+                    if result.backdrop_path <> invalid and result.backdrop_path <> "" then posterUrlLandscape = result.backdrop_path
 
-                itemContent.posterUrlPortrait = m.constants.imageUrl + posterUrlPortrait
-                itemContent.posterUrlLandscape = m.constants.imageUrl + posterUrlLandscape
+                    itemContent.posterUrlPortrait = m.constants.imageUrl + posterUrlPortrait
+                    itemContent.posterUrlLandscape = m.constants.imageUrl + posterUrlLandscape
+                end if
             end for
         end for
     end if
