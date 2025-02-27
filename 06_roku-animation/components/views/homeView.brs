@@ -20,11 +20,13 @@ sub setObservers()
 end sub
 
 sub setLocalVariables()
-    m.pageIndexMax = 15
+    m.pageIndexMax = 10
     m.pageIndex = 1
     m.currIndex = 0
     m.prevIndex = 0
     m.currGenreId = 0
+    m.gridChildren = createObject("roSGNode", "contentNode")
+    m.gridContent = createObject("roSGNode", "contentNode")
     m.lastFocusedNode = m.navBar
 end sub
 
@@ -51,6 +53,8 @@ sub onItemFocused(event as object)
     genreId = data.genreId
     if genreId <> m.currGenreId
         m.grid.content = invalid
+        m.gridContent = invalid
+        m.gridContent = createObject("roSGNode", "contentNode")
         m.pageIndex = 1
         getMovies(genreId, m.pageIndex)
         m.currGenreId = genreId
@@ -59,29 +63,34 @@ end sub
 
 sub getMovies(genreId, pageIndex)
     httpNode = createObject("roSGNode", "httpNode")
-    httpNode.observeField("response", "onHttpMoviesResponse")
+    httpNode.observeField("response", "_onHttpMoviesResponse")
 
-    m.repository.callFunc("getMoviesByGenre", { httpNode: httpNode, genreId: genreId, pageIndex: pageIndex })
+    for i = 0 to 2
+        m.repository.callFunc("getMoviesByGenre", { httpNode: httpNode, genreId: genreId, pageIndex: pageIndex + i })
+    end for
 end sub
 
-sub onHttpMoviesResponse(event as object)
+sub _onHttpMoviesResponse(event as object)
     response = event.getData()
-    if m.pageIndex = 1
-        m.grid.content = response.content
-        m.pageIndex++
-        getMovies(m.navBar.itemFocused.genreId, m.pageIndex)
-    else if m.pageIndex = 2
-        appendRowContent(response.content)
-    else
-        appendRowContent(response.content)
-        m.grid.jumpToRowItem = [m.currIndex, 0]
-    end if
-end sub
-
-sub appendRowContent(content)
+    content = response.content
     children = content.getChildren(-1, 0)
-    if m.grid.content <> invalid
-        m.grid.content.appendChildren(children)
+    m.gridChildren.appendChildren(children)
+
+    if m.gridChildren.getChildCount() = 60
+        rows = 2
+        cols = 30
+        for j = 0 to rows - 1
+            rowContent = m.gridContent.createChild("contentNode")
+            for i = 0 to cols - 1
+                idx = j * cols + i
+                child = m.gridChildren.getChild(idx).clone(true)
+                rowContent.appendChild(child)
+            end for
+        end for
+        m.grid.content = m.gridContent
+        m.grid.jumpToRowItem = [m.currIndex, 0]
+        m.gridChildren = invalid
+        m.gridChildren = CreateObject("roSGNode", "contentNode")
     end if
 end sub
 

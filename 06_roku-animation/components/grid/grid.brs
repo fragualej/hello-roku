@@ -53,9 +53,7 @@ end sub
 
 sub onRowFocused(event as object)
     rowFocusedIndex = event.getData()
-    if rowFocusedIndex <> 0
-        m.top.rowFocusedIndex = event.getData()
-    end if
+    m.top.rowFocusedIndex = event.getData()
 end sub
 
 sub onJumpToItem(event as object)

@@ -68,37 +68,30 @@ function buildResponse(model as string, data as object)
         end for
     else if model = "movies"
         results = data.results
-        rows = 2
-        cols = 10
-        for j = 0 to rows - 1
-            rowContent = content.createChild("contentNode")
-            for i = 0 to cols - 1
-                idx = j * cols + i
-                result = results[idx]
-                itemContent = rowContent.createChild(model)
-                if result <> invalid
-                    itemContent.id = result.id
-                    itemContent.title = result.title
-                    itemContent.description = result.overview
-                    itemContent.popularity = result.popularity.toStr()
-                    itemContent.releaseDate = left(result.release_date, 4)
-                    itemContent.voteAverage = left(result.vote_average.toStr(), 3)
-                    itemContent.originalLanguage = result.original_language
-                    itemContent.genresIds = result.genre_ids
+        for i = 0 to data.results.count() - 1
+            result = results[i]
+            itemContent = content.createChild("movies")
+            if result <> invalid
+                itemContent.id = result.id
+                itemContent.title = result.title
+                itemContent.description = result.overview
+                itemContent.popularity = result.popularity.toStr()
+                itemContent.releaseDate = left(result.release_date, 4)
+                itemContent.voteAverage = left(result.vote_average.toStr(), 3)
+                itemContent.originalLanguage = result.original_language
+                itemContent.genresIds = result.genre_ids
 
-                    posterUrlPortrait = ""
-                    posterUrlLandscape = ""
+                posterUrlPortrait = ""
+                posterUrlLandscape = ""
 
-                    if result.poster_path <> invalid and result.poster_path <> "" then posterUrlPortrait = result.poster_path
-                    if result.backdrop_path <> invalid and result.backdrop_path <> "" then posterUrlLandscape = result.backdrop_path
+                if result.poster_path <> invalid and result.poster_path <> "" then posterUrlPortrait = result.poster_path
+                if result.backdrop_path <> invalid and result.backdrop_path <> "" then posterUrlLandscape = result.backdrop_path
 
-                    itemContent.posterUrlPortrait = m.constants.api.TMDB_API_IMAGE_URL + posterUrlPortrait
-                    itemContent.posterUrlLandscape = m.constants.api.TMDB_API_IMAGE_URL + posterUrlLandscape
-                end if
-            end for
+                itemContent.posterUrlPortrait = m.constants.api.TMDB_API_IMAGE_URL + posterUrlPortrait
+                itemContent.posterUrlLandscape = m.constants.api.TMDB_API_IMAGE_URL + posterUrlLandscape
+            end if
         end for
     end if
-
     return content
 end function
 
