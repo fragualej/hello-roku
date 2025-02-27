@@ -1,21 +1,16 @@
 sub init()
     m.pageIndex = 1
-    m.repository = m.top.getScene().repository
     m.navBar = m.top.findNode("navBar")
     m.grid = m.top.findNode("grid")
 
-    m.top.observeField("focusedChild", "onFocusChanged")
     m.grid.observeField("itemSelected", "onGridItemSelected")
     m.grid.observeField("rowFocusedIndex", "onGridRowFocused")
 
     m.navBar.observeField("itemFocused", "onItemFocused")
-    getGenres()
-end sub
 
-sub onFocusChanged()
-    if m.top.hasFocus()
-        m.navBar.setFocus(true)
-    end if
+    m.top.observeField("focusedChild", "onFocusChanged")
+
+    getGenres()
 end sub
 
 sub getGenres()
@@ -25,15 +20,21 @@ sub getGenres()
     m.repository.callFunc("getGenres", { httpNode: httpNode })
 end sub
 
+sub onFocusChanged()
+    if m.top.hasFocus()
+        m.navBar.setFocus(true)
+    end if
+end sub
+
 sub onHttpGenresResponse(event as object)
     response = event.getData()
-
     m.navBar.content = response.content
 end sub
 
 sub onItemFocused(event as object)
     data = event.getData()
     m.grid.content = invalid
+    m.pageIndex = 1
     getMovies(data.genreId, m.pageIndex)
 end sub
 
@@ -53,13 +54,17 @@ sub onHttpMoviesResponse(event as object)
     else if m.pageIndex = 2
         content = response.content
         children = content.getChildren(-1, 0)
-        m.grid.content.appendChildren(children)
+        if m.grid.content <> invalid
+            m.grid.content.appendChildren(children)
+        end if
     else
         content = response.content
         children = content.getChildren(-1, 0)
-        m.grid.content.appendChildren(children)
-        rowIndex = m.grid.content.getChildCount()
-        m.grid.jumpToRowItem = [rowIndex - 2, 0]
+        if m.grid.content <> invalid
+            m.grid.content.appendChildren(children)
+            rowIndex = m.grid.content.getChildCount()
+            m.grid.jumpToRowItem = [rowIndex - 2, 0]
+        end if
     end if
 end sub
 
@@ -84,7 +89,6 @@ end sub
 
 sub onGridRowFocused(event as object)
     rowFocusedIndex = event.getData()
-    print "[DEBUG] homeView", rowFocusedIndex
 end sub
 
 function onKeyEvent(key as string, press as boolean) as boolean
@@ -95,9 +99,11 @@ function onKeyEvent(key as string, press as boolean) as boolean
                 m.grid.setFocus(true)
                 handled = true
             else
-                m.pageIndex++
-                genreId = m.navBar.itemFocused.genreId
-                getMovies(genreId, m.pageIndex)
+                if m.pageIndex <= 15
+                    m.pageIndex++
+                    genreId = m.navBar.itemFocused.genreId
+                    getMovies(genreId, m.pageIndex)
+                end if
             end if
         else if key = "up"
             if m.grid.isInFocusChain()

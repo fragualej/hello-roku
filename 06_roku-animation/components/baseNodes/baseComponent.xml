@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <component name="baseComponent" extends="group">
+    <script type="text/brightscript" uri="baseComponent.brs"/>
     <script type="text/brightscript" uri="pkg:/source/core/app.brs"/>
     <script type="text/brightscript" uri="pkg:/source/utils/constantsUtils.brs"/>
     <script type="text/brightscript" uri="pkg:/source/utils/deviceUtils.brs"/>

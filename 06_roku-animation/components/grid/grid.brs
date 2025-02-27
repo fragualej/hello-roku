@@ -1,5 +1,4 @@
 sub init()
-    m.constants = constantsUtil_get()
     m.rowlist = m.top.findNode("rowlist")
     rows = 3
     cols = 3
@@ -21,6 +20,9 @@ sub init()
     m.top.observeField("focusedChild", "onFocusChanged")
     m.top.observeField("content", "onContentChanged")
     m.top.observeField("jumpToRowItem", "onJumpToItem")
+
+    m.rowlist.observeField("rowItemSelected", "onRowItemSelected")
+    m.rowlist.observeField("itemFocused", "onRowFocused")
 end sub
 
 sub onFocusChanged()
@@ -32,8 +34,6 @@ end sub
 sub onContentChanged(event as object)
     content = event.getData()
     m.rowlist.content = content
-    m.rowlist.observeField("rowItemSelected", "onRowItemSelected")
-    m.rowlist.observeField("itemFocused", "onItemFocused")
 end sub
 
 sub onRowItemSelected(event as object)
@@ -44,8 +44,8 @@ sub onRowItemSelected(event as object)
     m.top.itemSelected = itemContent
 end sub
 
-sub onItemFocused(event as object)
-    m.top.itemFocusedIndex = [event.getData()]
+sub onRowFocused(event as object)
+    m.top.rowFocusedIndex = event.getData()
 end sub
 
 sub onJumpToItem(event as object)
