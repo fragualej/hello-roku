@@ -1,10 +1,5 @@
 sub init()
-    m.constants = {
-        baseUrl: "https://api.themoviedb.org/3/trending/movie/week?api_key="
-        imageUrl: "https://image.tmdb.org/t/p/w500"
-        apiKey: "558e2410c2be44f6e971c2b2c8cf64d0"
-    }
-
+    m.constants = constantsUtil_get()
     m.jobs = {}
     m.port = createObject("roMessagePort")
     m.top.observeField("request", m.port)
@@ -98,8 +93,8 @@ function buildResponse(model as string, data as object, request as object)
                     if result.poster_path <> invalid and result.poster_path <> "" then posterUrlPortrait = result.poster_path
                     if result.backdrop_path <> invalid and result.backdrop_path <> "" then posterUrlLandscape = result.backdrop_path
 
-                    itemContent.posterUrlPortrait = m.constants.imageUrl + posterUrlPortrait
-                    itemContent.posterUrlLandscape = m.constants.imageUrl + posterUrlLandscape
+                    itemContent.posterUrlPortrait = m.constants.api.TMDB_API_IMAGE_URL + posterUrlPortrait
+                    itemContent.posterUrlLandscape = m.constants.api.TMDB_API_IMAGE_URL + posterUrlLandscape
                 end if
             end for
         end for

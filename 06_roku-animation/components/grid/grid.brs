@@ -1,4 +1,9 @@
 sub init()
+    setRowListConfig()
+    setObservers()
+end sub
+
+sub setRowListConfig()
     m.rowlist = m.top.findNode("rowlist")
     rows = 3
     cols = 3
@@ -16,7 +21,9 @@ sub init()
         rowItemSpacing: [grid.gapx, 0],
         itemSpacing: [0, grid.gapy],
     })
+end sub
 
+sub setObservers()
     m.top.observeField("focusedChild", "onFocusChanged")
     m.top.observeField("content", "onContentChanged")
     m.top.observeField("jumpToRowItem", "onJumpToItem")
