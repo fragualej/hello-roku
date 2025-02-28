@@ -4,19 +4,18 @@ sub init()
 end sub
 
 sub setRowListConfig()
+    grid = m.app.gridFields
+
     m.rowlist = m.top.findNode("rowlist")
-    rows = 3
-    cols = 3
-    grid = gridUtil_setGrid(rows, cols)
     m.rowlist.update({
         itemComponentName: "movieItem",
         vertFocusAnimationStyle: "floatingFocus",
         rowFocusAnimationStyle: "fixedFocusWrap"
         drawFocusFeedback: true,
-        numRows: rows - 1,
+        numRows: grid.rows - 1,
         translation: [grid.ix, grid.iy * 2.25],
-        itemSize: [grid.gridw * 1.2, grid.cellh],
-        itemClippingRect: [0, 0, grid.gridw * 1.2, grid.cellh * 3]
+        itemSize: [grid.gridw + grid.cellw * 2, grid.cellh],
+        itemClippingRect: [0, 0, grid.gridw + grid.cellw * 2, grid.cellh * 2]
         rowItemSize: [grid.itemw, grid.itemh],
         rowItemSpacing: [grid.gapx, 0],
         itemSpacing: [0, grid.gapy],

@@ -1,8 +1,8 @@
-function gridUtil_setGrid(p_rows, p_cols, isSimetric = false, p_grid_factor = 0.8, p_gap_factor = 0.01) as object
-    p_resolution = deviceUtil_getUIResolution()
+function gridUtil_setGrid(p_rows, p_cols, isSimetric = false, p_grid_factor = 0.8, p_gap_factor = 0.05) as object
+    res = deviceUtil_getUIResolution()
 
-    width = p_resolution.width
-    height = p_resolution.height
+    width = res.width
+    height = res.height
 
     gridw = width * p_grid_factor
     gridh = height * p_grid_factor
@@ -12,8 +12,8 @@ function gridUtil_setGrid(p_rows, p_cols, isSimetric = false, p_grid_factor = 0.
     cellw = gridw / p_cols
     cellh = gridh / p_rows
 
-    gapx = gridw * p_gap_factor
-    gapy = gridh * p_gap_factor
+    gapx = cellw * p_gap_factor
+    gapy = cellh * p_gap_factor
 
     itemw = cellw - gapx
     itemh = cellh - gapy
@@ -22,14 +22,16 @@ function gridUtil_setGrid(p_rows, p_cols, isSimetric = false, p_grid_factor = 0.
     iy = gridUtil_vAlignToCenter(height, gridh)
 
     return {
+        rows: p_rows,
+        cols: p_cols,
         gridw: gridw,
         gridh: gridh,
         cellw: cellw,
         cellh: cellh,
-        gapx: gapx,
-        gapy: gapy,
         itemw: itemw,
         itemh: itemh,
+        gapx: gapx,
+        gapy: gapy,
         ix: ix,
         iy: iy
     }

@@ -63,14 +63,14 @@ end sub
 
 sub getMovies(genreId, pageIndex)
     httpNode = createObject("roSGNode", "httpNode")
-    httpNode.observeField("response", "_onHttpMoviesResponse")
+    httpNode.observeField("response", "onHttpMoviesResponse")
 
     for i = 0 to 2
         m.repository.callFunc("getMoviesByGenre", { httpNode: httpNode, genreId: genreId, pageIndex: pageIndex + i })
     end for
 end sub
 
-sub _onHttpMoviesResponse(event as object)
+sub onHttpMoviesResponse(event as object)
     response = event.getData()
     content = response.content
     children = content.getChildren(-1, 0)
@@ -90,7 +90,7 @@ sub _onHttpMoviesResponse(event as object)
         m.grid.content = m.gridContent
         m.grid.jumpToRowItem = [m.currIndex, 0]
         m.gridChildren = invalid
-        m.gridChildren = CreateObject("roSGNode", "contentNode")
+        m.gridChildren = createObject("roSGNode", "contentNode")
     end if
 end sub
 

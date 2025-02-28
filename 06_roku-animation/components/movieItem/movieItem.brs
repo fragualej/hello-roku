@@ -11,8 +11,8 @@ sub init()
 
     labelFields = {
         width: itemw,
-        height: itemh * 0.3,
-        translation: [0, itemh * 0.7]
+        height: itemh * 0.2,
+        translation: [0, itemh * 0.8]
     }
 
     m.poster.update({
@@ -26,9 +26,9 @@ end sub
 
 sub onContentChanged(event as object)
     itemContent = event.getData()
-    m.poster.uri = itemContent.posterUrlLandscape
+    m.poster.uri = itemContent.posterUrlPortrait
     text = ""
-    text += Substitute("<h3>{0}</h3>", itemContent.title)
+    text += Substitute("<h4>{0}</h4>", itemContent.title)
     text += Substitute("<h4>{0}{1} | {2}</h4>", chr(10), itemContent.releaseDate, itemContent.voteAverage)
     m.label.text = text
 end sub
