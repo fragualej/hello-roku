@@ -51,5 +51,5 @@ sub unFocusedState()
 end sub
 
 sub selectedState()
-    m.rectangle.color = "#9398b5"
+    m.rectangle.color = "#3355ff"
 end sub
