@@ -6,7 +6,7 @@
         <field id="itemSelected" type="node" />
     </interface>
     <children>
-        <multiStyleLabel id="label"  wrap="true" width="1152" text="Loading..."/>
+        <multiStyleLabel id="label"  wrap="true"/>
         <navBar id="navBar"/>
         <grid id="grid"/>
     </children>

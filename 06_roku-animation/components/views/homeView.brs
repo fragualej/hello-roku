@@ -9,7 +9,8 @@ sub setComponents()
     m.label = m.top.findNode("label")
     m.label.setFields({
         drawingStyles: m.constants.styles.multiStyles,
-        translation: [m.app.gridFields.ix, m.app.gridFields.iy]
+        translation: [m.app.gridFields.ix, m.app.gridFields.iy * 1.5]
+        width: m.app.gridFields.gridw
     })
     m.navBar = m.top.findNode("navBar")
     m.grid = m.top.findNode("grid")
@@ -58,6 +59,7 @@ sub onItemFocused(event as object)
     data = event.getData()
     genreId = data.genreId
     if genreId <> m.currGenreId
+        m.label.text = ""
         m.grid.content = invalid
         m.gridContent = invalid
         m.gridContent = createObject("roSGNode", "contentNode")
@@ -83,7 +85,6 @@ sub onHttpMoviesResponse(event as object)
     m.gridChildren.appendChildren(children)
 
     if m.gridChildren.getChildCount() = 60
-        setLabelText(m.gridChildren.getChild(0))
         rows = 2
         cols = 30
         for j = 0 to rows - 1

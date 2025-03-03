@@ -18,7 +18,7 @@ sub init()
     m.rectangle.setFields({
         width: itemw
         height: itemh
-        color: "#ff00ff"
+        color: "#3355ff"
     })
 end sub
 
@@ -43,17 +43,13 @@ sub onFocusPercentChanged(event as object)
 end sub
 
 sub focusedState()
-    ' m.label.text = substitute("<h3>{0}</h3>", m.top.itemContent.genreName)
-    m.rectangle.visible = true
-    m.rectangle.color = "#ff00ff"
+    m.rectangle.color = "#3355ff"
 end sub
 
 sub unFocusedState()
-    ' m.label.text = substitute("<h3>{0}</h3>", m.top.itemContent.genreName)
-    m.rectangle.color = "#00ff10"
+    m.rectangle.color = "#9398b5"
 end sub
 
 sub selectedState()
-    ' m.label.text = substitute("<h3>{0}</h3>", m.top.itemContent.genreName)
-    m.rectangle.color = "#00ff10"
+    m.rectangle.color = "#9398b5"
 end sub

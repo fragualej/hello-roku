@@ -7,7 +7,7 @@
         <field id="rowHasFocus" type="boolean"  onChange="onFocusPercentChanged"/>
     </interface>
     <children>
-        <rectangle id="rectangle" visible="false">
+        <rectangle id="rectangle">
             <multiStyleLabel id="label"/>
         </rectangle>
     </children>
