@@ -5,20 +5,31 @@ end sub
 
 sub setRowListConfig()
     grid = m.app.gridFields
+    ix = grid.ix
+    iy = grid.iy
+    rows = grid.rows
+    gridw = grid.gridw
+    gridh = grid.gridh
+    cellw = grid.cellw
+    cellh = grid.cellh
+    itemw = grid.itemw
+    itemh = grid.itemh
+    gapx = grid.gapx
+    gapy = grid.gapy
 
     m.rowlist = m.top.findNode("rowlist")
     m.rowlist.update({
         itemComponentName: "movieItem",
-        vertFocusAnimationStyle: "floatingFocus",
+        vertFocusAnimationStyle: "fixedFocus",
         rowFocusAnimationStyle: "fixedFocusWrap"
         drawFocusFeedback: true,
-        numRows: grid.rows - 1,
-        translation: [grid.ix, grid.iy * 2.25],
-        itemSize: [grid.gridw + grid.cellw * 2, grid.cellh],
-        itemClippingRect: [0, 0, grid.gridw + grid.cellw * 2, grid.cellh * 2]
-        rowItemSize: [grid.itemw, grid.itemh],
-        rowItemSpacing: [grid.gapx, 0],
-        itemSpacing: [0, grid.gapy],
+        numRows: rows - 1,
+        translation: [ix, iy + (cellh + gapy) * 0.75],
+        itemSize: [gridw, cellh],
+        itemClippingRect: [0, 0, gridw, cellh * 2]
+        rowItemSize: [itemw, itemh],
+        rowItemSpacing: [gapx, 0],
+        itemSpacing: [0, gapy],
     })
 end sub
 
@@ -28,6 +39,7 @@ sub setObservers()
     m.top.observeField("jumpToRowItem", "onJumpToItem")
 
     m.rowlist.observeField("rowItemSelected", "onRowItemSelected")
+    m.rowlist.observeField("rowItemFocused", "onRowItemFocused")
     m.rowlist.observeField("itemFocused", "onRowFocused")
 end sub
 
@@ -48,6 +60,14 @@ sub onRowItemSelected(event as object)
     itemContent = rowContent.getChild(rowItemIndex[1])
 
     m.top.itemSelected = itemContent
+end sub
+
+sub onRowItemFocused(event as object)
+    rowItemIndex = event.getData()
+    rowContent = m.rowlist.content.getChild(rowItemIndex[0])
+    itemContent = rowContent.getChild(rowItemIndex[1])
+
+    m.top.itemFocused = itemContent
 end sub
 
 sub onRowFocused(event as object)

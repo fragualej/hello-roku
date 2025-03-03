@@ -4,6 +4,7 @@
     <interface>
         <field id="content" type="node" />
         <field id="itemSelected" type="node" alwaysNotify="true"/>
+        <field id="itemFocused" type="node" alwaysNotify="true"/>
         <field id="rowFocusedIndex" type="integer" alwaysNotify="true"/>
         <field id="jumpToRowItem" type="array" />
     </interface>

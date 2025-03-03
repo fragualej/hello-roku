@@ -13,15 +13,26 @@ end sub
 
 sub onContentChanged(event as object)
     content = event.getData()
-    navFields = m.app.navFields
+    grid = m.app.navFields
+
+    ix = grid.ix
+    iy = grid.iy
+    gridw = grid.gridw
+    gridh = grid.gridh
+    cellw = grid.cellw
+    cellh = grid.cellh
+    itemw = grid.itemw
+    itemh = grid.itemh
+    gapx = grid.gapx
+    gapy = grid.gapy
 
     m.rowlist.setFields({
         itemComponentName: "navItem"
         drawFocusFeedback: false
-        translation: [navFields.ix, navFields.iy]
-        itemSize: [navFields.gridw, navFields.gridh]
-        rowItemSize: [navFields.itemw, navFields.itemh]
-        rowItemSpacing: [navFields.gapx, 0]
+        translation: [grid.ix, grid.iy * 3]
+        itemSize: [grid.gridw, grid.gridh]
+        rowItemSize: [grid.itemw, grid.itemh]
+        rowItemSpacing: [grid.gapx, 0]
     })
     m.rowlist.content = content
     m.rowlist.observeField("rowItemFocused", "onItemFocused")

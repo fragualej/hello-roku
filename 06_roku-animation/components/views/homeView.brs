@@ -6,6 +6,11 @@ sub init()
 end sub
 
 sub setComponents()
+    m.label = m.top.findNode("label")
+    m.label.setFields({
+        drawingStyles: m.constants.styles.multiStyles,
+        translation: [m.app.gridFields.ix, m.app.gridFields.iy]
+    })
     m.navBar = m.top.findNode("navBar")
     m.grid = m.top.findNode("grid")
 end sub
@@ -14,6 +19,7 @@ sub setObservers()
     m.top.observeField("focusedChild", "onFocusChanged")
 
     m.grid.observeField("itemSelected", "onGridItemSelected")
+    m.grid.observeField("itemFocused", "onGridItemFocused")
     m.grid.observeField("rowFocusedIndex", "onGridRowFocused")
 
     m.navBar.observeField("itemFocused", "onItemFocused")
@@ -77,6 +83,7 @@ sub onHttpMoviesResponse(event as object)
     m.gridChildren.appendChildren(children)
 
     if m.gridChildren.getChildCount() = 60
+        setLabelText(m.gridChildren.getChild(0))
         rows = 2
         cols = 30
         for j = 0 to rows - 1
@@ -114,6 +121,11 @@ sub onGridItemSelected(event as object)
     m.lastFocusedNode = m.grid
 end sub
 
+sub onGridItemFocused(event as object)
+    itemFocused = event.getData()
+    setLabelText(itemFocused)
+end sub
+
 sub onGridRowFocused(event as object)
     m.prevIndex = m.currIndex
     m.currIndex = event.getData()
@@ -146,3 +158,10 @@ function onKeyEvent(key as string, press as boolean) as boolean
     end if
     return handled
 end function
+
+sub setLabelText(itemContent as object)
+    text = ""
+    text += substitute("<h1>{0}</h1>", itemContent.title)
+    text += substitute("<h3>{0}{1} | {2}</h3>", chr(10), itemContent.releaseDate, itemContent.voteAverage)
+    m.label.text = text
+end sub

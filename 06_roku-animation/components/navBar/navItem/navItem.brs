@@ -1,20 +1,25 @@
 sub init()
     navFields = m.app.navFields
 
-    m.layoutGroup = m.top.findNode("layoutGroup")
     m.label = m.top.findNode("label")
     m.rectangle = m.top.findNode("rectangle")
 
     itemw = navFields.itemw
     itemh = navFields.itemh
 
-    m.label.drawingStyles = m.constants.styles.multiStyles
+    m.label.setFields({
+        drawingStyles: m.constants.styles.multiStyles
+        width: itemw
+        height: itemh
+        horizAlign: "center"
+        vertAlign: "center"
+    })
 
-    m.rectangle.width = itemw
-    m.rectangle.height = itemh * 0.01
-
-    m.layoutGroup.translation = [itemw * 0.5, 0]
-    m.layoutGroup.itemSpacings = [itemh * 0.02]
+    m.rectangle.setFields({
+        width: itemw
+        height: itemh
+        color: "#ff00ff"
+    })
 end sub
 
 sub onContentChanged(event as object)
@@ -38,16 +43,17 @@ sub onFocusPercentChanged(event as object)
 end sub
 
 sub focusedState()
-    m.label.text = substitute("<h2>{0}</h2>", m.top.itemContent.genreName)
+    ' m.label.text = substitute("<h3>{0}</h3>", m.top.itemContent.genreName)
     m.rectangle.visible = true
+    m.rectangle.color = "#ff00ff"
 end sub
 
 sub unFocusedState()
-    m.label.text = substitute("<h3>{0}</h3>", m.top.itemContent.genreName)
-    m.rectangle.visible = false
+    ' m.label.text = substitute("<h3>{0}</h3>", m.top.itemContent.genreName)
+    m.rectangle.color = "#00ff10"
 end sub
 
 sub selectedState()
-    m.label.text = substitute("<h2>{0}</h2>", m.top.itemContent.genreName)
-    m.rectangle.visible = false
+    ' m.label.text = substitute("<h3>{0}</h3>", m.top.itemContent.genreName)
+    m.rectangle.color = "#00ff10"
 end sub
