@@ -6,6 +6,12 @@ sub init()
 end sub
 
 sub setComponents()
+    m.label = m.top.findNode("label")
+    m.label.setFields({
+        drawingStyles: m.constants.styles.multiStyles,
+        translation: [m.app.gridFields.ix, m.app.gridFields.iy * 1.5]
+        width: m.app.gridFields.gridw
+    })
     m.navBar = m.top.findNode("navBar")
     m.grid = m.top.findNode("grid")
 end sub
@@ -14,6 +20,7 @@ sub setObservers()
     m.top.observeField("focusedChild", "onFocusChanged")
 
     m.grid.observeField("itemSelected", "onGridItemSelected")
+    m.grid.observeField("itemFocused", "onGridItemFocused")
     m.grid.observeField("rowFocusedIndex", "onGridRowFocused")
 
     m.navBar.observeField("itemFocused", "onItemFocused")
@@ -52,6 +59,7 @@ sub onItemFocused(event as object)
     data = event.getData()
     genreId = data.genreId
     if genreId <> m.currGenreId
+        m.label.text = ""
         m.grid.content = invalid
         m.gridContent = invalid
         m.gridContent = createObject("roSGNode", "contentNode")
@@ -63,14 +71,14 @@ end sub
 
 sub getMovies(genreId, pageIndex)
     httpNode = createObject("roSGNode", "httpNode")
-    httpNode.observeField("response", "_onHttpMoviesResponse")
+    httpNode.observeField("response", "onHttpMoviesResponse")
 
     for i = 0 to 2
         m.repository.callFunc("getMoviesByGenre", { httpNode: httpNode, genreId: genreId, pageIndex: pageIndex + i })
     end for
 end sub
 
-sub _onHttpMoviesResponse(event as object)
+sub onHttpMoviesResponse(event as object)
     response = event.getData()
     content = response.content
     children = content.getChildren(-1, 0)
@@ -90,7 +98,7 @@ sub _onHttpMoviesResponse(event as object)
         m.grid.content = m.gridContent
         m.grid.jumpToRowItem = [m.currIndex, 0]
         m.gridChildren = invalid
-        m.gridChildren = CreateObject("roSGNode", "contentNode")
+        m.gridChildren = createObject("roSGNode", "contentNode")
     end if
 end sub
 
@@ -112,6 +120,11 @@ sub onGridItemSelected(event as object)
     itemSelected.genresText = text
     m.top.itemSelected = itemSelected
     m.lastFocusedNode = m.grid
+end sub
+
+sub onGridItemFocused(event as object)
+    itemFocused = event.getData()
+    setLabelText(itemFocused)
 end sub
 
 sub onGridRowFocused(event as object)
@@ -146,3 +159,10 @@ function onKeyEvent(key as string, press as boolean) as boolean
     end if
     return handled
 end function
+
+sub setLabelText(itemContent as object)
+    text = ""
+    text += substitute("<h1>{0}</h1>", itemContent.title)
+    text += substitute("<h3>{0}{1} | {2}</h3>", chr(10), itemContent.releaseDate, itemContent.voteAverage)
+    m.label.text = text
+end sub

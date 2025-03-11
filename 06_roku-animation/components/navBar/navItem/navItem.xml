@@ -7,9 +7,8 @@
         <field id="rowHasFocus" type="boolean"  onChange="onFocusPercentChanged"/>
     </interface>
     <children>
-        <layoutGroup id="layoutGroup" horizAlignment="center" itemSpacings="[20]">
+        <rectangle id="rectangle">
             <multiStyleLabel id="label"/>
-            <rectangle id="rectangle" color="#ffffff" visible="false"/>
-        </layoutGroup>
+        </rectangle>
     </children>
 </component>
