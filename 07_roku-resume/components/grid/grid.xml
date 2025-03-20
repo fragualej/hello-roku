@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<component name="grid" extends="baseComponent">
+    <script type="text/brightscript" uri="grid.brs"/>
+    <interface>
+        <field id="content" type="node" />
+        <field id="itemSelected" type="node" alwaysNotify="true"/>
+        <field id="itemFocused" type="node" alwaysNotify="true"/>
+        <field id="rowFocusedIndex" type="integer" alwaysNotify="true"/>
+        <field id="jumpToRowItem" type="array" />
+    </interface>
+    <children>
+        <rowlist id="rowlist"/> 
+    </children>
+</component>

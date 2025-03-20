@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<component name="movies" extends="contentNode">
+    <interface>
+        <field id="releaseDate" type="string"/>
+        <field id="popularity" type="float"/>
+        <field id="originalLanguage" type="string"/>
+        <field id="posterUrlPortrait" type="string"/>
+        <field id="posterUrlLandscape" type="string"/>
+        <field id="voteAverage" type="string"/>
+        <field id="genresText" type="string"/>
+        <field id="genresIds" type="array"/>
+    </interface>
+</component>

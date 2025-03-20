@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<component name="genres" extends="contentNode">
+    <interface>
+        <field id="genreId" type="integer"/>
+        <field id="genreName" type="string"/>
+    </interface>
+</component>

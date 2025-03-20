@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<component name="movieItem" extends="baseComponent">
+    <script type="text/brightscript" uri="movieItem.brs"/>
+    <interface>
+        <field id="itemContent" type="node" onChange="onContentChanged"/>
+        <field id="focusPercent" type="float" onChange="onFocusPercentChanged"/>
+    </interface>
+    <children>
+        <poster id="poster" loadDisplayMode="scaleToFit"/>
+    </children>
+</component>

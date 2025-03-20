@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<component name="homeView" extends="baseView">
+    <script type="text/brightscript" uri="homeView.brs"/>
+    <interface>
+        <field id="content" type="node" />
+        <field id="itemSelected" type="node" />
+    </interface>
+    <children>
+        <multiStyleLabel id="label"  wrap="true"/>
+        <navBar id="navBar"/>
+        <grid id="grid"/>
+    </children>
+</component>
