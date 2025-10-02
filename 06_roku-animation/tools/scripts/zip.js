@@ -6,8 +6,8 @@ const path = require('path');
 const fs = require('fs');
 
 async function packageApp() {
-    const rootDir = path.join(__dirname, '..');
-    const configPath = path.join(__dirname, 'bsconfig.json');
+    const rootDir = path.join(__dirname, '../..');
+    const configPath = path.join(__dirname, '../bsconfig.json');
 
     // Get git hash (short version)
     let gitHash = 'nogit';
@@ -17,11 +17,14 @@ async function packageApp() {
         console.warn('⚠️  Warning: Could not get git hash');
     }
 
-    // Get timestamp in format: YYYYMMDD
+    // Get timestamp in format: YYYYMMDD_HHMMSS
     const now = new Date();
     const timestamp = now.getFullYear() +
         String(now.getMonth() + 1).padStart(2, '0') +
-        String(now.getDate()).padStart(2, '0');
+        String(now.getDate()).padStart(2, '0') + '_' +
+        String(now.getHours()).padStart(2, '0') +
+        String(now.getMinutes()).padStart(2, '0') +
+        String(now.getSeconds()).padStart(2, '0');
 
     const packageName = `${timestamp}_${gitHash}.zip`;
     const packagePath = path.join(rootDir, 'build', packageName);

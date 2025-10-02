@@ -10,9 +10,10 @@
 │   ├── manifest
 │   └── source/
 ├── dist/          # Compiled output (unzipped)
-├── build/         # Deployment packages (YYYYMMDD_hash.zip)
+├── build/         # Deployment packages (YYYYMMDD_HHMMSS_hash.zip)
 ├── out/           # Temporary deployment artifacts
 └── tools/         # Build scripts and utilities
+    ├── scripts/
     ├── bsconfig.json
     └── package.json
 ```
@@ -36,17 +37,11 @@ Edit `.env` and add your Roku device IP and developer password:
 
 ## Build Commands
 
-### `npm run build`
-Compiles source code to `dist/` directory (unzipped output)
-```bash
-cd tools
-npm run build
-```
-
 ### `npm run zip`
-Creates deployment package with format: `build/YYYYMMDD_hash.zip`
-- Includes timestamp (YYYYMMDD) for chronological sorting
+Creates deployment package with format: `build/YYYYMMDD_HHMMSS_hash.zip`
+- Includes timestamp (YYYYMMDD_HHMMSS) for precise chronological sorting
 - Includes git commit hash for version tracking
+- Updates `dist/` with compiled output
 ```bash
 cd tools
 npm run zip
@@ -54,7 +49,7 @@ npm run zip
 
 ### `npm run deploy`
 Compiles and deploys directly to Roku device (requires `.env` configuration)
-- Automatically compiles source
+- Automatically compiles source and updates `dist/`
 - Uploads to Roku via network
 - Creates temporary package in `out/`
 ```bash
@@ -70,11 +65,11 @@ cd tools
 npm run deploy  # Compile + upload in one step
 ```
 
-### Manual Deploy (Production)
+### Manual Deploy (Production/QA)
 1. Create versioned package:
 ```bash
 cd tools
-npm run zip  # Creates build/YYYYMMDD_hash.zip
+npm run zip  # Creates build/YYYYMMDD_HHMMSS_hash.zip
 ```
 
 2. Upload via browser:
