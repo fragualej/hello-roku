@@ -34,6 +34,7 @@ cp .env.example .env
 Edit `.env` and add your Roku device IP and developer password:
 - **ROKU_IP**: Find your Roku's IP in Settings > Network > About
 - **ROKU_PASSWORD**: Set in Settings > System > Advanced system settings > Developer mode
+- **ROKU_SIGNING_PASSWORD** (optional): For signed packages - generate key via `http://<ROKU_IP>` > Utilities > Genkey
 
 ## Build Commands
 
@@ -47,6 +48,15 @@ cd tools
 npm run zip
 ```
 
+### `npm run sign`
+Creates signed package for Roku Channel Store submission: `build/YYYYMMDD_HHMMSS_hash_signed.pkg`
+- Requires `ROKU_SIGNING_PASSWORD` in `.env`
+- Uses device's signing key to create production-ready package
+```bash
+cd tools
+npm run sign
+```
+
 ### `npm run deploy`
 Compiles and deploys directly to Roku device (requires `.env` configuration)
 - Automatically compiles source and updates `dist/`
@@ -57,23 +67,24 @@ cd tools
 npm run deploy
 ```
 
-## Deployment
+## Deployment Workflows
 
-### Quick Deploy (Development)
+### Development (Quick Deploy)
 ```bash
 cd tools
 npm run deploy  # Compile + upload in one step
 ```
 
-### Manual Deploy (Production/QA)
-1. Create versioned package:
+### QA/Testing (Versioned Package)
 ```bash
 cd tools
 npm run zip  # Creates build/YYYYMMDD_HHMMSS_hash.zip
 ```
+Then upload via browser at `http://<ROKU_IP>`
 
-2. Upload via browser:
-   - Open `http://<ROKU_IP>`
-   - Login with developer password
-   - Upload the zip file from `build/`
-   - Click "Install"
+### Production (Signed Package for Channel Store)
+```bash
+cd tools
+npm run sign  # Creates build/YYYYMMDD_HHMMSS_hash_signed.pkg
+```
+Upload the `.pkg` file to Roku Channel Store for publication

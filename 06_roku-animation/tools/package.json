@@ -1,14 +1,13 @@
 {
   "name": "tools",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "Build tools for Roku app development",
   "scripts": {
     "zip": "node scripts/zip.js",
-    "deploy": "node --no-deprecation scripts/deploy.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "sign": "node --no-deprecation scripts/sign.js",
+    "deploy": "node --no-deprecation scripts/deploy.js"
   },
-  "keywords": [],
+  "keywords": ["roku", "brighterscript", "build-tools"],
   "author": "",
   "license": "ISC",
   "type": "commonjs",
