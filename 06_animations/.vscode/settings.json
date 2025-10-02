@@ -1,0 +1,12 @@
+{
+    "search.exclude": {
+        "**/dist": true,
+        "**/out": true,
+        "**/node_modules": true,
+        "**/tools/node_modules": true
+    },
+    "files.exclude": {
+        "**/dist": true,
+        "**/out": true
+    }
+}
