@@ -6,24 +6,15 @@ const fs = require('fs');
 
 async function packageApp() {
     const rootDir = path.join(__dirname, '..');
-    const srcDir = path.join(rootDir, 'src');
-    const outDir = path.join(rootDir, 'build', 'out');
+    const configPath = path.join(__dirname, 'bsconfig.json');
     const packagePath = path.join(rootDir, 'build', 'roku-app.zip');
-
-    // Create build output directory
-    if (!fs.existsSync(outDir)) {
-        fs.mkdirSync(outDir, { recursive: true });
-    }
 
     const builder = new ProgramBuilder();
 
     await builder.run({
-        project: srcDir,
-        outDir: outDir,
+        project: configPath,
         createPackage: true,
-        stagingDir: outDir,
-        outFile: packagePath,
-        diagnosticFilters: ['**/*']
+        outFile: packagePath
     });
 
     if (builder.program.getDiagnostics().length > 0) {

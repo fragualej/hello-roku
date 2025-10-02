@@ -6,23 +6,12 @@ const fs = require('fs');
 
 async function build() {
     const rootDir = path.join(__dirname, '..');
-    const srcDir = path.join(rootDir, 'src');
-    const outDir = path.join(rootDir, 'build', 'out');
-
-    // Create build output directory
-    if (!fs.existsSync(outDir)) {
-        fs.mkdirSync(outDir, { recursive: true });
-    }
+    const configPath = path.join(__dirname, 'bsconfig.json');
 
     const builder = new ProgramBuilder();
 
     await builder.run({
-        project: srcDir,
-        outDir: outDir,
-        createPackage: false,
-        copyToStaging: true,
-        stagingDir: outDir,
-        diagnosticFilters: ['**/*']
+        project: configPath
     });
 
     if (builder.program.getDiagnostics().length > 0) {
@@ -33,7 +22,7 @@ async function build() {
         process.exit(1);
     } else {
         console.log('\n✅ Build completed successfully!');
-        console.log(`Output: ${outDir}`);
+        console.log(`Output: ${path.join(rootDir, 'dist')}`);
     }
 }
 

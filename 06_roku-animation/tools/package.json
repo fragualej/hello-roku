@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "build": "node build.js",
-    "package": "node package.js",
+    "zip": "node package.js",
+    "deploy": "node deploy.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
@@ -13,6 +14,7 @@
   "license": "ISC",
   "type": "commonjs",
   "devDependencies": {
-    "brighterscript": "^0.70.1"
+    "brighterscript": "^0.70.1",
+    "dotenv": "^17.2.3"
   }
 }

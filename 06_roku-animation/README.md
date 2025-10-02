@@ -9,8 +9,11 @@
 │   ├── images/
 │   ├── manifest
 │   └── source/
-├── build/         # Build artifacts
+├── dist/          # Compiled output (unzipped)
+├── build/         # Deployment package (roku-app.zip)
 └── tools/         # Build scripts and utilities
+    ├── bsconfig.json
+    └── package.json
 ```
 
 ## Setup
@@ -32,24 +35,39 @@ Edit `.env` and add your Roku device IP and developer password:
 
 ## Build Commands
 
-### Create a build (compiles to `build/out/`)
+### Compile source code (outputs to `dist/`)
 ```bash
 cd tools
 npm run build
 ```
 
-### Create a deployment package (creates `build/roku-app.zip`)
+### Create deployment package (creates `build/roku-app.zip`)
 ```bash
 cd tools
-npm run package
+npm run zip
+```
+
+### Deploy to Roku device (automatic upload)
+```bash
+cd tools
+npm run deploy
 ```
 
 ## Deploy to Roku Device
 
-1. Build the package:
+### Automatic Deployment
 ```bash
 cd tools
-npm run package
+npm run zip     # Create the package
+npm run deploy  # Upload to Roku
+```
+
+### Manual Deployment
+
+1. Create the package:
+```bash
+cd tools
+npm run zip
 ```
 
 2. Access the Roku Developer Installer:
@@ -60,12 +78,3 @@ npm run package
    - Click "Browse" and select `build/roku-app.zip`
    - Click "Install"
    - Your app will be installed on channel 1
-
-Alternatively, you can sideload via curl:
-```bash
-source ../.env
-curl -F "mysubmit=Install" \
-     -F "archive=@../build/roku-app.zip" \
-     -u rokudev:$ROKU_PASSWORD \
-     http://$ROKU_IP/plugin_install
-```
