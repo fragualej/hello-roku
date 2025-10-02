@@ -8,6 +8,8 @@
         "unsafe-iterators": "warn",
         "unreachable-code": "warn",
         "eol-last": "off",
-        "no-trailing-whitespace": "warn"
+        "no-trailing-whitespace": "warn",
+        "no-trailing-comma": "warn",
+        "trailing-comma": "warn"
     }
 }

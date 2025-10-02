@@ -1,9 +1,23 @@
 #!/usr/bin/env node
 
 const { ProgramBuilder } = require('brighterscript');
+const { execSync } = require('child_process');
+const fs = require('fs');
 const path = require('path');
 
 async function build() {
+    // Generate config.json from .env before building
+    console.log('📝 Generating config from .env...');
+    try {
+        execSync('node scripts/generate-config.js', {
+            cwd: path.join(__dirname, '..'),
+            stdio: 'inherit'
+        });
+    } catch (error) {
+        console.error('❌ Failed to generate config:', error.message);
+        process.exit(1);
+    }
+
     const configPath = path.join(__dirname, '../bsconfig.json');
 
     console.log('🔨 Building project...');
@@ -41,6 +55,19 @@ async function build() {
             });
             process.exit(1);
         } else {
+            // Copy config.json to dist after build
+            const srcConfigPath = path.join(__dirname, '../../src/config/config.json');
+            const distConfigDir = path.join(__dirname, '../../dist/config');
+            const distConfigPath = path.join(distConfigDir, 'config.json');
+
+            if (fs.existsSync(srcConfigPath)) {
+                if (!fs.existsSync(distConfigDir)) {
+                    fs.mkdirSync(distConfigDir, { recursive: true });
+                }
+                fs.copyFileSync(srcConfigPath, distConfigPath);
+                console.log('📋 Copied config.json to dist/config/');
+            }
+
             console.log('\n✅ Build completed successfully!');
             console.log('📁 Output directory: dist/');
             if (warnings.length > 0) {
