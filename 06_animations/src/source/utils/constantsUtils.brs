@@ -39,7 +39,7 @@ end function
 
 function _setApi()
     ' Load config from config.json
-    config = ReadAsciiFile("pkg:/config/config.json")
+    config = ReadAsciiFile("pkg:/source/config/config.json")
     configJson = ParseJson(config)
 
     api = createObject("roSGNode", "node")

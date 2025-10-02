@@ -25,7 +25,7 @@ function generateConfig() {
         }
     };
 
-    const srcConfigDir = path.join(__dirname, '../../src/config');
+    const srcConfigDir = path.join(__dirname, '../../src/source/config');
 
     // Ensure config directory exists in src
     if (!fs.existsSync(srcConfigDir)) {

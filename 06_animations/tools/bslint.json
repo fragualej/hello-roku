@@ -1,4 +1,5 @@
 {
+    "extends": "bslint:recommended",
     "rules": {
         "no-print": "warn",
         "no-stop": "warn",
@@ -9,7 +10,6 @@
         "unreachable-code": "warn",
         "eol-last": "off",
         "no-trailing-whitespace": "warn",
-        "no-trailing-comma": "warn",
-        "trailing-comma": "warn"
+        "consistent-trailing-comma": "off"
     }
 }

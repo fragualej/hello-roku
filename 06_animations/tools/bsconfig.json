@@ -4,7 +4,6 @@
         "source/**/*",
         "components/**/*",
         "images/**/*",
-        "config/**/*",
         "manifest"
     ],
     "outDir": "../dist",
