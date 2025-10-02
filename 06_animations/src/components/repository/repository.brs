@@ -21,8 +21,8 @@ end function
 
 sub enqueue(request as object)
     headers = {
-        "Authorization": "Bearer " + m.token
-        "accept": "application/json"
+        "Authorization": "Bearer " + m.token,
+        "accept": "application/json",
     }
     request.addReplace("headers", headers)
     m.httpTask.request = request

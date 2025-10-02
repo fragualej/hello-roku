@@ -8,17 +8,17 @@ sub init()
     itemh = navFields.itemh
 
     m.label.setFields({
-        drawingStyles: m.constants.styles.multiStyles
-        width: itemw
-        height: itemh
-        horizAlign: "center"
-        vertAlign: "center"
+        drawingStyles: m.constants.styles.multiStyles,
+        width: itemw,
+        height: itemh,
+        horizAlign: "center",
+        vertAlign: "center",
     })
 
     m.rectangle.setFields({
-        width: itemw
-        height: itemh
-        color: "#3355ff"
+        width: itemw,
+        height: itemh,
+        color: "#3355ff",
     })
 end sub
 

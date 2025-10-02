@@ -2,8 +2,8 @@ sub showDetailsView(content as object)
     detailsView = createObject("roSGNode", "detailsView")
     detailsView.observeField("itemSelected", "onDetailsItemSelected")
     navToView({
-        view: detailsView
-        content: content
+        view: detailsView,
+        content: content,
     })
 end sub
 

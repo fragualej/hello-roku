@@ -6,8 +6,8 @@ sub init()
     grid = gridUtil_setGrid(1, 2, false, 0.6)
 
     m.layoutGroup.setFields({
-        translation: [grid.ix, grid.iy]
-        itemSpacings: [grid.gapx]
+        translation: [grid.ix, grid.iy],
+        itemSpacings: [grid.gapx],
     })
     m.label.setFields({
         drawingStyles: m.constants.styles.multiStyles,

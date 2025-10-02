@@ -9,8 +9,8 @@ sub setComponents()
     m.label = m.top.findNode("label")
     m.label.setFields({
         drawingStyles: m.constants.styles.multiStyles,
-        translation: [m.app.gridFields.ix, m.app.gridFields.iy * 1.5]
-        width: m.app.gridFields.gridw
+        translation: [m.app.gridFields.ix, m.app.gridFields.iy * 1.5],
+        width: m.app.gridFields.gridw,
     })
     m.navBar = m.top.findNode("navBar")
     m.grid = m.top.findNode("grid")

@@ -31,11 +31,11 @@ sub setGrid()
     iy = grid.iy
 
     m.label.setFields({
-        width: gridw
-        height: gridh * 0.1
-        horizAlign: "center"
-        translation: [ix, iy]
-        text: "<h2>Loading...</h2>"
+        width: gridw,
+        height: gridh * 0.1,
+        horizAlign: "center",
+        translation: [ix, iy],
+        text: "<h2>Loading...</h2>",
     })
     m.rectangle = m.top.findNode("rectangle")
     m.rectangle.width = gridw

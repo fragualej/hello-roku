@@ -21,12 +21,12 @@ sub setRowListConfig()
     m.rowlist.update({
         itemComponentName: "movieItem",
         vertFocusAnimationStyle: "fixedFocus",
-        rowFocusAnimationStyle: "fixedFocusWrap"
+        rowFocusAnimationStyle: "fixedFocusWrap",
         drawFocusFeedback: true,
         numRows: rows - 1,
         translation: [ix, iy + (cellh + gapy) * 0.75],
         itemSize: [gridw, cellh],
-        itemClippingRect: [0, 0, gridw, cellh * 2]
+        itemClippingRect: [0, 0, gridw, cellh * 2],
         rowItemSize: [itemw, itemh],
         rowItemSpacing: [gapx, 0],
         itemSpacing: [0, gapy],

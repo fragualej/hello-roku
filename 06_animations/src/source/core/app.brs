@@ -6,8 +6,8 @@ function app()
         gridParams = { rows: 2, cols: 5 }
         navParams = { rows: 11, cols: 7 }
         m.app.append({
-            gridFields: _setGridFields(gridParams)
-            navFields: _setNavFields(navParams)
+            gridFields: _setGridFields(gridParams),
+            navFields: _setNavFields(navParams),
         })
 
         m.global.addFields({ app: m.app })
