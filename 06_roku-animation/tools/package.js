@@ -1,13 +1,36 @@
 #!/usr/bin/env node
 
 const { ProgramBuilder } = require('brighterscript');
+const { execSync } = require('child_process');
 const path = require('path');
 const fs = require('fs');
 
 async function packageApp() {
     const rootDir = path.join(__dirname, '..');
     const configPath = path.join(__dirname, 'bsconfig.json');
-    const packagePath = path.join(rootDir, 'build', 'roku-app.zip');
+
+    // Get git hash (short version)
+    let gitHash = 'nogit';
+    try {
+        gitHash = execSync('git rev-parse --short HEAD', { cwd: rootDir }).toString().trim();
+    } catch (error) {
+        console.warn('⚠️  Warning: Could not get git hash');
+    }
+
+    // Get timestamp in format: YYYYMMDD
+    const now = new Date();
+    const timestamp = now.getFullYear() +
+        String(now.getMonth() + 1).padStart(2, '0') +
+        String(now.getDate()).padStart(2, '0');
+
+    const packageName = `${timestamp}_${gitHash}.zip`;
+    const packagePath = path.join(rootDir, 'build', packageName);
+
+    // Create build directory if it doesn't exist
+    const buildDir = path.join(rootDir, 'build');
+    if (!fs.existsSync(buildDir)) {
+        fs.mkdirSync(buildDir, { recursive: true });
+    }
 
     const builder = new ProgramBuilder();
 
@@ -25,7 +48,8 @@ async function packageApp() {
         process.exit(1);
     } else {
         console.log('\n✅ Package created successfully!');
-        console.log(`Package: ${packagePath}`);
+        console.log(`Package: ${packageName}`);
+        console.log(`Path: ${packagePath}`);
     }
 }
 

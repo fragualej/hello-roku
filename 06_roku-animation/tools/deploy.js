@@ -1,15 +1,13 @@
 #!/usr/bin/env node
 
-const { exec } = require('child_process');
+const { ProgramBuilder } = require('brighterscript');
 const path = require('path');
-const fs = require('fs');
 require('dotenv').config({ path: path.join(__dirname, '..', '.env') });
 
 async function deploy() {
     const ROKU_IP = process.env.ROKU_IP;
     const ROKU_PASSWORD = process.env.ROKU_PASSWORD;
-    const rootDir = path.join(__dirname, '..');
-    const packagePath = path.join(rootDir, 'build', 'roku-app.zip');
+    const configPath = path.join(__dirname, 'bsconfig.json');
 
     // Validate environment variables
     if (!ROKU_IP) {
@@ -21,34 +19,37 @@ async function deploy() {
         process.exit(1);
     }
 
-    // Check if package exists
-    if (!fs.existsSync(packagePath)) {
-        console.error('❌ Error: Package not found. Run "npm run package" first.');
-        process.exit(1);
-    }
-
     console.log(`📦 Deploying to Roku device at ${ROKU_IP}...`);
 
-    const command = `curl -s -S -F "mysubmit=Install" -F "archive=@${packagePath}" -u rokudev:${ROKU_PASSWORD} http://${ROKU_IP}/plugin_install`;
+    const builder = new ProgramBuilder();
 
-    exec(command, (error, stdout, stderr) => {
-        if (error) {
-            console.error('❌ Deployment failed:', error.message);
+    const rootDir = path.join(__dirname, '..');
+    const outDir = path.join(rootDir, 'out');
+
+    try {
+        // BrighterScript will compile and deploy in one command
+        await builder.run({
+            project: configPath,
+            deploy: true,
+            host: ROKU_IP,
+            password: ROKU_PASSWORD,
+            outFile: path.join(outDir, 'package.zip')
+        });
+
+        if (builder.program.getDiagnostics().length > 0) {
+            console.log('\n❌ Deployment completed with errors:');
+            builder.program.getDiagnostics().forEach(diagnostic => {
+                console.log(`  ${diagnostic.file?.pathAbsolute || 'unknown'}:${diagnostic.range.start.line + 1} - ${diagnostic.message}`);
+            });
             process.exit(1);
-        }
-        if (stderr) {
-            console.error('⚠️  Warning:', stderr);
-        }
-
-        if (stdout.includes('Install Success')) {
+        } else {
             console.log('✅ App deployed successfully!');
             console.log(`🚀 Access your app on the Roku device`);
-        } else if (stdout.includes('Identical to previous version')) {
-            console.log('✅ App deployed (identical to previous version)');
-        } else {
-            console.log('Response:', stdout);
         }
-    });
+    } catch (error) {
+        console.error('❌ Deployment failed:', error.message);
+        process.exit(1);
+    }
 }
 
 deploy().catch(err => {

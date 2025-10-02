@@ -10,7 +10,8 @@
 │   ├── manifest
 │   └── source/
 ├── dist/          # Compiled output (unzipped)
-├── build/         # Deployment package (roku-app.zip)
+├── build/         # Deployment packages (YYYYMMDD_hash.zip)
+├── out/           # Temporary deployment artifacts
 └── tools/         # Build scripts and utilities
     ├── bsconfig.json
     └── package.json
@@ -35,46 +36,49 @@ Edit `.env` and add your Roku device IP and developer password:
 
 ## Build Commands
 
-### Compile source code (outputs to `dist/`)
+### `npm run build`
+Compiles source code to `dist/` directory (unzipped output)
 ```bash
 cd tools
 npm run build
 ```
 
-### Create deployment package (creates `build/roku-app.zip`)
+### `npm run zip`
+Creates deployment package with format: `build/YYYYMMDD_hash.zip`
+- Includes timestamp (YYYYMMDD) for chronological sorting
+- Includes git commit hash for version tracking
 ```bash
 cd tools
 npm run zip
 ```
 
-### Deploy to Roku device (automatic upload)
+### `npm run deploy`
+Compiles and deploys directly to Roku device (requires `.env` configuration)
+- Automatically compiles source
+- Uploads to Roku via network
+- Creates temporary package in `out/`
 ```bash
 cd tools
 npm run deploy
 ```
 
-## Deploy to Roku Device
+## Deployment
 
-### Automatic Deployment
+### Quick Deploy (Development)
 ```bash
 cd tools
-npm run zip     # Create the package
-npm run deploy  # Upload to Roku
+npm run deploy  # Compile + upload in one step
 ```
 
-### Manual Deployment
-
-1. Create the package:
+### Manual Deploy (Production)
+1. Create versioned package:
 ```bash
 cd tools
-npm run zip
+npm run zip  # Creates build/YYYYMMDD_hash.zip
 ```
 
-2. Access the Roku Developer Installer:
-   - Open browser to `http://<ROKU_IP>`
-   - Login with your developer password
-
-3. Upload and install:
-   - Click "Browse" and select `build/roku-app.zip`
+2. Upload via browser:
+   - Open `http://<ROKU_IP>`
+   - Login with developer password
+   - Upload the zip file from `build/`
    - Click "Install"
-   - Your app will be installed on channel 1

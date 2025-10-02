@@ -9,6 +9,7 @@
     "outDir": "../dist",
     "stagingDir": "../dist",
     "createPackage": false,
+    "retainStagingDir": true,
     "diagnosticFilters": [
         {
             "src": "**/.*",

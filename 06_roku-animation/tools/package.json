@@ -6,7 +6,7 @@
   "scripts": {
     "build": "node build.js",
     "zip": "node package.js",
-    "deploy": "node deploy.js",
+    "deploy": "node --no-deprecation deploy.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
