@@ -38,6 +38,16 @@ Edit `.env` and add your Roku device IP and developer password:
 
 ## Build Commands
 
+### `npm run build`
+Compiles source code to `dist/` directory without deploying
+- Transpiles BrighterScript to BrightScript
+- Updates `dist/` with compiled output
+- Used automatically by VSCode debug configuration
+```bash
+cd tools
+npm run build
+```
+
 ### `npm run zip`
 Creates deployment package with format: `build/YYYYMMDD_HHMMSS_hash.zip`
 - Includes timestamp (YYYYMMDD_HHMMSS) for precise chronological sorting
@@ -67,22 +77,43 @@ cd tools
 npm run deploy
 ```
 
-## Deployment Workflows
+## Development Workflows
 
-### Development (Quick Deploy)
+### VSCode Debugging (Recommended for Development)
+The project includes VSCode configuration for debugging with breakpoints and logs:
+
+1. Open project in VSCode
+2. Press `F5` or Run → Start Debugging
+3. Select "BrightScript Debug" configuration
+4. Automatic workflow:
+   - Runs `npm run build` (compiles to `dist/`)
+   - Deploys to Roku device
+   - Attaches debugger with breakpoints support
+
+**VSCode Configuration** (`.vscode/` directory):
+- `launch.json` - Debug configurations using env variables from `.env`
+- `tasks.json` - Pre-launch build task
+
+**Requirements:**
+- [BrightScript Language](https://marketplace.visualstudio.com/items?itemName=RokuCommunity.brightscript) extension installed
+- `.env` file configured with `ROKU_IP` and `ROKU_PASSWORD`
+
+### Command Line Workflows
+
+#### Development (Quick Deploy)
 ```bash
 cd tools
 npm run deploy  # Compile + upload in one step
 ```
 
-### QA/Testing (Versioned Package)
+#### QA/Testing (Versioned Package)
 ```bash
 cd tools
 npm run zip  # Creates build/YYYYMMDD_HHMMSS_hash.zip
 ```
 Then upload via browser at `http://<ROKU_IP>`
 
-### Production (Signed Package for Channel Store)
+#### Production (Signed Package for Channel Store)
 ```bash
 cd tools
 npm run sign  # Creates build/YYYYMMDD_HHMMSS_hash_signed.pkg
