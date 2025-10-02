@@ -10,6 +10,7 @@
     "stagingDir": "../dist",
     "createPackage": false,
     "retainStagingDir": true,
+    "sourceMap": true,
     "diagnosticFilters": [
         {
             "src": "**/.*",
