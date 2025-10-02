@@ -2,7 +2,7 @@
 
 const fs = require('fs');
 const path = require('path');
-require('dotenv').config({ path: path.join(__dirname, '../..', '.env') });
+require('dotenv').config({ path: path.join(__dirname, '..', '.env') });
 
 function generateConfig() {
     const TMDB_API_KEY = process.env.TMDB_API_KEY || '';
@@ -25,7 +25,7 @@ function generateConfig() {
         }
     };
 
-    const srcConfigDir = path.join(__dirname, '../../src/source/config');
+    const srcConfigDir = path.join(__dirname, '../src/source/config');
 
     // Ensure config directory exists in src
     if (!fs.existsSync(srcConfigDir)) {

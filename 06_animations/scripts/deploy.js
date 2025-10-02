@@ -2,7 +2,7 @@
 
 const { ProgramBuilder } = require('brighterscript');
 const path = require('path');
-require('dotenv').config({ path: path.join(__dirname, '../..', '.env') });
+require('dotenv').config({ path: path.join(__dirname, '..', '.env') });
 
 async function deploy() {
     const ROKU_IP = process.env.ROKU_IP;
@@ -23,7 +23,7 @@ async function deploy() {
 
     const builder = new ProgramBuilder();
 
-    const rootDir = path.join(__dirname, '../..');
+    const rootDir = path.join(__dirname, '..');
     const outDir = path.join(rootDir, 'out');
 
     try {

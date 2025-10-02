@@ -1,13 +1,13 @@
 {
-    "rootDir": "../src",
+    "rootDir": "${cwd}/src",
     "files": [
         "source/**/*",
         "components/**/*",
         "images/**/*",
         "manifest"
     ],
-    "outDir": "../dist",
-    "stagingDir": "../dist",
+    "outDir": "${cwd}/dist",
+    "stagingDir": "${cwd}/dist",
     "createPackage": false,
     "retainStagingDir": true,
     "sourceMap": true,

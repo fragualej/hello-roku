@@ -6,7 +6,7 @@ const path = require('path');
 const fs = require('fs');
 
 async function packageApp() {
-    const rootDir = path.join(__dirname, '../..');
+    const rootDir = path.join(__dirname, '..');
     const configPath = path.join(__dirname, '../bsconfig.json');
 
     // Get git hash (short version)

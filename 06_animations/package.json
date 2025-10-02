@@ -1,18 +1,15 @@
 {
-  "name": "tools",
+  "name": "06_animations",
   "version": "1.0.0",
-  "description": "Build tools for Roku app development",
+  "description": "Roku app with animations",
+  "main": "index.js",
   "scripts": {
     "build": "node --no-deprecation scripts/build.js",
     "zip": "node scripts/zip.js",
     "sign": "node --no-deprecation scripts/sign.js",
     "deploy": "node --no-deprecation scripts/deploy.js"
   },
-  "keywords": [
-    "roku",
-    "brighterscript",
-    "build-tools"
-  ],
+  "keywords": ["roku", "brighterscript"],
   "author": "",
   "license": "ISC",
   "type": "commonjs",

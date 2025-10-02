@@ -65,8 +65,8 @@ async function build() {
             process.exit(1);
         } else {
             // Copy config.json to dist after build
-            const srcConfigPath = path.join(__dirname, '../../src/source/config/config.json');
-            const distConfigDir = path.join(__dirname, '../../dist/source/config');
+            const srcConfigPath = path.join(__dirname, '../src/source/config/config.json');
+            const distConfigDir = path.join(__dirname, '../dist/source/config');
             const distConfigPath = path.join(distConfigDir, 'config.json');
 
             if (fs.existsSync(srcConfigPath)) {

@@ -4,25 +4,24 @@
 
 ```
 .
-├── src/           # Source code
+├── src/              # Source code
 │   ├── components/
 │   ├── images/
 │   ├── manifest
 │   └── source/
-├── dist/          # Compiled output (unzipped)
-├── build/         # Deployment packages (YYYYMMDD_HHMMSS_hash.zip)
-├── out/           # Temporary deployment artifacts
-└── tools/         # Build scripts and utilities
-    ├── scripts/
-    ├── bsconfig.json
-    └── package.json
+├── dist/             # Compiled output (unzipped)
+├── build/            # Deployment packages (YYYYMMDD_HHMMSS_hash.zip)
+├── out/              # Temporary deployment artifacts
+├── scripts/          # Build scripts
+├── bsconfig.json     # BrighterScript configuration
+├── bslint.json       # Linting rules
+└── package.json      # Project dependencies and scripts
 ```
 
 ## Setup
 
 1. Install dependencies:
 ```bash
-cd tools
 npm install
 ```
 
@@ -44,7 +43,6 @@ Compiles source code to `dist/` directory without deploying
 - Updates `dist/` with compiled output
 - Used automatically by VSCode debug configuration
 ```bash
-cd tools
 npm run build
 ```
 
@@ -54,7 +52,6 @@ Creates deployment package with format: `build/YYYYMMDD_HHMMSS_hash.zip`
 - Includes git commit hash for version tracking
 - Updates `dist/` with compiled output
 ```bash
-cd tools
 npm run zip
 ```
 
@@ -63,7 +60,6 @@ Creates signed package for Roku Channel Store submission: `build/YYYYMMDD_HHMMSS
 - Requires `ROKU_SIGNING_PASSWORD` in `.env`
 - Uses device's signing key to create production-ready package
 ```bash
-cd tools
 npm run sign
 ```
 
@@ -73,7 +69,6 @@ Compiles and deploys directly to Roku device (requires `.env` configuration)
 - Uploads to Roku via network
 - Creates temporary package in `out/`
 ```bash
-cd tools
 npm run deploy
 ```
 
@@ -102,20 +97,17 @@ The project includes VSCode configuration for debugging with breakpoints and log
 
 #### Development (Quick Deploy)
 ```bash
-cd tools
 npm run deploy  # Compile + upload in one step
 ```
 
 #### QA/Testing (Versioned Package)
 ```bash
-cd tools
 npm run zip  # Creates build/YYYYMMDD_HHMMSS_hash.zip
 ```
 Then upload via browser at `http://<ROKU_IP>`
 
 #### Production (Signed Package for Channel Store)
 ```bash
-cd tools
 npm run sign  # Creates build/YYYYMMDD_HHMMSS_hash_signed.pkg
 ```
 Upload the `.pkg` file to Roku Channel Store for publication

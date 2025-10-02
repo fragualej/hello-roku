@@ -3,13 +3,13 @@
 const { ProgramBuilder } = require('brighterscript');
 const { execSync } = require('child_process');
 const path = require('path');
-require('dotenv').config({ path: path.join(__dirname, '../..', '.env') });
+require('dotenv').config({ path: path.join(__dirname, '..', '.env') });
 
 async function signPackage() {
     const ROKU_IP = process.env.ROKU_IP;
     const ROKU_PASSWORD = process.env.ROKU_PASSWORD;
     const ROKU_SIGNING_PASSWORD = process.env.ROKU_SIGNING_PASSWORD;
-    const rootDir = path.join(__dirname, '../..');
+    const rootDir = path.join(__dirname, '..');
     const configPath = path.join(__dirname, '../bsconfig.json');
 
     // Validate environment variables
