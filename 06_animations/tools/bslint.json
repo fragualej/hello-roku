@@ -10,6 +10,6 @@
         "unreachable-code": "warn",
         "eol-last": "off",
         "no-trailing-whitespace": "warn",
-        "consistent-trailing-comma": "off"
+        "consistent-trailing-comma": "on"
     }
 }

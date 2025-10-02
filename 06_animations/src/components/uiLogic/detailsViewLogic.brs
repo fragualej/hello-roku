@@ -3,7 +3,7 @@ sub showDetailsView(content as object)
     detailsView.observeField("itemSelected", "onDetailsItemSelected")
     navToView({
         view: detailsView,
-        content: content,
+        content: content
     })
 end sub
 

@@ -32,7 +32,7 @@ sub onContentChanged(event as object)
         translation: [grid.ix, grid.iy * 3],
         itemSize: [grid.gridw, grid.gridh],
         rowItemSize: [grid.itemw, grid.itemh],
-        rowItemSpacing: [grid.gapx, 0],
+        rowItemSpacing: [grid.gapx, 0]
     })
     m.rowlist.content = content
     m.rowlist.observeField("rowItemFocused", "onItemFocused")

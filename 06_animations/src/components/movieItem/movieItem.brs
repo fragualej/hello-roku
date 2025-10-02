@@ -2,7 +2,7 @@ sub init()
     m.poster = m.top.findNode("poster")
     m.poster.update({
         width: m.app.gridFields.itemw,
-        height: m.app.gridFields.itemh,
+        height: m.app.gridFields.itemh
     }, true)
 end sub
 

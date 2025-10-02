@@ -29,7 +29,7 @@ sub setRowListConfig()
         itemClippingRect: [0, 0, gridw, cellh * 2],
         rowItemSize: [itemw, itemh],
         rowItemSpacing: [gapx, 0],
-        itemSpacing: [0, gapy],
+        itemSpacing: [0, gapy]
     })
 end sub
 

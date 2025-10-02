@@ -12,13 +12,13 @@ sub init()
         width: itemw,
         height: itemh,
         horizAlign: "center",
-        vertAlign: "center",
+        vertAlign: "center"
     })
 
     m.rectangle.setFields({
         width: itemw,
         height: itemh,
-        color: "#3355ff",
+        color: "#3355ff"
     })
 end sub
 

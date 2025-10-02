@@ -35,7 +35,7 @@ sub setGrid()
         height: gridh * 0.1,
         horizAlign: "center",
         translation: [ix, iy],
-        text: "<h2>Loading...</h2>",
+        text: "<h2>Loading...</h2>"
     })
     m.rectangle = m.top.findNode("rectangle")
     m.rectangle.width = gridw

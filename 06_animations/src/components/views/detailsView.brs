@@ -7,7 +7,7 @@ sub init()
 
     m.layoutGroup.setFields({
         translation: [grid.ix, grid.iy],
-        itemSpacings: [grid.gapx],
+        itemSpacings: [grid.gapx]
     })
     m.label.setFields({
         drawingStyles: m.constants.styles.multiStyles,

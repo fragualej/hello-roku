@@ -49,7 +49,7 @@ function _setApi()
             "TMDB_API_ENDPOINT": configJson.api.endpoint,
             "TMDB_API_IMAGE_URL": configJson.api.imageUrl,
             "TMDB_API_KEY": configJson.api.key,
-            "TMDB_TOKEN": configJson.api.token,
+            "TMDB_TOKEN": configJson.api.token
         })
     else
         print "Error: Could not load config.json"
@@ -73,7 +73,7 @@ function _setFonts()
         "H3": x * Sqr(2) ^ 4,
         "H4": x * Sqr(2) ^ 3,
         "H5": x * Sqr(2) ^ 2,
-        "H6": x * Sqr(2) ^ 1,
+        "H6": x * Sqr(2) ^ 1
     })
 
     fonts.addFields({
@@ -91,34 +91,34 @@ function _setStyles(fonts, colors)
             "h1": {
                 "fontSize": fonts.size.H1,
                 "fontUri": fonts.uri.DEFAULT,
-                "color": colors.WHITE,
+                "color": colors.WHITE
             },
             "h2": {
                 "fontSize": fonts.size.H2,
                 "fontUri": fonts.uri.DEFAULT,
-                "color": colors.WHITE,
+                "color": colors.WHITE
             },
             "h3": {
                 "fontSize": fonts.size.H3,
                 "fontUri": fonts.uri.DEFAULT,
-                "color": colors.WHITE,
+                "color": colors.WHITE
             },
             "h4": {
                 "fontSize": fonts.size.H4,
                 "fontUri": fonts.uri.DEFAULT,
-                "color": colors.WHITE,
+                "color": colors.WHITE
             },
             "h5": {
                 "fontSize": fonts.size.H5,
                 "fontUri": fonts.uri.DEFAULT,
-                "color": colors.WHITE,
+                "color": colors.WHITE
             },
             "h6": {
                 "fontSize": fonts.size.H6,
                 "fontUri": fonts.uri.DEFAULT,
-                "color": colors.WHITE,
-            },
-        },
+                "color": colors.WHITE
+            }
+        }
     })
     return styles
 end function
