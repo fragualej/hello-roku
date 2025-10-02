@@ -7,7 +7,7 @@ sub init()
 end sub
 
 sub initHttpTask()
-    while (true)
+    while true
         msg = wait(0, m.port)
         if type(msg) = "roSGNodeEvent"
             handleRequest(msg)
@@ -36,7 +36,7 @@ sub handleResponse(event as object)
     code = event.getResponseCode()
     requestId = event.getSourceIdentity().toStr()
 
-    if (code >= 200 and code < 300)
+    if code >= 200 and code < 300
         job = m.jobs[requestId].job
         request = m.jobs[requestId].request
         if job <> invalid

@@ -15,17 +15,6 @@ sub onContentChanged(event as object)
     content = event.getData()
     grid = m.app.navFields
 
-    ix = grid.ix
-    iy = grid.iy
-    gridw = grid.gridw
-    gridh = grid.gridh
-    cellw = grid.cellw
-    cellh = grid.cellh
-    itemw = grid.itemw
-    itemh = grid.itemh
-    gapx = grid.gapx
-    gapy = grid.gapy
-
     m.rowlist.setFields({
         itemComponentName: "navItem",
         drawFocusFeedback: false,

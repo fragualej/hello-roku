@@ -130,7 +130,7 @@ end sub
 sub onGridRowFocused(event as object)
     m.prevIndex = m.currIndex
     m.currIndex = event.getData()
-    if (m.currIndex - m.prevIndex > 0 and m.currIndex mod 2 = 1 and m.pageIndex <= m.pageIndexMax)
+    if m.currIndex - m.prevIndex > 0 and m.currIndex mod 2 = 1 and m.pageIndex <= m.pageIndexMax
         m.pageIndex++
         genreId = m.navBar.itemFocused.genreId
         getMovies(genreId, m.pageIndex)

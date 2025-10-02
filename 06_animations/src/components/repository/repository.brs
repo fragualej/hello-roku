@@ -5,19 +5,19 @@ sub init()
     m.httpTask.control = "RUN"
 end sub
 
-function getGenres(request as object)
+sub getGenres(request as object)
     url = substitute("{0}/genre/movie/list", m.baseUrl)
     request.addReplace("url", url)
     request.addReplace("model", "genres")
     enqueue(request)
-end function
+end sub
 
-function getMoviesByGenre(request as object)
+sub getMoviesByGenre(request as object)
     url = substitute("{0}/discover/movie?include_adult=false&include_video=false&language=en-US&page={1}&sort_by=popularity.desc&with_genres={2}", m.baseUrl, request.pageIndex.toStr(), request.genreId.toStr())
     request.addReplace("url", url)
     request.addReplace("model", "movies")
     enqueue(request)
-end function
+end sub
 
 sub enqueue(request as object)
     headers = {

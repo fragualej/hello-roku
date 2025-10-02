@@ -8,5 +8,4 @@ sub showDetailsView(content as object)
 end sub
 
 sub onDetailsItemSelected(event as object)
-    itemSelected = event.getData()
 end sub

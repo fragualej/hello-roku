@@ -12,5 +12,4 @@ sub onContentChanged(event as object)
 end sub
 
 sub onFocusPercentChanged(event as object)
-    focusPercent = event.getData()
 end sub

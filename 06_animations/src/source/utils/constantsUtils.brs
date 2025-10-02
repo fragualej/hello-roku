@@ -2,7 +2,6 @@ function constantsUtil_get()
     constants = m.global.constants
     if constants = invalid
         constants = createObject("roSGNode", "node")
-        api = _setApi()
         colors = _setColors()
         fonts = _setFonts()
         styles = _setStyles(fonts, colors)

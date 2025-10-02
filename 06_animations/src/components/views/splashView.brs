@@ -25,7 +25,6 @@ sub setGrid()
     gridh = grid.gridh
     cellw = grid.cellw
     cellh = grid.cellh
-    itemw = grid.itemw
 
     ix = grid.ix
     iy = grid.iy
@@ -62,6 +61,7 @@ end sub
 
 sub onFire()
     m.frameCount++
+    angle = 0
     for i = 0 to m.rectangle.getChildCount() - 1
         child = m.rectangle.getChild(i)
         p = child.translation

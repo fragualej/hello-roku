@@ -9,8 +9,6 @@ sub setRowListConfig()
     iy = grid.iy
     rows = grid.rows
     gridw = grid.gridw
-    gridh = grid.gridh
-    cellw = grid.cellw
     cellh = grid.cellh
     itemw = grid.itemw
     itemh = grid.itemh
@@ -71,7 +69,6 @@ sub onRowItemFocused(event as object)
 end sub
 
 sub onRowFocused(event as object)
-    rowFocusedIndex = event.getData()
     m.top.rowFocusedIndex = event.getData()
 end sub
 
