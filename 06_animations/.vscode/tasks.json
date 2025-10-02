@@ -7,8 +7,10 @@
       "command": "cd tools && npm run build",
       "problemMatcher": [],
       "presentation": {
-        "reveal": "silent",
-        "panel": "shared"
+        "reveal": "always",
+        "panel": "dedicated",
+        "focus": false,
+        "clear": true
       }
     }
   ]

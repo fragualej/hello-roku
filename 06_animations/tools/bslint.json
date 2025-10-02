@@ -1,0 +1,13 @@
+{
+    "rules": {
+        "no-print": "warn",
+        "no-stop": "warn",
+        "no-todo": "warn",
+        "unused-variable": "warn",
+        "unsafe-path-loop": "warn",
+        "unsafe-iterators": "warn",
+        "unreachable-code": "warn",
+        "eol-last": "off",
+        "no-trailing-whitespace": "warn"
+    }
+}

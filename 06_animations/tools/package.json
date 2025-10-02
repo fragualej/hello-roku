@@ -8,11 +8,16 @@
     "sign": "node --no-deprecation scripts/sign.js",
     "deploy": "node --no-deprecation scripts/deploy.js"
   },
-  "keywords": ["roku", "brighterscript", "build-tools"],
+  "keywords": [
+    "roku",
+    "brighterscript",
+    "build-tools"
+  ],
   "author": "",
   "license": "ISC",
   "type": "commonjs",
   "devDependencies": {
+    "@rokucommunity/bslint": "^0.8.35",
     "brighterscript": "^0.70.1",
     "dotenv": "^17.2.3"
   }

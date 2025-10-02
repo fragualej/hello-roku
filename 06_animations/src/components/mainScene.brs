@@ -10,6 +10,7 @@ sub initView()
     splashView = createObject("roSGNode", "splashView")
     splashView.observeField("state", "onSplashStateChanged")
     navToView({ view: splashView })
+    print "[DEBUG]"
 end sub
 
 sub onSplashStateChanged()
