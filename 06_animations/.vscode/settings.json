@@ -1,20 +1,27 @@
 {
-  "search.exclude": {
-    "**/dist": true,
-    "**/out": true,
-    "**/node_modules": true,
-    "**/tools/node_modules": true
-  },
-  "files.exclude": {
-    "**/dist": true,
-    "**/out": true
-  },
-  "files.trimTrailingWhitespace": true,
-  "brightscript.format.keywordCase": "lower",
-  "brightscript.format.compositeKeywords": "split",
-  "brightscript.format.removeTrailingWhiteSpace": true,
-  "brightscript.format.formatInteriorWhitespace": true,
-  "brightscript.format.insertSpaceBeforeFunctionParenthesis": false,
-  "brightscript.format.insertSpaceBetweenEmptyCurlyBraces": false,
-  "brightscript.format.sortImports": true
+    "search.exclude": {
+        "**/dist": true,
+        "**/out": true,
+        "**/node_modules": true,
+        "**/tools/node_modules": true
+    },
+    "files.exclude": {
+        "**/dist": true,
+        "**/out": true
+    },
+    "files.trimTrailingWhitespace": true,
+    "brightscript.format.keywordCase": "lower",
+    "brightscript.format.compositeKeywords": "split",
+    "brightscript.format.removeTrailingWhiteSpace": true,
+    "brightscript.format.formatInteriorWhitespace": true,
+    "brightscript.format.insertSpaceBeforeFunctionParenthesis": false,
+    "brightscript.format.insertSpaceBetweenEmptyCurlyBraces": false,
+    "brightscript.format.sortImports": true,
+    "editor.tabSize": 4,
+    "editor.detectIndentation": false,
+    "editor.formatOnSave": true,
+    "[json]": {
+        "editor.tabSize": 4,
+        "editor.defaultFormatter": "vscode.json-language-features"
+    }
 }

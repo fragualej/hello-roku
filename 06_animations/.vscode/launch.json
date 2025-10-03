@@ -1,65 +1,65 @@
 {
-  "version": "0.2.0",
-  "configurations": [
-    {
-      "type": "brightscript",
-      "request": "launch",
-      "name": "BrightScript Debug",
-      "host": "${env:ROKU_IP}",
-      "password": "${env:ROKU_PASSWORD}",
-      "envFile": "${workspaceFolder}/.env",
-      "rootDir": "${workspaceFolder}/dist",
-      "sourceDirs": ["${workspaceFolder}/src"],
-      "files": [
-        "source/**/*",
-        "components/**/*",
-        "images/**/*",
-        "manifest"
-      ],
-      "enableDebugProtocol": true,
-      "deepLinkUrl": "${host}",
-      "injectRdbOnDeviceComponent": true,
-      "rendezvousTracking": true,
-      "retainDeploymentArchive": true,
-      "retainStagingFolder": true,
-      "preLaunchTask": "brighterscript-build"
-    },
-    {
-      "type": "node",
-      "request": "launch",
-      "name": "Deploy to Roku",
-      "skipFiles": [
-        "<node_internals>/**"
-      ],
-      "program": "${workspaceFolder}/scripts/deploy.js",
-      "cwd": "${workspaceFolder}",
-      "console": "integratedTerminal",
-      "args": ["--no-deprecation"],
-      "envFile": "${workspaceFolder}/.env"
-    },
-    {
-      "type": "node",
-      "request": "launch",
-      "name": "Zip Package",
-      "skipFiles": [
-        "<node_internals>/**"
-      ],
-      "program": "${workspaceFolder}/scripts/zip.js",
-      "cwd": "${workspaceFolder}",
-      "console": "integratedTerminal"
-    },
-    {
-      "type": "node",
-      "request": "launch",
-      "name": "Sign Package",
-      "skipFiles": [
-        "<node_internals>/**"
-      ],
-      "program": "${workspaceFolder}/scripts/sign.js",
-      "cwd": "${workspaceFolder}",
-      "console": "integratedTerminal",
-      "args": ["--no-deprecation"],
-      "envFile": "${workspaceFolder}/.env"
-    }
-  ]
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "brightscript",
+            "request": "launch",
+            "name": "BrightScript Debug",
+            "host": "${env:ROKU_IP}",
+            "password": "${env:ROKU_PASSWORD}",
+            "envFile": "${workspaceFolder}/.env",
+            "rootDir": "${workspaceFolder}/dist",
+            "sourceDirs": ["${workspaceFolder}/src"],
+            "files": [
+                "source/**/*",
+                "components/**/*",
+                "images/**/*",
+                "manifest"
+            ],
+            "enableDebugProtocol": true,
+            "deepLinkUrl": "${host}",
+            "injectRdbOnDeviceComponent": true,
+            "rendezvousTracking": true,
+            "retainDeploymentArchive": true,
+            "retainStagingFolder": true,
+            "preLaunchTask": "brighterscript-build"
+        },
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "Deploy to Roku",
+            "skipFiles": [
+                "<node_internals>/**"
+            ],
+            "program": "${workspaceFolder}/scripts/deploy.js",
+            "cwd": "${workspaceFolder}",
+            "console": "integratedTerminal",
+            "args": ["--no-deprecation"],
+            "envFile": "${workspaceFolder}/.env"
+        },
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "Zip Package",
+            "skipFiles": [
+                "<node_internals>/**"
+            ],
+            "program": "${workspaceFolder}/scripts/zip.js",
+            "cwd": "${workspaceFolder}",
+            "console": "integratedTerminal"
+        },
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "Sign Package",
+            "skipFiles": [
+                "<node_internals>/**"
+            ],
+            "program": "${workspaceFolder}/scripts/sign.js",
+            "cwd": "${workspaceFolder}",
+            "console": "integratedTerminal",
+            "args": ["--no-deprecation"],
+            "envFile": "${workspaceFolder}/.env"
+        }
+    ]
 }
