@@ -8,7 +8,9 @@
       "host": "${env:ROKU_IP}",
       "password": "${env:ROKU_PASSWORD}",
       "envFile": "${workspaceFolder}/.env",
-      "rootDir": "${workspaceFolder}/dist",
+      "cwd": "${workspaceFolder}",
+      "rootDir": "${workspaceFolder}/src",
+      "outDir": "${workspaceFolder}/dist",
       "sourceDirs": ["${workspaceFolder}/src"],
       "files": [
         "source/**/*",
@@ -31,8 +33,8 @@
       "skipFiles": [
         "<node_internals>/**"
       ],
-      "program": "${workspaceFolder}/tools/scripts/deploy.js",
-      "cwd": "${workspaceFolder}/tools",
+      "program": "${workspaceFolder}/scripts/deploy.js",
+      "cwd": "${workspaceFolder}",
       "console": "integratedTerminal",
       "args": ["--no-deprecation"],
       "envFile": "${workspaceFolder}/.env"
@@ -44,8 +46,8 @@
       "skipFiles": [
         "<node_internals>/**"
       ],
-      "program": "${workspaceFolder}/tools/scripts/zip.js",
-      "cwd": "${workspaceFolder}/tools",
+      "program": "${workspaceFolder}/scripts/zip.js",
+      "cwd": "${workspaceFolder}",
       "console": "integratedTerminal"
     },
     {
@@ -55,8 +57,8 @@
       "skipFiles": [
         "<node_internals>/**"
       ],
-      "program": "${workspaceFolder}/tools/scripts/sign.js",
-      "cwd": "${workspaceFolder}/tools",
+      "program": "${workspaceFolder}/scripts/sign.js",
+      "cwd": "${workspaceFolder}",
       "console": "integratedTerminal",
       "args": ["--no-deprecation"],
       "envFile": "${workspaceFolder}/.env"

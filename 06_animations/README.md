@@ -1,113 +1,161 @@
 # Roku Animation App
 
+A Roku channel application demonstrating animation techniques with BrighterScript.
+
 ## Project Structure
 
 ```
 .
 ├── src/              # Source code
-│   ├── components/
-│   ├── images/
-│   ├── manifest
-│   └── source/
-├── dist/             # Compiled output (unzipped)
-├── build/            # Deployment packages (YYYYMMDD_HHMMSS_hash.zip)
-├── out/              # Temporary deployment artifacts
-├── scripts/          # Build scripts
-├── bsconfig.json     # BrighterScript configuration
-├── bslint.json       # Linting rules
+│   ├── components/   # SceneGraph XML components
+│   ├── images/       # Image assets
+│   ├── manifest      # App manifest
+│   └── source/       # BrighterScript/BrightScript code
+├── dist/             # Compiled output (gitignored)
+├── build/            # Deployment packages (gitignored)
+├── out/              # Temporary deployment artifacts (gitignored)
+├── scripts/          # Build and deployment scripts
+├── .vscode/          # VSCode debug configuration
+├── bsconfig.json     # BrighterScript compiler configuration
+├── bslint.json       # Code linting rules
 └── package.json      # Project dependencies and scripts
 ```
 
+## Prerequisites
+
+- Node.js (v14 or higher)
+- Roku device with Developer Mode enabled
+- VSCode with [BrightScript Language](https://marketplace.visualstudio.com/items?itemName=RokuCommunity.brightscript) extension (recommended)
+
 ## Setup
 
-1. Install dependencies:
+### 1. Install Dependencies
+
 ```bash
 npm install
 ```
 
-2. Configure your Roku device:
+### 2. Configure Environment
+
+Create a `.env` file in the project root:
+
 ```bash
 cp .env.example .env
 ```
 
-Edit `.env` and add your Roku device IP and developer password:
-- **ROKU_IP**: Find your Roku's IP in Settings > Network > About
-- **ROKU_PASSWORD**: Set in Settings > System > Advanced system settings > Developer mode
-- **ROKU_SIGNING_PASSWORD** (optional): For signed packages - generate key via `http://<ROKU_IP>` > Utilities > Genkey
+Edit `.env` with your configuration:
 
-## Build Commands
+```env
+ROKU_IP=192.168.x.x
+ROKU_PASSWORD=your_dev_password
+ROKU_SIGNING_PASSWORD=your_signing_password
+TMDB_API_KEY=your_tmdb_api_key
+TMDB_API_TOKEN=your_tmdb_token
+```
 
-### `npm run build`
-Compiles source code to `dist/` directory without deploying
-- Transpiles BrighterScript to BrightScript
-- Updates `dist/` with compiled output
-- Used automatically by VSCode debug configuration
+**Where to find these values:**
+
+- **ROKU_IP**: Settings > Network > About on your Roku device
+- **ROKU_PASSWORD**: Settings > System > Advanced system settings > Developer mode
+- **ROKU_SIGNING_PASSWORD** (optional): Generate via `http://<ROKU_IP>` > Utilities > Genkey
+- **TMDB_API_KEY** & **TMDB_API_TOKEN**: Get from [themoviedb.org](https://www.themoviedb.org/settings/api)
+
+## Development
+
+### VSCode Debugging (Recommended)
+
+The easiest way to develop and test:
+
+1. Open the project in VSCode
+2. Press **F5** or select **Run > Start Debugging**
+3. The app will automatically:
+   - Build the project (`npm run build`)
+   - Deploy to your Roku device
+   - Attach the debugger for breakpoints and logging
+
+**Requirements:**
+- VSCode with [BrightScript Language extension](https://marketplace.visualstudio.com/items?itemName=RokuCommunity.brightscript)
+- `.env` file configured with `ROKU_IP` and `ROKU_PASSWORD`
+
+### Build Commands
+
+All commands run from the project root:
+
+#### `npm run build`
+Compiles source code to `dist/` directory without deploying.
+
 ```bash
 npm run build
 ```
 
-### `npm run zip`
-Creates deployment package with format: `build/YYYYMMDD_HHMMSS_hash.zip`
-- Includes timestamp (YYYYMMDD_HHMMSS) for precise chronological sorting
-- Includes git commit hash for version tracking
-- Updates `dist/` with compiled output
-```bash
-npm run zip
-```
+- Transpiles BrighterScript to BrightScript
+- Generates `config.json` from `.env`
+- Outputs to `dist/`
+- Used automatically by VSCode F5 debug
 
-### `npm run sign`
-Creates signed package for Roku Channel Store submission: `build/YYYYMMDD_HHMMSS_hash_signed.pkg`
-- Requires `ROKU_SIGNING_PASSWORD` in `.env`
-- Uses device's signing key to create production-ready package
-```bash
-npm run sign
-```
+#### `npm run deploy`
+Compiles and deploys directly to Roku device.
 
-### `npm run deploy`
-Compiles and deploys directly to Roku device (requires `.env` configuration)
-- Automatically compiles source and updates `dist/`
-- Uploads to Roku via network
-- Creates temporary package in `out/`
 ```bash
 npm run deploy
 ```
 
-## Development Workflows
+- Compiles source code
+- Creates temporary package in `out/`
+- Uploads to Roku via network
+- Fastest way to test changes from command line
 
-### VSCode Debugging (Recommended for Development)
-The project includes VSCode configuration for debugging with breakpoints and logs:
+#### `npm run zip`
+Creates versioned deployment package for distribution.
 
-1. Open project in VSCode
-2. Press `F5` or Run → Start Debugging
-3. Select "BrightScript Debug" configuration
-4. Automatic workflow:
-   - Runs `npm run build` (compiles to `dist/`)
-   - Deploys to Roku device
-   - Attaches debugger with breakpoints support
-
-**VSCode Configuration** (`.vscode/` directory):
-- `launch.json` - Debug configurations using env variables from `.env`
-- `tasks.json` - Pre-launch build task
-
-**Requirements:**
-- [BrightScript Language](https://marketplace.visualstudio.com/items?itemName=RokuCommunity.brightscript) extension installed
-- `.env` file configured with `ROKU_IP` and `ROKU_PASSWORD`
-
-### Command Line Workflows
-
-#### Development (Quick Deploy)
 ```bash
-npm run deploy  # Compile + upload in one step
+npm run zip
 ```
 
-#### QA/Testing (Versioned Package)
-```bash
-npm run zip  # Creates build/YYYYMMDD_HHMMSS_hash.zip
-```
-Then upload via browser at `http://<ROKU_IP>`
+- Compiles source code
+- Creates package: `build/YYYYMMDD_HHMMSS_hash.zip`
+- Timestamp format for chronological sorting
+- Git hash for version tracking
+- Upload manually at `http://<ROKU_IP>`
 
-#### Production (Signed Package for Channel Store)
+#### `npm run sign`
+Creates signed package for Roku Channel Store submission.
+
 ```bash
-npm run sign  # Creates build/YYYYMMDD_HHMMSS_hash_signed.pkg
+npm run sign
 ```
-Upload the `.pkg` file to Roku Channel Store for publication
+
+- Requires `ROKU_SIGNING_PASSWORD` in `.env`
+- Creates: `build/YYYYMMDD_HHMMSS_hash_signed.pkg`
+- Uses device signing key for production-ready package
+- Upload `.pkg` file to Roku Channel Store
+
+## Workflows
+
+### Quick Development Loop
+```bash
+# Option 1: VSCode (with debugging)
+Press F5
+
+# Option 2: Command line (fastest)
+npm run deploy
+```
+
+### Creating Release Packages
+```bash
+# For testing/QA
+npm run zip
+
+# For production/channel store
+npm run sign
+```
+
+## Configuration Files
+
+- **`.env`** - Environment variables (gitignored, required)
+- **`.env.example`** - Template for environment setup
+- **`bsconfig.json`** - BrighterScript compiler settings
+- **`bslint.json`** - Code linting rules
+- **`.vscode/launch.json`** - VSCode debug configurations
+- **`.vscode/tasks.json`** - VSCode pre-launch build task
+- **`.vscode/settings.json`** - VSCode workspace settings

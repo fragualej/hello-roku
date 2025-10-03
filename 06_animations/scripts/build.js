@@ -27,7 +27,8 @@ async function build() {
     try {
         // Only compile to dist/, no deployment
         await builder.run({
-            project: configPath
+            project: configPath,
+            cwd: path.join(__dirname, '..')
         });
 
         const diagnostics = builder.getDiagnostics(); // This includes plugin diagnostics

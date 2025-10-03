@@ -39,6 +39,7 @@ async function packageApp() {
 
     await builder.run({
         project: configPath,
+        cwd: path.join(__dirname, '..'),
         createPackage: true,
         outFile: packagePath
     });

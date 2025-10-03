@@ -54,6 +54,7 @@ async function signPackage() {
         // Compile and create signed package
         await builder.run({
             project: configPath,
+            cwd: path.join(__dirname, '..'),
             createPackage: true,
             outFile: signedPackagePath,
             // roku-deploy options for signing

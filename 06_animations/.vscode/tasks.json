@@ -4,7 +4,7 @@
     {
       "label": "brighterscript-build",
       "type": "shell",
-      "command": "cd tools && npm run build",
+      "command": "npm run build",
       "problemMatcher": [],
       "presentation": {
         "reveal": "always",

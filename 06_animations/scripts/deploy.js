@@ -30,6 +30,7 @@ async function deploy() {
         // BrighterScript will compile and deploy in one command
         await builder.run({
             project: configPath,
+            cwd: path.join(__dirname, '..'),
             deploy: true,
             host: ROKU_IP,
             password: ROKU_PASSWORD,
