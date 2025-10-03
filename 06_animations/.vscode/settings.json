@@ -9,5 +9,12 @@
     "**/dist": true,
     "**/out": true
   },
-  "files.trimTrailingWhitespace": true
+  "files.trimTrailingWhitespace": true,
+  "brightscript.format.keywordCase": "lower",
+  "brightscript.format.compositeKeywords": "split",
+  "brightscript.format.removeTrailingWhiteSpace": true,
+  "brightscript.format.formatInteriorWhitespace": true,
+  "brightscript.format.insertSpaceBeforeFunctionParenthesis": false,
+  "brightscript.format.insertSpaceBetweenEmptyCurlyBraces": false,
+  "brightscript.format.sortImports": true
 }
