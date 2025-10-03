@@ -8,9 +8,7 @@
       "host": "${env:ROKU_IP}",
       "password": "${env:ROKU_PASSWORD}",
       "envFile": "${workspaceFolder}/.env",
-      "cwd": "${workspaceFolder}",
-      "rootDir": "${workspaceFolder}/src",
-      "outDir": "${workspaceFolder}/dist",
+      "rootDir": "${workspaceFolder}/dist",
       "sourceDirs": ["${workspaceFolder}/src"],
       "files": [
         "source/**/*",

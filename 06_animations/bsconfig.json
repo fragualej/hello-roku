@@ -6,10 +6,9 @@
         "images/**/*",
         "manifest"
     ],
-    "outDir": "dist",
-    "stagingDir": "dist",
+    "stagingFolderPath": "dist",
+    "retainStagingFolder": true,
     "createPackage": false,
-    "retainStagingDir": true,
     "sourceMap": true,
     "plugins": ["@rokucommunity/bslint"],
     "lintConfig": "bslint.json"
