@@ -18,6 +18,7 @@
     "brightscript.format.insertSpaceBetweenEmptyCurlyBraces": false,
     "brightscript.format.sortImports": true,
     "editor.tabSize": 4,
+    "editor.insertSpaces": true,
     "editor.detectIndentation": false,
     "editor.formatOnSave": true,
     "[json]": {
