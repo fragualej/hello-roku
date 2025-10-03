@@ -156,7 +156,9 @@ The project includes pre-configured settings for immediate development:
 
 - **`bsconfig.json`** - BrighterScript compiler (compiles `src/` → `dist/`)
 - **`bslint.json`** - Code linting rules
-- **`.vscode/`** - VSCode debug configuration (F5 to deploy & debug)
+- **`.vscode/launch.json`** - VSCode debug configurations
+- **`.vscode/tasks.json`** - VSCode pre-launch build task
+- **`.vscode/settings.json`** - VSCode workspace settings
 - **`.env`** - Environment variables (create from `.env.example`)
 
 All configurations are ready to use - just clone, install dependencies, configure `.env`, and press F5!
