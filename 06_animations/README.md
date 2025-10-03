@@ -150,12 +150,13 @@ npm run zip
 npm run sign
 ```
 
-## Configuration Files
+## Project Configuration
 
-- **`.env`** - Environment variables (gitignored, required)
-- **`.env.example`** - Template for environment setup
-- **`bsconfig.json`** - BrighterScript compiler settings
+The project includes pre-configured settings for immediate development:
+
+- **`bsconfig.json`** - BrighterScript compiler (compiles `src/` → `dist/`)
 - **`bslint.json`** - Code linting rules
-- **`.vscode/launch.json`** - VSCode debug configurations
-- **`.vscode/tasks.json`** - VSCode pre-launch build task
-- **`.vscode/settings.json`** - VSCode workspace settings
+- **`.vscode/`** - VSCode debug configuration (F5 to deploy & debug)
+- **`.env`** - Environment variables (create from `.env.example`)
+
+All configurations are ready to use - just clone, install dependencies, configure `.env`, and press F5!
