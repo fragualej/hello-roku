@@ -1,46 +1,64 @@
 sub init()
     m.targetList1 = m.top.findNode("targetList1")
     m.targetList2 = m.top.findNode("targetList2")
+    m.targetList3 = m.top.findNode("targetList3")
     m.focusLabel = m.top.findNode("focusLabel")
 
-    ' Shared configuration
+    m.targetLists = [m.targetList1, m.targetList2, m.targetList3]
+    m.currentRowIndex = 0
+
+    ' Configuration - smaller items to fit 3 rows
+    m.visibleCols = 9
+    m.sizes = {
+        focused: { w: 320, h: 180 },
+        base:    { w: 101, h: 180 }
+    }
+    m.gapX = 15
+
+    ' Create shared TargetSets
     m.focusedTargetSet = createFocusedTargetSet()
     m.unfocusedTargetSet = createUnfocusedTargetSet()
 
-    setupTargetList(m.targetList1, true)
-    setupTargetList(m.targetList2, false)
+    ' Setup each row
+    for i = 0 to m.targetLists.count() - 1
+        setupTargetList(m.targetLists[i], i = 0)
+        setupContent(m.targetLists[i], i * 15)
+        m.targetLists[i].observeField("itemFocused", "onItemFocused")
+    end for
 
-    setupContent(m.targetList1, 0)
-    setupContent(m.targetList2, 20)
-
-    m.targetList1.observeField("itemFocused", "onItemFocused")
-    m.targetList2.observeField("itemFocused", "onItemFocused")
-
-    ' Forward focus to targetList1 when this view gets focus
+    ' Forward focus
     m.top.observeField("focusedChild", "onFocusedChildChanged")
 end sub
 
 sub onFocusedChildChanged()
     if m.top.hasFocus()
-        m.targetList1.setFocus(true)
+        m.targetLists[m.currentRowIndex].setFocus(true)
     end if
 end sub
 
 function createFocusedTargetSet() as object
     targetSet = createObject("roSGNode", "TargetSet")
 
-    ' Focused: 400x225 (16:9), Unfocused: 127x225 (9:16)
-    targetSet.targetRects = [
-        { x: -450, y: -112, width: 400, height: 225 },
-        { x: -30,  y: -112, width: 127, height: 225 },
-        { x: 117,  y: -112, width: 127, height: 225 },
-        { x: 264,  y: -112, width: 127, height: 225 },
-        { x: 411,  y: -112, width: 127, height: 225 },
-        { x: 558,  y: -112, width: 127, height: 225 },
-        { x: 705,  y: -112, width: 127, height: 225 },
-        { x: 852,  y: -112, width: 127, height: 225 },
-        { x: 999,  y: -112, width: 127, height: 225 }
-    ]
+    rects = []
+    focusW = m.sizes.focused.w
+    focusH = m.sizes.focused.h
+    baseW = m.sizes.base.w
+    baseH = m.sizes.base.h
+
+    ' Start position (focused item at left)
+    startX = -350
+
+    ' Position 0: Focused (16:9)
+    rects.push({ x: startX, y: -focusH / 2, width: focusW, height: focusH })
+
+    ' Positions 1+: Unfocused (9:16)
+    x = startX + focusW + m.gapX
+    for i = 1 to m.visibleCols - 1
+        rects.push({ x: x, y: -baseH / 2, width: baseW, height: baseH })
+        x = x + baseW + m.gapX
+    end for
+
+    targetSet.targetRects = rects
     targetSet.focusIndex = 0
 
     return targetSet
@@ -49,18 +67,19 @@ end function
 function createUnfocusedTargetSet() as object
     targetSet = createObject("roSGNode", "TargetSet")
 
-    ' All items: 127x225 (9:16)
-    targetSet.targetRects = [
-        { x: -350, y: -112, width: 127, height: 225 },
-        { x: -203, y: -112, width: 127, height: 225 },
-        { x: -56,  y: -112, width: 127, height: 225 },
-        { x: 91,   y: -112, width: 127, height: 225 },
-        { x: 238,  y: -112, width: 127, height: 225 },
-        { x: 385,  y: -112, width: 127, height: 225 },
-        { x: 532,  y: -112, width: 127, height: 225 },
-        { x: 679,  y: -112, width: 127, height: 225 },
-        { x: 826,  y: -112, width: 127, height: 225 }
-    ]
+    rects = []
+    baseW = m.sizes.base.w
+    baseH = m.sizes.base.h
+
+    startX = -250
+    x = startX
+
+    for i = 0 to m.visibleCols - 1
+        rects.push({ x: x, y: -baseH / 2, width: baseW, height: baseH })
+        x = x + baseW + m.gapX
+    end for
+
+    targetSet.targetRects = rects
     targetSet.focusIndex = 0
 
     return targetSet
@@ -84,7 +103,7 @@ sub setupContent(targetList as object, startIndex as integer)
     contentRoot = createObject("roSGNode", "ContentNode")
     colors = Constants.Palette.GetItemColors()
 
-    for i = 0 to 19
+    for i = 0 to 14
         child = contentRoot.createChild("ContentNode")
         child.title = (startIndex + i).toStr()
         child.addFields({ itemColor: colors[i mod colors.count()] })
@@ -94,22 +113,32 @@ sub setupContent(targetList as object, startIndex as integer)
 end sub
 
 sub onItemFocused()
-    if m.targetList1.hasFocus()
-        m.focusLabel.text = "Row 1 - Item " + m.targetList1.itemFocused.toStr()
-    else if m.targetList2.hasFocus()
-        m.focusLabel.text = "Row 2 - Item " + m.targetList2.itemFocused.toStr()
-    end if
+    for i = 0 to m.targetLists.count() - 1
+        if m.targetLists[i].hasFocus()
+            m.currentRowIndex = i
+            m.focusLabel.text = "Row " + (i + 1).toStr() + " - Item " + m.targetLists[i].itemFocused.toStr()
+            exit for
+        end if
+    end for
 end sub
 
 function onKeyEvent(key as string, press as boolean) as boolean
     if not press then return false
 
-    if key = "down" and m.targetList1.hasFocus()
-        m.targetList2.setFocus(true)
-        return true
-    else if key = "up" and m.targetList2.hasFocus()
-        m.targetList1.setFocus(true)
-        return true
+    if key = "down"
+        newIndex = m.currentRowIndex + 1
+        if newIndex < m.targetLists.count()
+            m.targetLists[newIndex].setFocus(true)
+            m.currentRowIndex = newIndex
+            return true
+        end if
+    else if key = "up"
+        newIndex = m.currentRowIndex - 1
+        if newIndex >= 0
+            m.targetLists[newIndex].setFocus(true)
+            m.currentRowIndex = newIndex
+            return true
+        end if
     end if
 
     return false

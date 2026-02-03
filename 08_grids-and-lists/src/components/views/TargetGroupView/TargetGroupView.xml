@@ -12,7 +12,7 @@
 
         <Label
             id="descLabel"
-            text="2D grid with custom positions - Use multiple TargetLists for rows"
+            text="Multiple TargetLists with shared TargetSets - UP/DOWN to change rows"
             translation="[50, 70]"
             font="font:SmallSystemFont"
             color="#888888"
@@ -21,14 +21,21 @@
 
         <TargetList
             id="targetList1"
-            translation="[750, 350]"
+            translation="[700, 250]"
             advanceKey="right"
             reverseKey="left"
         />
 
         <TargetList
             id="targetList2"
-            translation="[750, 650]"
+            translation="[700, 480]"
+            advanceKey="right"
+            reverseKey="left"
+        />
+
+        <TargetList
+            id="targetList3"
+            translation="[700, 710]"
             advanceKey="right"
             reverseKey="left"
         />
@@ -36,7 +43,7 @@
         <Label
             id="row1Label"
             text="Row 1"
-            translation="[50, 335]"
+            translation="[50, 220]"
             font="font:SmallSystemFont"
             color="#888888"
         />
@@ -44,14 +51,22 @@
         <Label
             id="row2Label"
             text="Row 2"
-            translation="[50, 635]"
+            translation="[50, 450]"
+            font="font:SmallSystemFont"
+            color="#888888"
+        />
+
+        <Label
+            id="row3Label"
+            text="Row 3"
+            translation="[50, 680]"
             font="font:SmallSystemFont"
             color="#888888"
         />
 
         <Label
             id="focusLabel"
-            translation="[50, 900]"
+            translation="[50, 920]"
             font="font:SmallSystemFont"
         />
     </children>
