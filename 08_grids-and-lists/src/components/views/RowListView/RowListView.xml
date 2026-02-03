@@ -23,13 +23,13 @@
             id="rowList"
             translation="[50, 130]"
             itemComponentName="RowListItem"
-            numRows="4"
-            itemSize="[200, 150]"
-            itemSpacing="[20, 0]"
-            rowItemSize="[[200, 150]]"
-            rowItemSpacing="[[20, 0]]"
+            numRows="3"
+            itemSize="[250, 220]"
+            itemSpacing="[20, 20]"
+            rowItemSize="[[250, 180], [200, 120], [300, 200], [180, 100], [220, 150]]"
+            rowItemSpacing="[[15, 0], [10, 0], [20, 0], [8, 0], [12, 0]]"
             showRowLabel="[true]"
-            rowLabelOffset="[[0, 10]]"
+            rowLabelOffset="[[0, 10], [0, 10], [0, 10], [0, 10], [0, 10]]"
         />
 
         <Label

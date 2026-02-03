@@ -19,6 +19,18 @@ sub onContentChanged()
     end if
 end sub
 
+sub onSizeChanged()
+    width = m.top.width
+    height = m.top.height
+
+    if width > 0 and height > 0
+        m.itemRect.width = width
+        m.itemRect.height = height
+        m.itemLabel.width = width
+        m.itemLabel.height = height
+    end if
+end sub
+
 sub onFocusChanged()
     updateColor()
 end sub

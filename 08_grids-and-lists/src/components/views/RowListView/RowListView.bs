@@ -25,8 +25,8 @@ sub setupContent()
         rowNode = contentRoot.createChild("ContentNode")
         rowNode.title = "Row " + rowIndex.toStr()
 
-        ' Create 15 items per row
-        for itemIndex = 0 to 14
+        ' Create 25 items per row
+        for itemIndex = 0 to 24
             itemNode = rowNode.createChild("ContentNode")
             itemNode.title = "R" + rowIndex.toStr() + " C" + itemIndex.toStr()
             colorIndex = (rowIndex + itemIndex) mod colors.count()

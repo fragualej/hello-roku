@@ -2,6 +2,8 @@
 <component name="RowListItem" extends="BaseItem">
     <interface>
         <field id="itemContent" type="node" onChange="onContentChanged" />
+        <field id="width" type="float" onChange="onSizeChanged" />
+        <field id="height" type="float" onChange="onSizeChanged" />
         <field id="focusPercent" type="float" onChange="onFocusChanged" />
         <field id="rowFocusPercent" type="float" onChange="onFocusChanged" />
     </interface>
@@ -9,11 +11,9 @@
     <script type="text/brighterscript" uri="RowListItem.bs" />
 
     <children>
-        <Rectangle id="itemRect" width="200" height="150" color="#0f3460">
+        <Rectangle id="itemRect" color="#0f3460">
             <Label
                 id="itemLabel"
-                width="200"
-                height="150"
                 horizAlign="center"
                 vertAlign="center"
                 font="font:SmallBoldSystemFont"
