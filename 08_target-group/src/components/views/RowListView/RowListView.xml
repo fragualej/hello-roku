@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<component name="RowListView" extends="BaseView">
+    <script type="text/brighterscript" uri="RowListView.bs" />
+
+    <children>
+        <Label
+            id="titleLabel"
+            text="RowList Example"
+            translation="[50, 30]"
+            font="font:MediumBoldSystemFont"
+        />
+
+        <Label
+            id="descLabel"
+            text="Multiple horizontal rows with vertical scrolling - Netflix-style"
+            translation="[50, 70]"
+            font="font:SmallSystemFont"
+            color="#888888"
+            width="1400"
+        />
+
+        <RowList
+            id="rowList"
+            translation="[50, 130]"
+            itemComponentName="RowListItem"
+            numRows="4"
+            itemSize="[200, 150]"
+            itemSpacing="[20, 0]"
+            rowItemSize="[[200, 150]]"
+            rowItemSpacing="[[20, 0]]"
+            showRowLabel="[true]"
+            rowLabelOffset="[[0, 10]]"
+        />
+
+        <Label
+            id="focusLabel"
+            translation="[50, 900]"
+            font="font:SmallSystemFont"
+        />
+    </children>
+</component>

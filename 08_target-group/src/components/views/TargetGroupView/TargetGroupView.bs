@@ -1,0 +1,116 @@
+sub init()
+    m.targetList1 = m.top.findNode("targetList1")
+    m.targetList2 = m.top.findNode("targetList2")
+    m.focusLabel = m.top.findNode("focusLabel")
+
+    ' Shared configuration
+    m.focusedTargetSet = createFocusedTargetSet()
+    m.unfocusedTargetSet = createUnfocusedTargetSet()
+
+    setupTargetList(m.targetList1, true)
+    setupTargetList(m.targetList2, false)
+
+    setupContent(m.targetList1, 0)
+    setupContent(m.targetList2, 20)
+
+    m.targetList1.observeField("itemFocused", "onItemFocused")
+    m.targetList2.observeField("itemFocused", "onItemFocused")
+
+    ' Forward focus to targetList1 when this view gets focus
+    m.top.observeField("focusedChild", "onFocusedChildChanged")
+end sub
+
+sub onFocusedChildChanged()
+    if m.top.hasFocus()
+        m.targetList1.setFocus(true)
+    end if
+end sub
+
+function createFocusedTargetSet() as object
+    targetSet = createObject("roSGNode", "TargetSet")
+
+    ' Focused: 400x225 (16:9), Unfocused: 127x225 (9:16)
+    targetSet.targetRects = [
+        { x: -450, y: -112, width: 400, height: 225 },
+        { x: -30,  y: -112, width: 127, height: 225 },
+        { x: 117,  y: -112, width: 127, height: 225 },
+        { x: 264,  y: -112, width: 127, height: 225 },
+        { x: 411,  y: -112, width: 127, height: 225 },
+        { x: 558,  y: -112, width: 127, height: 225 },
+        { x: 705,  y: -112, width: 127, height: 225 },
+        { x: 852,  y: -112, width: 127, height: 225 },
+        { x: 999,  y: -112, width: 127, height: 225 }
+    ]
+    targetSet.focusIndex = 0
+
+    return targetSet
+end function
+
+function createUnfocusedTargetSet() as object
+    targetSet = createObject("roSGNode", "TargetSet")
+
+    ' All items: 127x225 (9:16)
+    targetSet.targetRects = [
+        { x: -350, y: -112, width: 127, height: 225 },
+        { x: -203, y: -112, width: 127, height: 225 },
+        { x: -56,  y: -112, width: 127, height: 225 },
+        { x: 91,   y: -112, width: 127, height: 225 },
+        { x: 238,  y: -112, width: 127, height: 225 },
+        { x: 385,  y: -112, width: 127, height: 225 },
+        { x: 532,  y: -112, width: 127, height: 225 },
+        { x: 679,  y: -112, width: 127, height: 225 },
+        { x: 826,  y: -112, width: 127, height: 225 }
+    ]
+    targetSet.focusIndex = 0
+
+    return targetSet
+end function
+
+sub setupTargetList(targetList as object, isFocused as boolean)
+    targetList.focusedTargetSet = m.focusedTargetSet
+    targetList.unfocusedTargetSet = m.unfocusedTargetSet
+
+    if isFocused
+        targetList.targetSet = m.focusedTargetSet
+    else
+        targetList.targetSet = m.unfocusedTargetSet
+    end if
+
+    targetList.showTargetRects = false
+    targetList.itemComponentName = "TargetGroupItem"
+end sub
+
+sub setupContent(targetList as object, startIndex as integer)
+    contentRoot = createObject("roSGNode", "ContentNode")
+    colors = Constants.Palette.GetItemColors()
+
+    for i = 0 to 19
+        child = contentRoot.createChild("ContentNode")
+        child.title = (startIndex + i).toStr()
+        child.addFields({ itemColor: colors[i mod colors.count()] })
+    end for
+
+    targetList.content = contentRoot
+end sub
+
+sub onItemFocused()
+    if m.targetList1.hasFocus()
+        m.focusLabel.text = "Row 1 - Item " + m.targetList1.itemFocused.toStr()
+    else if m.targetList2.hasFocus()
+        m.focusLabel.text = "Row 2 - Item " + m.targetList2.itemFocused.toStr()
+    end if
+end sub
+
+function onKeyEvent(key as string, press as boolean) as boolean
+    if not press then return false
+
+    if key = "down" and m.targetList1.hasFocus()
+        m.targetList2.setFocus(true)
+        return true
+    else if key = "up" and m.targetList2.hasFocus()
+        m.targetList1.setFocus(true)
+        return true
+    end if
+
+    return false
+end function

@@ -1,0 +1,105 @@
+sub init()
+    m.targetList = m.top.findNode("targetList")
+    m.focusLabel = m.top.findNode("focusLabel")
+
+    m.numCols = 20
+    m.visibleCols = 9
+    m.focusCol = 0
+
+    ' Sizes: Focused 16:9 (480x270), Unfocused 9:16 (152x270)
+    m.sizes = {
+        focused: { w: 480, h: 270 },
+        base:    { w: 152, h: 270 }
+    }
+    m.gapX = 20
+
+    setupTargetList()
+    setupContent()
+
+    m.targetList.observeField("itemFocused", "onItemFocused")
+
+    ' Forward focus to targetList when this view gets focus
+    m.top.observeField("focusedChild", "onFocusedChildChanged")
+end sub
+
+sub onFocusedChildChanged()
+    if m.top.hasFocus()
+        m.targetList.setFocus(true)
+    end if
+end sub
+
+sub setupTargetList()
+    focusedTargetSet = createObject("roSGNode", "TargetSet")
+    focusedTargetSet.targetRects = createFocusedRects()
+    focusedTargetSet.focusIndex = m.focusCol
+
+    unfocusedTargetSet = createObject("roSGNode", "TargetSet")
+    unfocusedTargetSet.targetRects = createUnfocusedRects()
+    unfocusedTargetSet.focusIndex = m.focusCol
+
+    m.targetList.targetSet = focusedTargetSet
+    m.targetList.focusedTargetSet = focusedTargetSet
+    m.targetList.unfocusedTargetSet = unfocusedTargetSet
+    m.targetList.showTargetRects = false
+    m.targetList.itemComponentName = "TargetListItem"
+end sub
+
+function createFocusedRects() as object
+    rects = []
+    focusW = m.sizes.focused.w
+    focusH = m.sizes.focused.h
+    baseW = m.sizes.base.w
+    baseH = m.sizes.base.h
+
+    ' Focus at position 0 (left)
+    startX = -400
+
+    ' Position 0: Focused (16:9)
+    rects.push({ x: startX, y: -focusH / 2, width: focusW, height: focusH })
+
+    ' Positions 1+: Unfocused (9:16)
+    x = startX + focusW + m.gapX
+    for i = 1 to m.visibleCols - 1
+        rects.push({ x: x, y: -baseH / 2, width: baseW, height: baseH })
+        x = x + baseW + m.gapX
+    end for
+
+    return rects
+end function
+
+function createUnfocusedRects() as object
+    rects = []
+    baseW = m.sizes.base.w
+    baseH = m.sizes.base.h
+
+    startX = -300
+    x = startX
+
+    for i = 0 to m.visibleCols - 1
+        rects.push({ x: x, y: -baseH / 2, width: baseW, height: baseH })
+        x = x + baseW + m.gapX
+    end for
+
+    return rects
+end function
+
+sub setupContent()
+    contentRoot = createObject("roSGNode", "ContentNode")
+    colors = Constants.Palette.GetItemColors()
+
+    for i = 0 to m.numCols - 1
+        child = contentRoot.createChild("ContentNode")
+        child.title = "Item " + i.toStr()
+        child.addFields({ itemColor: colors[i mod colors.count()] })
+    end for
+
+    m.targetList.content = contentRoot
+end sub
+
+sub onItemFocused()
+    m.focusLabel.text = "Focused: Item " + m.targetList.itemFocused.toStr()
+end sub
+
+function onKeyEvent(key as string, press as boolean) as boolean
+    return false
+end function

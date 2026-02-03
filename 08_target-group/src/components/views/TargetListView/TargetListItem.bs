@@ -1,0 +1,45 @@
+sub init()
+    m.itemRect = m.top.findNode("itemRect")
+    m.itemLabel = m.top.findNode("itemLabel")
+
+    m.baseColor = Constants.Colors.Secondary
+    m.focusColor = Constants.Colors.Primary
+end sub
+
+sub onContentChanged()
+    content = m.top.itemContent
+    if content <> invalid
+        m.itemLabel.text = content.title
+
+        if content.hasField("itemColor") and content.itemColor <> invalid
+            m.baseColor = content.itemColor
+        end if
+
+        updateVisuals()
+    end if
+end sub
+
+sub onRectChanged()
+    rect = m.top.currRect
+    if rect <> invalid
+        m.itemRect.width = rect.width
+        m.itemRect.height = rect.height
+        m.itemLabel.width = rect.width
+        m.itemLabel.height = rect.height
+    end if
+end sub
+
+sub onFocusChanged()
+    updateVisuals()
+end sub
+
+sub updateVisuals()
+    focusPercent = m.top.focusPercent
+    groupHasFocus = m.top.groupHasFocus
+
+    if groupHasFocus and focusPercent > 0.5
+        m.itemRect.color = m.focusColor
+    else
+        m.itemRect.color = m.baseColor
+    end if
+end sub

@@ -1,0 +1,27 @@
+namespace Constants
+    namespace Colors
+        const Background = "#1a1a2e"
+        const Panel = "#16213e"
+        const Primary = "#e94560"
+        const Secondary = "#0f3460"
+        const Tertiary = "#16213e"
+        const Accent1 = "#533483"
+        const Accent2 = "#2c698d"
+        const TextMuted = "#888888"
+        const TextDark = "#666666"
+        const White = "#FFFFFF"
+    end namespace
+
+    namespace Palette
+        ' Item colors array for grids/lists
+        function GetItemColors() as object
+            return [
+                Constants.Colors.Primary,
+                Constants.Colors.Secondary,
+                Constants.Colors.Tertiary,
+                Constants.Colors.Accent1,
+                Constants.Colors.Accent2
+            ]
+        end function
+    end namespace
+end namespace

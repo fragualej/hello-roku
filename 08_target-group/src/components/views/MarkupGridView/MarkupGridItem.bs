@@ -1,0 +1,34 @@
+sub init()
+    m.itemRect = m.top.findNode("itemRect")
+    m.itemLabel = m.top.findNode("itemLabel")
+
+    m.baseColor = Constants.Colors.Secondary
+    m.focusColor = Constants.Colors.Primary
+end sub
+
+sub onContentChanged()
+    content = m.top.itemContent
+    if content <> invalid
+        m.itemLabel.text = content.title
+
+        if content.hasField("itemColor") and content.itemColor <> invalid
+            m.baseColor = content.itemColor
+        end if
+
+        updateColor()
+    end if
+end sub
+
+sub onFocusChanged()
+    updateColor()
+end sub
+
+sub updateColor()
+    focusPercent = m.top.focusPercent
+
+    if focusPercent > 0.5
+        m.itemRect.color = m.focusColor
+    else
+        m.itemRect.color = m.baseColor
+    end if
+end sub

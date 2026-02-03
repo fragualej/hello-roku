@@ -1,0 +1,42 @@
+sub init()
+    m.markupGrid = m.top.findNode("markupGrid")
+    m.focusLabel = m.top.findNode("focusLabel")
+
+    setupContent()
+
+    m.markupGrid.observeField("itemFocused", "onItemFocused")
+
+    ' Forward focus to markupGrid when this view gets focus
+    m.top.observeField("focusedChild", "onFocusedChildChanged")
+end sub
+
+sub onFocusedChildChanged()
+    if m.top.hasFocus()
+        m.markupGrid.setFocus(true)
+    end if
+end sub
+
+sub setupContent()
+    contentRoot = createObject("roSGNode", "ContentNode")
+    colors = Constants.Palette.GetItemColors()
+
+    ' Create 30 items (5 rows x 6 columns)
+    for i = 0 to 29
+        child = contentRoot.createChild("ContentNode")
+        child.title = "Item " + i.toStr()
+        child.addFields({ itemColor: colors[i mod colors.count()] })
+    end for
+
+    m.markupGrid.content = contentRoot
+end sub
+
+sub onItemFocused()
+    focusedIndex = m.markupGrid.itemFocused
+    row = int(focusedIndex / 6)
+    col = focusedIndex mod 6
+    m.focusLabel.text = "Row " + row.toStr() + " / Col " + col.toStr() + " (Item " + focusedIndex.toStr() + ")"
+end sub
+
+function onKeyEvent(key as string, press as boolean) as boolean
+    return false
+end function

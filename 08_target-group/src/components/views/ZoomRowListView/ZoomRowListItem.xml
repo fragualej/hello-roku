@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<component name="ZoomRowListItem" extends="BaseItem">
+    <interface>
+        <field id="itemContent" type="node" onChange="onContentChanged" />
+        <field id="width" type="float" onChange="onSizeChanged" />
+        <field id="height" type="float" onChange="onSizeChanged" />
+        <field id="focusPercent" type="float" onChange="onFocusChanged" />
+        <field id="rowFocusPercent" type="float" onChange="onFocusChanged" />
+        <field id="itemHasFocus" type="boolean" onChange="onFocusChanged" />
+        <field id="rowHasFocus" type="boolean" onChange="onFocusChanged" />
+    </interface>
+
+    <script type="text/brighterscript" uri="ZoomRowListItem.bs" />
+
+    <children>
+        <Rectangle id="itemRect" color="#0f3460">
+            <Label
+                id="itemLabel"
+                horizAlign="center"
+                vertAlign="center"
+                font="font:SmallBoldSystemFont"
+            />
+        </Rectangle>
+    </children>
+</component>

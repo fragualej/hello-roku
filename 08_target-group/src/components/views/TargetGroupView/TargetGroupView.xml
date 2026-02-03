@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<component name="TargetGroupView" extends="BaseView">
+    <script type="text/brighterscript" uri="TargetGroupView.bs" />
+
+    <children>
+        <Label
+            id="titleLabel"
+            text="TargetGroup Example"
+            translation="[50, 30]"
+            font="font:MediumBoldSystemFont"
+        />
+
+        <Label
+            id="descLabel"
+            text="2D grid with custom positions - Use multiple TargetLists for rows"
+            translation="[50, 70]"
+            font="font:SmallSystemFont"
+            color="#888888"
+            width="1400"
+        />
+
+        <TargetList
+            id="targetList1"
+            translation="[750, 350]"
+            advanceKey="right"
+            reverseKey="left"
+        />
+
+        <TargetList
+            id="targetList2"
+            translation="[750, 650]"
+            advanceKey="right"
+            reverseKey="left"
+        />
+
+        <Label
+            id="row1Label"
+            text="Row 1"
+            translation="[50, 335]"
+            font="font:SmallSystemFont"
+            color="#888888"
+        />
+
+        <Label
+            id="row2Label"
+            text="Row 2"
+            translation="[50, 635]"
+            font="font:SmallSystemFont"
+            color="#888888"
+        />
+
+        <Label
+            id="focusLabel"
+            translation="[50, 900]"
+            font="font:SmallSystemFont"
+        />
+    </children>
+</component>

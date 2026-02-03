@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<component name="MainScene" extends="Scene">
+    <script type="text/brighterscript" uri="MainScene.bs" />
+
+    <children>
+        <Rectangle
+            id="background"
+            width="1920"
+            height="1080"
+            color="#1a1a2e"
+        />
+
+        <!-- Menu Panel -->
+        <Rectangle
+            id="menuPanel"
+            width="400"
+            height="1080"
+            color="#16213e"
+        />
+
+        <Label
+            id="titleLabel"
+            text="Grid Components"
+            translation="[30, 40]"
+            font="font:LargeBoldSystemFont"
+        />
+
+        <Label
+            id="subtitleLabel"
+            text="Select an example"
+            translation="[30, 95]"
+            font="font:SmallSystemFont"
+            color="#888888"
+        />
+
+        <LabelList
+            id="menuList"
+            translation="[30, 150]"
+            itemSize="[340, 60]"
+            itemSpacing="[0, 10]"
+            textHorizAlign="left"
+            focusedColor="#e94560"
+            color="#FFFFFF"
+        />
+
+        <!-- Content Area -->
+        <Group id="contentArea" translation="[420, 0]">
+            <!-- Views will be added here dynamically -->
+        </Group>
+
+        <!-- Instructions -->
+        <Label
+            id="instructionLabel"
+            translation="[30, 980]"
+            text="Press BACK to return to menu"
+            font="font:SmallSystemFont"
+            color="#666666"
+        />
+    </children>
+</component>

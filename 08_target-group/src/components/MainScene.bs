@@ -1,0 +1,86 @@
+sub init()
+    m.menuList = m.top.findNode("menuList")
+    m.contentArea = m.top.findNode("contentArea")
+    m.instructionLabel = m.top.findNode("instructionLabel")
+
+    m.currentView = invalid
+    m.menuFocused = true
+
+    setupMenu()
+
+    m.menuList.observeField("itemSelected", "onMenuItemSelected")
+    m.menuList.setFocus(true)
+end sub
+
+sub setupMenu()
+    content = createObject("roSGNode", "ContentNode")
+
+    menuItems = [
+        "MarkupGrid",
+        "RowList",
+        "TargetGroup",
+        "TargetList",
+        "ZoomRowList"
+    ]
+
+    for each item in menuItems
+        node = content.createChild("ContentNode")
+        node.title = item
+    end for
+
+    m.menuList.content = content
+end sub
+
+sub onMenuItemSelected()
+    selectedIndex = m.menuList.itemSelected
+
+    ' Remove current view if exists
+    if m.currentView <> invalid
+        m.contentArea.removeChild(m.currentView)
+        m.currentView = invalid
+    end if
+
+    ' Create new view based on selection
+    viewNames = [
+        "MarkupGridView",
+        "RowListView",
+        "TargetGroupView",
+        "TargetListView",
+        "ZoomRowListView"
+    ]
+
+    if selectedIndex >= 0 and selectedIndex < viewNames.count()
+        m.currentView = createObject("roSGNode", viewNames[selectedIndex])
+        m.contentArea.appendChild(m.currentView)
+        m.currentView.setFocus(true)
+        m.menuFocused = false
+        m.instructionLabel.text = "Press BACK to return to menu"
+    end if
+end sub
+
+sub focusMenu()
+    m.menuList.setFocus(true)
+    m.menuFocused = true
+end sub
+
+function onKeyEvent(key as string, press as boolean) as boolean
+    if not press then return false
+
+    if key = "back" and not m.menuFocused
+        focusMenu()
+        return true
+    end if
+
+    if key = "right" and m.menuFocused and m.currentView <> invalid
+        m.currentView.setFocus(true)
+        m.menuFocused = false
+        return true
+    end if
+
+    if key = "left" and not m.menuFocused
+        focusMenu()
+        return true
+    end if
+
+    return false
+end function

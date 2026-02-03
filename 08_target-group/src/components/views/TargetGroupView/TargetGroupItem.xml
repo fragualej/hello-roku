@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<component name="TargetGroupItem" extends="BaseItem">
+    <interface>
+        <field id="index" type="integer" />
+        <field id="itemContent" type="node" onChange="onContentChanged" />
+        <field id="currRect" type="rect2d" onChange="onRectChanged" />
+        <field id="focusPercent" type="float" onChange="onFocusChanged" />
+        <field id="groupHasFocus" type="boolean" onChange="onFocusChanged" />
+    </interface>
+
+    <script type="text/brighterscript" uri="TargetGroupItem.bs" />
+
+    <children>
+        <Rectangle id="itemRect" color="#0f3460">
+            <Label
+                id="itemLabel"
+                horizAlign="center"
+                vertAlign="center"
+                font="font:SmallBoldSystemFont"
+            />
+        </Rectangle>
+    </children>
+</component>

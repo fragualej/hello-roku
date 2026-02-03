@@ -1,0 +1,3 @@
+sub init()
+    ' Base initialization - override in child items
+end sub

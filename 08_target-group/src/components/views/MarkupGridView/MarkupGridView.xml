@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<component name="MarkupGridView" extends="BaseView">
+    <script type="text/brighterscript" uri="MarkupGridView.bs" />
+
+    <children>
+        <Label
+            id="titleLabel"
+            text="MarkupGrid Example"
+            translation="[50, 30]"
+            font="font:MediumBoldSystemFont"
+        />
+
+        <Label
+            id="descLabel"
+            text="Simple 2D grid with fixed item sizes - Built-in navigation"
+            translation="[50, 70]"
+            font="font:SmallSystemFont"
+            color="#888888"
+            width="1400"
+        />
+
+        <MarkupGrid
+            id="markupGrid"
+            translation="[50, 130]"
+            itemComponentName="MarkupGridItem"
+            numColumns="6"
+            itemSize="[200, 150]"
+            itemSpacing="[20, 20]"
+        />
+
+        <Label
+            id="focusLabel"
+            translation="[50, 900]"
+            font="font:SmallSystemFont"
+        />
+    </children>
+</component>

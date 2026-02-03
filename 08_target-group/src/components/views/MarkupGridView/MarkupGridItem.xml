@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<component name="MarkupGridItem" extends="BaseItem">
+    <interface>
+        <field id="itemContent" type="node" onChange="onContentChanged" />
+        <field id="focusPercent" type="float" onChange="onFocusChanged" />
+    </interface>
+
+    <script type="text/brighterscript" uri="MarkupGridItem.bs" />
+
+    <children>
+        <Rectangle id="itemRect" width="200" height="150" color="#0f3460">
+            <Label
+                id="itemLabel"
+                width="200"
+                height="150"
+                horizAlign="center"
+                vertAlign="center"
+                font="font:SmallBoldSystemFont"
+            />
+        </Rectangle>
+    </children>
+</component>

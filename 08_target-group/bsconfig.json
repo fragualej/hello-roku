@@ -1,0 +1,12 @@
+{
+    "rootDir": "src",
+    "files": [
+        "source/**/*",
+        "components/**/*",
+        "images/**/*",
+        "manifest"
+    ],
+    "stagingDir": "dist",
+    "createPackage": false,
+    "sourceMap": true
+}

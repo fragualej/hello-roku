@@ -1,0 +1,51 @@
+sub init()
+    m.zoomRowList = m.top.findNode("zoomRowList")
+    m.focusLabel = m.top.findNode("focusLabel")
+
+    setupContent()
+
+    m.zoomRowList.observeField("rowItemFocused", "onItemFocused")
+
+    ' Forward focus to zoomRowList when this view gets focus
+    m.top.observeField("focusedChild", "onFocusedChildChanged")
+end sub
+
+sub onFocusedChildChanged()
+    if m.top.hasFocus()
+        m.zoomRowList.setFocus(true)
+    end if
+end sub
+
+sub setupContent()
+    contentRoot = createObject("roSGNode", "ContentNode")
+    colors = Constants.Palette.GetItemColors()
+
+    ' Create 5 rows
+    for rowIndex = 0 to 4
+        rowNode = contentRoot.createChild("ContentNode")
+        rowNode.title = "Row " + rowIndex.toStr()
+
+        ' Create 15 items per row
+        for itemIndex = 0 to 14
+            itemNode = rowNode.createChild("ContentNode")
+            itemNode.title = "R" + rowIndex.toStr() + " C" + itemIndex.toStr()
+            colorIndex = (rowIndex + itemIndex) mod colors.count()
+            itemNode.addFields({ itemColor: colors[colorIndex] })
+        end for
+    end for
+
+    m.zoomRowList.content = contentRoot
+end sub
+
+sub onItemFocused()
+    focused = m.zoomRowList.rowItemFocused
+    if focused <> invalid and focused.count() = 2
+        rowIndex = focused[0]
+        itemIndex = focused[1]
+        m.focusLabel.text = "Row " + rowIndex.toStr() + " / Item " + itemIndex.toStr()
+    end if
+end sub
+
+function onKeyEvent(key as string, press as boolean) as boolean
+    return false
+end function

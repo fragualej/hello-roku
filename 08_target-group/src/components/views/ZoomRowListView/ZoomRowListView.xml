@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<component name="ZoomRowListView" extends="BaseView">
+    <script type="text/brighterscript" uri="ZoomRowListView.bs" />
+
+    <children>
+        <Label
+            id="titleLabel"
+            text="ZoomRowList Example"
+            translation="[50, 30]"
+            font="font:MediumBoldSystemFont"
+        />
+
+        <Label
+            id="descLabel"
+            text="Rows with zoom effect on focused row - Automatic scaling"
+            translation="[50, 70]"
+            font="font:SmallSystemFont"
+            color="#888888"
+            width="1400"
+        />
+
+        <ZoomRowList
+            id="zoomRowList"
+            translation="[50, 130]"
+            itemComponentName="ZoomRowListItem"
+        />
+
+        <Label
+            id="focusLabel"
+            translation="[50, 900]"
+            font="font:SmallSystemFont"
+        />
+    </children>
+</component>

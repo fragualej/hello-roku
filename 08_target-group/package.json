@@ -1,0 +1,15 @@
+{
+    "name": "08_target-group",
+    "version": "1.0.0",
+    "description": "Roku TargetGroup sample app",
+    "scripts": {
+        "build": "node scripts/build.js"
+    },
+    "keywords": ["roku", "brighterscript", "targetgroup"],
+    "author": "",
+    "license": "ISC",
+    "type": "commonjs",
+    "devDependencies": {
+        "brighterscript": "^0.70.1"
+    }
+}
