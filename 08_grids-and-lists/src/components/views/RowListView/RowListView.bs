@@ -25,10 +25,10 @@ sub setupContent()
         rowNode = contentRoot.createChild("ContentNode")
         rowNode.title = "Row " + rowIndex.toStr()
 
-        ' Create 25 items per row
-        for itemIndex = 0 to 24
+        ' Create 20 items per row
+        for itemIndex = 0 to 19
             itemNode = rowNode.createChild("ContentNode")
-            itemNode.title = "R" + rowIndex.toStr() + " C" + itemIndex.toStr()
+            itemNode.title = "R" + rowIndex.toStr() + " I" + itemIndex.toStr()
             colorIndex = (rowIndex + itemIndex) mod colors.count()
             itemNode.addFields({ itemColor: colors[colorIndex] })
         end for

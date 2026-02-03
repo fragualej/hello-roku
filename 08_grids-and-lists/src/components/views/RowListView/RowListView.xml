@@ -12,7 +12,7 @@
 
         <Label
             id="descLabel"
-            text="Multiple horizontal rows with vertical scrolling - Netflix-style"
+            text="Multiple rows with different heights per row"
             translation="[50, 70]"
             font="font:SmallSystemFont"
             color="#888888"
@@ -24,10 +24,10 @@
             translation="[50, 130]"
             itemComponentName="RowListItem"
             numRows="3"
-            itemSize="[250, 220]"
+            itemSize="[1400, 200]"
             itemSpacing="[20, 20]"
-            rowItemSize="[[250, 180], [200, 120], [300, 200], [180, 100], [220, 150]]"
-            rowItemSpacing="[[15, 0], [10, 0], [20, 0], [8, 0], [12, 0]]"
+            rowItemSize="[[280, 160], [200, 120], [320, 180], [240, 140], [260, 150]]"
+            rowItemSpacing="[[15, 0], [12, 0], [18, 0], [10, 0], [14, 0]]"
             showRowLabel="[true]"
             rowLabelOffset="[[0, 10], [0, 10], [0, 10], [0, 10], [0, 10]]"
         />
