@@ -1,0 +1,39 @@
+sub init()
+    m.itemRect = m.top.findNode("itemRect")
+    m.itemLabel = m.top.findNode("itemLabel")
+    m.focusColorInterp = m.top.findNode("focusColorInterp")
+    m.focusColorInterp.fieldToInterp = "itemRect.color"
+
+    ' Set interpolator colors using Constants
+    ' ColorFieldInterpolator requires "0xRRGGBBAA" format, not "#RRGGBB"
+    ' Convert "#RRGGBB" to "0xRRGGBBAA" format
+    unfocusedColor = "0x" + mid(Constants.Colors.Secondary, 2) + "FF"  ' Full opacity when unfocused
+    focusedColor = "0x" + mid(Constants.Colors.Primary, 2) + "FF"      ' Full opacity when focused
+
+    m.itemRect.color = Constants.Colors.Secondary
+    m.focusColorInterp.keyValue = [unfocusedColor, focusedColor]
+end sub
+
+sub onContentChanged()
+    content = m.top.itemContent
+    if content <> invalid
+        m.itemLabel.text = content.title
+    end if
+end sub
+
+sub onCurrRectChanged()
+    m.itemRect.width = m.top.currRect.width
+    m.itemRect.height = m.top.currRect.height
+end sub
+
+sub onCurrTargetChanged()
+    ' Can be used for additional target-based logic
+end sub
+
+sub onFocusPercentChanged()
+    if m.top.groupHasFocus
+        m.focusColorInterp.fraction = m.top.focusPercent
+    else
+        m.focusColorInterp.fraction = 0
+    end if
+end sub

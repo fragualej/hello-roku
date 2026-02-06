@@ -1,0 +1,41 @@
+sub init()
+    m.markupList = m.top.findNode("markupList")
+    m.focusLabel = m.top.findNode("focusLabel")
+
+    setupContent()
+
+    m.markupList.observeField("itemFocused", "onItemFocused")
+
+    ' Forward focus to markupList when this view gets focus
+    m.top.observeField("focusedChild", "onFocusedChildChanged")
+end sub
+
+sub onFocusedChildChanged()
+    if m.top.hasFocus()
+        m.markupList.setFocus(true)
+    end if
+end sub
+
+sub setupContent()
+    contentRoot = createObject("roSGNode", "ContentNode")
+    colors = Constants.Palette.GetItemColors()
+
+    ' Create 15 list items
+    for i = 0 to 14
+        child = contentRoot.createChild("ContentNode")
+        child.title = "List Item " + i.toStr()
+        child.description = "Description for item " + i.toStr()
+        child.addFields({ itemColor: colors[i mod colors.count()] })
+    end for
+
+    m.markupList.content = contentRoot
+end sub
+
+sub onItemFocused()
+    focusedIndex = m.markupList.itemFocused
+    m.focusLabel.text = "Selected: Item " + focusedIndex.toStr()
+end sub
+
+function onKeyEvent(key as string, press as boolean) as boolean
+    return false
+end function

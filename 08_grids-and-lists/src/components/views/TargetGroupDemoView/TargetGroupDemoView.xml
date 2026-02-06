@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<component name="TargetGroupDemoView" extends="BaseView">
+    <script type="text/brighterscript" uri="TargetGroupDemoView.bs" />
+
+    <children>
+        <Label
+            id="titleLabel"
+            text="TargetGroup Example"
+            translation="[50, 30]"
+            font="font:MediumBoldSystemFont"
+        />
+
+        <Label
+            id="descLabel"
+            text="TargetGroup with animated focus - LEFT/RIGHT to navigate"
+            translation="[50, 70]"
+            font="font:SmallSystemFont"
+            color="#888888"
+            width="1400"
+        />
+
+        <!--
+            TargetGroup translation: [700, 450]
+            - X=700: Centers the ~970px row in the available 1500px content width
+            - Y=450: Vertical center of content area
+            - Items are positioned relative to this origin (0,0)
+        -->
+        <TargetGroup
+            id="targetGroup"
+            translation="[700, 450]"
+            wrap="true"
+            itemComponentName="TargetGroupDemoItem"
+        />
+
+        <Label
+            id="focusLabel"
+            translation="[50, 900]"
+            font="font:SmallSystemFont"
+        />
+    </children>
+</component>

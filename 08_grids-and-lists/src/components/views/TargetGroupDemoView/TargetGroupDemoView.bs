@@ -1,0 +1,291 @@
+' ============================================================================
+' TargetGroupDemoView - Demonstrates the TargetGroup component
+' ============================================================================
+'
+' LAYOUT CALCULATIONS:
+' --------------------
+' Screen width: 1920px
+' Menu panel width: 420px (from MainScene contentArea translation)
+' Available content width: 1920 - 420 = 1500px
+'
+' TARGETGROUP POSITIONING:
+' ------------------------
+' TargetGroup translation: [700, 450]
+' - X=700: Centers the focus area in the available 1500px
+' - Y=450: Vertical center of content area
+'
+' ITEM SIZE HIERARCHY (scales toward focus):
+' ------------------------------------------
+' Small:  80 x 100  (distant items)
+' Medium: 110 x 138 (approaching focus)
+' Large:  150 x 188 (adjacent to focus)
+' Focus:  200 x 250 (currently focused item)
+'
+' VISIBLE POSITIONS: 7
+' ---------------------
+' [0:small] [1:medium] [2:large] [3:FOCUS] [4:large] [5:medium] [6:small]
+'
+' Total width: 80 + 110 + 150 + 200 + 150 + 110 + 80 = 880px
+' Gaps (6 x 15px): 90px
+' Full row width: 970px
+'
+' TARGETSETS:
+' -----------
+' 3 TargetSets control where focus can be:
+' - TargetSet 1: Focus at position 2 (left of center)
+' - TargetSet 2: Focus at position 3 (center) - default
+' - TargetSet 3: Focus at position 4 (right of center)
+' ============================================================================
+
+sub init()
+    m.targetGroup = m.top.findNode("targetGroup")
+    m.focusLabel = m.top.findNode("focusLabel")
+
+    ' State tracking
+    m.hadFocus = false
+    m.currTargetSetIndex = 1  ' Start with center focus (TargetSet 2)
+    m.currItemIndex = 0
+    m.keypressed = "none"
+
+    setupTargetSets()
+    setupContent()
+
+    ' Observe focus and item changes
+    m.targetGroup.observeField("focusedChild", "onFocusedChildChanged")
+    m.targetGroup.observeField("itemFocused", "onItemFocusedChanged")
+    m.targetGroup.observeField("currFocusItemIndex", "onCurrFocusItemIndexChanged")
+    m.top.observeField("focusedChild", "onViewFocusChanged")
+
+    onCurrFocusItemIndexChanged()
+end sub
+
+sub onViewFocusChanged()
+    if m.top.hasFocus()
+        m.targetGroup.setFocus(true)
+    end if
+end sub
+
+sub setupTargetSets()
+    ' =======================================================================
+    ' ITEM DIMENSIONS
+    ' =======================================================================
+    smallW = 80
+    smallH = 100
+    medW = 110
+    medH = 138
+    largeW = 150
+    largeH = 188
+    focusW = 200
+    focusH = 250
+    gap = 15
+
+    ' =======================================================================
+    ' LAYOUT CALCULATIONS
+    ' =======================================================================
+    ' Total row width: 880px items + 90px gaps = 970px
+    ' Center around origin (0,0), so items span from -485 to +485
+    rowWidth = smallW + medW + largeW + focusW + largeW + medW + smallW + (6 * gap)
+    startX = -rowWidth / 2
+
+    ' =======================================================================
+    ' CREATE 3 TARGETSETS
+    ' =======================================================================
+    targetSet1 = createObject("roSGNode", "TargetSet")  ' Focus at position 2
+    targetSet2 = createObject("roSGNode", "TargetSet")  ' Focus at position 3 (center)
+    targetSet3 = createObject("roSGNode", "TargetSet")  ' Focus at position 4
+
+    m.focusedTargetSets = [targetSet1, targetSet2, targetSet3]
+
+    ' -----------------------------------------------------------------------
+    ' TARGETSET 1: Focus at position 2 (left-shifted focus)
+    ' Layout: [small][medium][FOCUS][large][medium][small][small]
+    ' -----------------------------------------------------------------------
+    x = startX
+    targetSet1.targetRects = [
+        { x: x, y: -smallH / 2, width: smallW, height: smallH },                         ' pos 0
+        { x: x + smallW + gap, y: -medH / 2, width: medW, height: medH },                ' pos 1
+        { x: x + smallW + medW + 2 * gap, y: -focusH / 2, width: focusW, height: focusH }, ' pos 2 FOCUS
+        { x: x + smallW + medW + focusW + 3 * gap, y: -largeH / 2, width: largeW, height: largeH }, ' pos 3
+        { x: x + smallW + medW + focusW + largeW + 4 * gap, y: -medH / 2, width: medW, height: medH }, ' pos 4
+        { x: x + smallW + medW + focusW + largeW + medW + 5 * gap, y: -smallH / 2, width: smallW, height: smallH }, ' pos 5
+        { x: x + smallW + medW + focusW + largeW + medW + smallW + 6 * gap, y: -smallH / 2, width: smallW, height: smallH } ' pos 6 (offscreen stack)
+    ]
+    targetSet1.focusIndex = 2
+
+    ' -----------------------------------------------------------------------
+    ' TARGETSET 2: Focus at position 3 (centered focus) - DEFAULT
+    ' Layout: [small][medium][large][FOCUS][large][medium][small]
+    ' -----------------------------------------------------------------------
+    x = startX
+    targetSet2.targetRects = [
+        { x: x, y: -smallH / 2, width: smallW, height: smallH },                         ' pos 0
+        { x: x + smallW + gap, y: -medH / 2, width: medW, height: medH },                ' pos 1
+        { x: x + smallW + medW + 2 * gap, y: -largeH / 2, width: largeW, height: largeH }, ' pos 2
+        { x: x + smallW + medW + largeW + 3 * gap, y: -focusH / 2, width: focusW, height: focusH }, ' pos 3 FOCUS
+        { x: x + smallW + medW + largeW + focusW + 4 * gap, y: -largeH / 2, width: largeW, height: largeH }, ' pos 4
+        { x: x + smallW + medW + largeW + focusW + largeW + 5 * gap, y: -medH / 2, width: medW, height: medH }, ' pos 5
+        { x: x + smallW + medW + largeW + focusW + largeW + medW + 6 * gap, y: -smallH / 2, width: smallW, height: smallH } ' pos 6
+    ]
+    targetSet2.focusIndex = 3
+
+    ' -----------------------------------------------------------------------
+    ' TARGETSET 3: Focus at position 4 (right-shifted focus)
+    ' Layout: [small][small][medium][large][FOCUS][medium][small]
+    ' -----------------------------------------------------------------------
+    x = startX
+    targetSet3.targetRects = [
+        { x: x, y: -smallH / 2, width: smallW, height: smallH },                         ' pos 0 (offscreen stack)
+        { x: x, y: -smallH / 2, width: smallW, height: smallH },                         ' pos 1
+        { x: x + smallW + gap, y: -medH / 2, width: medW, height: medH },                ' pos 2
+        { x: x + smallW + medW + 2 * gap, y: -largeH / 2, width: largeW, height: largeH }, ' pos 3
+        { x: x + smallW + medW + largeW + 3 * gap, y: -focusH / 2, width: focusW, height: focusH }, ' pos 4 FOCUS
+        { x: x + smallW + medW + largeW + focusW + 4 * gap, y: -medH / 2, width: medW, height: medH }, ' pos 5
+        { x: x + smallW + medW + largeW + focusW + medW + 5 * gap, y: -smallH / 2, width: smallW, height: smallH } ' pos 6
+    ]
+    targetSet3.focusIndex = 4
+
+    ' -----------------------------------------------------------------------
+    ' UNFOCUSED TARGETSET: All items same size (used when row loses focus)
+    ' -----------------------------------------------------------------------
+    m.unfocusedTargetSet = createObject("roSGNode", "TargetSet")
+    unfocusedSize = 80
+    unfocusedGap = 12
+    unfocusedRowWidth = 7 * unfocusedSize + 6 * unfocusedGap
+    ux = -unfocusedRowWidth / 2
+
+    m.unfocusedTargetSet.targetRects = [
+        { x: ux, y: -unfocusedSize / 2, width: unfocusedSize, height: unfocusedSize },
+        { x: ux + (unfocusedSize + unfocusedGap), y: -unfocusedSize / 2, width: unfocusedSize, height: unfocusedSize },
+        { x: ux + 2 * (unfocusedSize + unfocusedGap), y: -unfocusedSize / 2, width: unfocusedSize, height: unfocusedSize },
+        { x: ux + 3 * (unfocusedSize + unfocusedGap), y: -unfocusedSize / 2, width: unfocusedSize, height: unfocusedSize },
+        { x: ux + 4 * (unfocusedSize + unfocusedGap), y: -unfocusedSize / 2, width: unfocusedSize, height: unfocusedSize },
+        { x: ux + 5 * (unfocusedSize + unfocusedGap), y: -unfocusedSize / 2, width: unfocusedSize, height: unfocusedSize },
+        { x: ux + 6 * (unfocusedSize + unfocusedGap), y: -unfocusedSize / 2, width: unfocusedSize, height: unfocusedSize }
+    ]
+    m.unfocusedTargetSet.focusIndex = 3
+
+    ' =======================================================================
+    ' CONFIGURE TARGETGROUP
+    ' =======================================================================
+    m.targetGroup.targetSet = m.focusedTargetSets[m.currTargetSetIndex]
+    m.targetGroup.showTargetRects = false  ' Set to true to debug target positions
+    m.targetGroup.wrap = true
+end sub
+
+sub setupContent()
+    contentRoot = createObject("roSGNode", "ContentNode")
+    colors = Constants.Palette.GetItemColors()
+
+    ' Create 15 content items (more than 7 visible positions for scrolling)
+    for i = 0 to 14
+        child = contentRoot.createChild("ContentNode")
+        child.title = i.toStr()
+        child.addFields({ itemColor: colors[i mod colors.count()] })
+    end for
+
+    m.targetGroup.content = contentRoot
+end sub
+
+' ==========================================================================
+' FOCUS HANDLING
+' ==========================================================================
+
+sub onFocusedChildChanged()
+    hasFocus = m.targetGroup.hasFocus()
+
+    if m.hadFocus and not hasFocus
+        ' Lost focus - animate to unfocused (uniform) layout
+        m.hadFocus = false
+        if not m.targetGroup.targetSet.isSameNode(m.unfocusedTargetSet)
+            m.targetGroup.animateToTargetSet = m.unfocusedTargetSet
+        end if
+    else if not m.hadFocus and hasFocus
+        ' Gained focus - animate to focused layout
+        m.hadFocus = true
+        if not m.targetGroup.targetSet.isSameNode(m.focusedTargetSets[m.currTargetSetIndex])
+            m.targetGroup.animateToTargetSet = m.focusedTargetSets[m.currTargetSetIndex]
+        end if
+    end if
+end sub
+
+' ==========================================================================
+' NAVIGATION
+' ==========================================================================
+
+sub advance()
+    m.targetGroup.advancing = true
+    m.currItemIndex = m.currItemIndex + 1
+
+    ' Wrap around if past last item
+    if m.currItemIndex >= m.targetGroup.content.getChildCount()
+        m.currItemIndex = 0
+    end if
+
+    ' Move to next TargetSet if available (shifts focus position right)
+    if m.currTargetSetIndex < m.focusedTargetSets.count() - 1
+        m.currTargetSetIndex = m.currTargetSetIndex + 1
+        m.targetGroup.animateToTargetSet = m.focusedTargetSets[m.currTargetSetIndex]
+    end if
+
+    m.targetGroup.animateToItem = m.currItemIndex
+end sub
+
+sub reverse()
+    m.targetGroup.reversing = true
+    m.currItemIndex = m.currItemIndex - 1
+
+    ' Wrap around if before first item
+    if m.currItemIndex < 0
+        m.currItemIndex = m.targetGroup.content.getChildCount() - 1
+    end if
+
+    ' Move to previous TargetSet if available (shifts focus position left)
+    if m.currTargetSetIndex > 0
+        m.currTargetSetIndex = m.currTargetSetIndex - 1
+        m.targetGroup.animateToTargetSet = m.focusedTargetSets[m.currTargetSetIndex]
+    end if
+
+    m.targetGroup.animateToItem = m.currItemIndex
+end sub
+
+sub onItemFocusedChanged()
+    if m.keypressed = "left"
+        reverse()
+    else if m.keypressed = "right"
+        advance()
+    end if
+end sub
+
+sub onCurrFocusItemIndexChanged()
+    m.focusLabel.text = "Focused Item: " + m.targetGroup.currFocusItemIndex.toStr()
+end sub
+
+' ==========================================================================
+' KEY EVENT HANDLER
+' ==========================================================================
+
+function onKeyEvent(key as string, press as boolean) as boolean
+    handled = false
+
+    if key = "left"
+        if press
+            m.keypressed = "left"
+            reverse()
+        else
+            m.keypressed = "none"
+            m.targetGroup.reversing = false
+        end if
+        handled = true
+    else if key = "right"
+        if press
+            m.keypressed = "right"
+            advance()
+        else
+            m.keypressed = "none"
+            m.targetGroup.advancing = false
+        end if
+        handled = true
+    end if
+
+    return handled
+end function

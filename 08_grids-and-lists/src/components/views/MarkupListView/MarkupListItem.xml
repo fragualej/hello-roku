@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<component name="MarkupListItem" extends="BaseItem">
+    <interface>
+        <field id="itemContent" type="node" onChange="onContentChanged" />
+        <field id="focusPercent" type="float" onChange="onFocusChanged" />
+    </interface>
+
+    <script type="text/brighterscript" uri="MarkupListItem.bs" />
+
+    <children>
+        <Rectangle id="itemRect" width="600" height="80" color="#0f3460">
+            <LayoutGroup
+                translation="[15, 10]"
+                layoutDirection="vert"
+                itemSpacings="[5]"
+            >
+                <Label
+                    id="titleLabel"
+                    width="570"
+                    height="35"
+                    font="font:SmallBoldSystemFont"
+                />
+                <Label
+                    id="descLabel"
+                    width="570"
+                    height="25"
+                    font="font:SmallSystemFont"
+                    color="#888888"
+                />
+            </LayoutGroup>
+        </Rectangle>
+    </children>
+</component>
