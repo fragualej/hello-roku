@@ -1,72 +1,39 @@
-<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="utf-8"?>
 <component name="TargetGroupView" extends="BaseView">
     <script type="text/brighterscript" uri="TargetGroupView.bs" />
 
     <children>
         <Label
             id="titleLabel"
-            text="TargetGroup Example"
+            text="TargetGroup (Multi-Type Rows)"
             translation="[50, 30]"
             font="font:MediumBoldSystemFont"
         />
 
         <Label
             id="descLabel"
-            text="Multiple TargetLists with shared TargetSets - UP/DOWN to change rows"
+            text="Programmatic rows with scroll - UP/DOWN to scroll, LEFT/RIGHT to navigate"
             translation="[50, 70]"
             font="font:SmallSystemFont"
             color="#888888"
             width="1400"
         />
 
-        <TargetList
-            id="targetList1"
-            translation="[700, 250]"
-            advanceKey="right"
-            reverseKey="left"
-        />
+        <Group
+            id="scrollContainer"
+            translation="[500, 400]" />
 
-        <TargetList
-            id="targetList2"
-            translation="[700, 480]"
-            advanceKey="right"
-            reverseKey="left"
-        />
-
-        <TargetList
-            id="targetList3"
-            translation="[700, 710]"
-            advanceKey="right"
-            reverseKey="left"
-        />
-
-        <Label
-            id="row1Label"
-            text="Row 1"
-            translation="[50, 220]"
-            font="font:SmallSystemFont"
-            color="#888888"
-        />
-
-        <Label
-            id="row2Label"
-            text="Row 2"
-            translation="[50, 450]"
-            font="font:SmallSystemFont"
-            color="#888888"
-        />
-
-        <Label
-            id="row3Label"
-            text="Row 3"
-            translation="[50, 680]"
-            font="font:SmallSystemFont"
-            color="#888888"
-        />
+        <Animation id="scrollAnim" duration="0.3" easeFunction="inOutCubic">
+            <Vector2DFieldInterpolator
+                id="scrollInterp"
+                fieldToInterp="scrollContainer.translation"
+                key="[0.0, 1.0]"
+            />
+        </Animation>
 
         <Label
             id="focusLabel"
-            translation="[50, 920]"
+            translation="[50, 1000]"
             font="font:SmallSystemFont"
         />
     </children>

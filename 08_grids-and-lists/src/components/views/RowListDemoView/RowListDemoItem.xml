@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<component name="RowListDemoItem" extends="Group">
+    <interface>
+        <field id="itemContent" type="node" onChange="onContentChanged" />
+        <field id="width" type="float" onChange="onSizeChanged" />
+        <field id="height" type="float" onChange="onSizeChanged" />
+        <field id="focusPercent" type="float" onChange="onFocusPercentChanged" />
+        <field id="rowFocusPercent" type="float" />
+        <field id="itemHasFocus" type="boolean" />
+        <field id="index" type="integer" />
+        <field id="rowIndex" type="integer" />
+        <field id="rowHasFocus" type="boolean" />
+        <field id="rowListHasFocus" type="boolean" />
+    </interface>
+
+    <script type="text/brighterscript" uri="pkg:/source/core/Constants.bs" />
+    <script type="text/brighterscript" uri="RowListDemoItem.bs" />
+
+    <children>
+        <Group id="itemGroup">
+            <Rectangle id="itemRect">
+                <Label
+                    id="itemLabel"
+                    horizAlign="center"
+                    vertAlign="center"
+                    font="font:SmallBoldSystemFont"
+                />
+            </Rectangle>
+        </Group>
+        <ColorFieldInterpolator
+            id="focusColorInterp"
+            key="[0.0, 1.0]"
+        />
+    </children>
+</component>

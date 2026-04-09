@@ -1,61 +1,107 @@
 sub init()
-    m.targetList1 = m.top.findNode("targetList1")
-    m.targetList2 = m.top.findNode("targetList2")
-    m.targetList3 = m.top.findNode("targetList3")
+    m.scrollContainer = m.top.findNode("scrollContainer")
+    m.scrollAnim = m.top.findNode("scrollAnim")
+    m.scrollInterp = m.top.findNode("scrollInterp")
     m.focusLabel = m.top.findNode("focusLabel")
 
-    m.targetLists = [m.targetList1, m.targetList2, m.targetList3]
     m.currentRowIndex = 0
-
-    ' Configuration - smaller items to fit 3 rows
-    m.visibleCols = 9
-    m.sizes = {
-        focused: { w: 320, h: 180 },
-        base:    { w: 101, h: 180 }
-    }
     m.gapX = 15
+    m.rowSpacing = 550
+    m.containerX = 500
+    m.baseContainerY = 400
 
-    ' Create shared TargetSets
-    m.focusedTargetSet = createFocusedTargetSet()
-    m.unfocusedTargetSet = createUnfocusedTargetSet()
+    ' Row definitions — add/remove rows here, everything else adapts
+    m.rowDefs = [
+        { title: "Live", focusedW: 712, focusedH: 448, unfocusedW: 564, unfocusedH: 375, visibleCols: 3, itemCount: 15 },
+        { title: "Top 10", focusedW: 777, focusedH: 478, unfocusedW: 348, unfocusedH: 478, visibleCols: 4, itemCount: 15 },
+        { title: "Originals", focusedW: 321, focusedH: 439, unfocusedW: 258, unfocusedH: 378, visibleCols: 5, itemCount: 15 }
+    ]
 
-    ' Setup each row
-    for i = 0 to m.targetLists.count() - 1
-        setupTargetList(m.targetLists[i], i = 0)
-        setupContent(m.targetLists[i], i * 15)
-        m.targetLists[i].observeField("itemFocused", "onItemFocused")
-    end for
+    m.targetGroups = []
+    m.focusedTargetSets = []
+    m.unfocusedTargetSets = []
+    m.itemIndices = []
+    m.rowPositions = []
 
-    ' Forward focus
+    buildRows()
+    updateLabels()
+
     m.top.observeField("focusedChild", "onFocusedChildChanged")
+end sub
+
+sub buildRows()
+    colors = Constants.Palette.GetItemColors()
+    yPos = 0
+
+    for i = 0 to m.rowDefs.count() - 1
+        rowDef = m.rowDefs[i]
+
+        ' Create row title label
+        rowLabel = createObject("roSGNode", "Label")
+        rowLabel.text = rowDef.title
+        rowLabel.translation = [-450, yPos - 20]
+        rowLabel.font = createObject("roSGNode", "Font")
+        rowLabel.font.size = 28
+        rowLabel.color = "#888888"
+        m.scrollContainer.appendChild(rowLabel)
+
+        ' Create TargetGroup node
+        tg = createObject("roSGNode", "TargetGroup")
+        tg.translation = [0, yPos]
+        tg.itemComponentName = "TargetGroupItem"
+
+        ' Create TargetSets
+        focusedTS = createFocusedTargetSet(rowDef)
+        unfocusedTS = createUnfocusedTargetSet(rowDef)
+
+        if i = 0
+            tg.targetSet = focusedTS
+        else
+            tg.targetSet = unfocusedTS
+        end if
+
+        ' Create content
+        contentRoot = createObject("roSGNode", "ContentNode")
+        for j = 0 to rowDef.itemCount - 1
+            child = contentRoot.createChild("ContentNode")
+            child.title = rowDef.title + " " + j.toStr()
+            child.addFields({ itemColor: colors[j mod colors.count()] })
+        end for
+        tg.content = contentRoot
+
+        m.scrollContainer.appendChild(tg)
+
+        ' Track state
+        m.targetGroups.push(tg)
+        m.focusedTargetSets.push(focusedTS)
+        m.unfocusedTargetSets.push(unfocusedTS)
+        m.itemIndices.push(0)
+        m.rowPositions.push(yPos)
+
+        yPos = yPos + m.rowSpacing
+    end for
 end sub
 
 sub onFocusedChildChanged()
     if m.top.hasFocus()
-        m.targetLists[m.currentRowIndex].setFocus(true)
+        m.targetGroups[m.currentRowIndex].setFocus(true)
     end if
 end sub
 
-function createFocusedTargetSet() as object
+function createFocusedTargetSet(rowDef as object) as object
     targetSet = createObject("roSGNode", "TargetSet")
 
     rects = []
-    focusW = m.sizes.focused.w
-    focusH = m.sizes.focused.h
-    baseW = m.sizes.base.w
-    baseH = m.sizes.base.h
-
-    ' Start position (focused item at left)
     startX = -350
 
-    ' Position 0: Focused (16:9)
-    rects.push({ x: startX, y: -focusH / 2, width: focusW, height: focusH })
+    ' Position 0: Focused item
+    rects.push({ x: startX, y: -rowDef.focusedH / 2, width: rowDef.focusedW, height: rowDef.focusedH })
 
-    ' Positions 1+: Unfocused (9:16)
-    x = startX + focusW + m.gapX
-    for i = 1 to m.visibleCols - 1
-        rects.push({ x: x, y: -baseH / 2, width: baseW, height: baseH })
-        x = x + baseW + m.gapX
+    ' Positions 1+: Unfocused items
+    x = startX + rowDef.focusedW + m.gapX
+    for i = 1 to rowDef.visibleCols - 1
+        rects.push({ x: x, y: -rowDef.unfocusedH / 2, width: rowDef.unfocusedW, height: rowDef.unfocusedH })
+        x = x + rowDef.unfocusedW + m.gapX
     end for
 
     targetSet.targetRects = rects
@@ -64,19 +110,16 @@ function createFocusedTargetSet() as object
     return targetSet
 end function
 
-function createUnfocusedTargetSet() as object
+function createUnfocusedTargetSet(rowDef as object) as object
     targetSet = createObject("roSGNode", "TargetSet")
 
     rects = []
-    baseW = m.sizes.base.w
-    baseH = m.sizes.base.h
-
     startX = -250
     x = startX
 
-    for i = 0 to m.visibleCols - 1
-        rects.push({ x: x, y: -baseH / 2, width: baseW, height: baseH })
-        x = x + baseW + m.gapX
+    for i = 0 to rowDef.visibleCols - 1
+        rects.push({ x: x, y: -rowDef.unfocusedH / 2, width: rowDef.unfocusedW, height: rowDef.unfocusedH })
+        x = x + rowDef.unfocusedW + m.gapX
     end for
 
     targetSet.targetRects = rects
@@ -85,60 +128,60 @@ function createUnfocusedTargetSet() as object
     return targetSet
 end function
 
-sub setupTargetList(targetList as object, isFocused as boolean)
-    targetList.focusedTargetSet = m.focusedTargetSet
-    targetList.unfocusedTargetSet = m.unfocusedTargetSet
+sub scrollToRow(newIndex as integer)
+    if newIndex = m.currentRowIndex then return
+    if newIndex < 0 or newIndex >= m.targetGroups.count() then return
 
-    if isFocused
-        targetList.targetSet = m.focusedTargetSet
-    else
-        targetList.targetSet = m.unfocusedTargetSet
-    end if
+    ' Animate old row to unfocused, new row to focused
+    m.targetGroups[m.currentRowIndex].animateToTargetSet = m.unfocusedTargetSets[m.currentRowIndex]
+    m.targetGroups[newIndex].animateToTargetSet = m.focusedTargetSets[newIndex]
 
-    targetList.showTargetRects = false
-    targetList.itemComponentName = "TargetGroupItem"
+    ' Scroll container
+    currentY = m.baseContainerY - m.rowPositions[m.currentRowIndex]
+    targetY = m.baseContainerY - m.rowPositions[newIndex]
+    m.scrollInterp.keyValue = [[m.containerX, currentY], [m.containerX, targetY]]
+    m.scrollAnim.control = "start"
+
+    ' Move focus
+    m.targetGroups[newIndex].setFocus(true)
+    m.currentRowIndex = newIndex
+
+    updateLabels()
 end sub
 
-sub setupContent(targetList as object, startIndex as integer)
-    contentRoot = createObject("roSGNode", "ContentNode")
-    colors = Constants.Palette.GetItemColors()
-
-    for i = 0 to 14
-        child = contentRoot.createChild("ContentNode")
-        child.title = (startIndex + i).toStr()
-        child.addFields({ itemColor: colors[i mod colors.count()] })
-    end for
-
-    targetList.content = contentRoot
-end sub
-
-sub onItemFocused()
-    for i = 0 to m.targetLists.count() - 1
-        if m.targetLists[i].hasFocus()
-            m.currentRowIndex = i
-            m.focusLabel.text = "Row " + (i + 1).toStr() + " - Item " + m.targetLists[i].itemFocused.toStr()
-            exit for
-        end if
-    end for
+sub updateLabels()
+    rowDef = m.rowDefs[m.currentRowIndex]
+    m.focusLabel.text = rowDef.title + " (" + (m.currentRowIndex + 1).toStr() + "/" + m.rowDefs.count().toStr() + ") | Item " + m.itemIndices[m.currentRowIndex].toStr()
 end sub
 
 function onKeyEvent(key as string, press as boolean) as boolean
     if not press then return false
 
     if key = "down"
-        newIndex = m.currentRowIndex + 1
-        if newIndex < m.targetLists.count()
-            m.targetLists[newIndex].setFocus(true)
-            m.currentRowIndex = newIndex
-            return true
-        end if
+        scrollToRow(m.currentRowIndex + 1)
+        return true
     else if key = "up"
-        newIndex = m.currentRowIndex - 1
-        if newIndex >= 0
-            m.targetLists[newIndex].setFocus(true)
-            m.currentRowIndex = newIndex
-            return true
+        scrollToRow(m.currentRowIndex - 1)
+        return true
+    else if key = "right"
+        tg = m.targetGroups[m.currentRowIndex]
+        rowDef = m.rowDefs[m.currentRowIndex]
+        newItem = m.itemIndices[m.currentRowIndex] + 1
+        if newItem < rowDef.itemCount
+            m.itemIndices[m.currentRowIndex] = newItem
+            tg.animateToItem = newItem
+            updateLabels()
         end if
+        return true
+    else if key = "left"
+        tg = m.targetGroups[m.currentRowIndex]
+        newItem = m.itemIndices[m.currentRowIndex] - 1
+        if newItem >= 0
+            m.itemIndices[m.currentRowIndex] = newItem
+            tg.animateToItem = newItem
+            updateLabels()
+        end if
+        return true
     end if
 
     return false

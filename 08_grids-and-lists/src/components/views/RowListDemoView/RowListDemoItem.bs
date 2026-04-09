@@ -1,0 +1,92 @@
+' ============================================================================
+' RowListDemoItem - Item renderer for RowListDemoView
+' ============================================================================
+' Each item has two size states (unfocused/focused) passed via content fields.
+' focusPercent (0→1) drives linear interpolation of width and height,
+' plus a ColorFieldInterpolator for smooth color transitions.
+' ============================================================================
+
+sub init()
+    m.itemGroup = m.top.findNode("itemGroup")
+    m.itemRect = m.top.findNode("itemRect")
+    m.itemLabel = m.top.findNode("itemLabel")
+    m.focusColorInterp = m.top.findNode("focusColorInterp")
+    m.focusColorInterp.fieldToInterp = "itemRect.color"
+
+    m.focusedW = 0
+    m.focusedH = 0
+    m.unfocusedW = 0
+    m.unfocusedH = 0
+
+    ' ColorFieldInterpolator requires "0xRRGGBBAA" format
+    unfocusedColor = "0x" + mid(Constants.Colors.Secondary, 2) + "FF"
+    focusedColor = "0x" + mid(Constants.Colors.Primary, 2) + "FF"
+
+    m.itemRect.color = Constants.Colors.Secondary
+    m.focusColorInterp.keyValue = [unfocusedColor, focusedColor]
+end sub
+
+sub onContentChanged()
+    content = m.top.itemContent
+    if content = invalid then return
+
+    m.itemLabel.text = content.title
+
+    ' Read focused/unfocused dimensions from content fields
+    if content.hasField("focusedW") and content.focusedW > 0
+        m.focusedW = content.focusedW
+        m.focusedH = content.focusedH
+        m.unfocusedW = content.unfocusedW
+        m.unfocusedH = content.unfocusedH
+
+        ' Start at unfocused size
+        m.itemRect.width = m.unfocusedW
+        m.itemRect.height = m.unfocusedH
+        m.itemLabel.width = m.unfocusedW
+        m.itemLabel.height = m.unfocusedH
+
+        centerInCell()
+    end if
+
+    ' Use custom color if provided
+    if content.hasField("itemColor") and content.itemColor <> invalid
+        baseColor = content.itemColor
+        unfocusedColor = "0x" + mid(baseColor, 2) + "FF"
+        focusedColor = "0x" + mid(Constants.Colors.Primary, 2) + "FF"
+        m.itemRect.color = baseColor
+        m.focusColorInterp.keyValue = [unfocusedColor, focusedColor]
+    end if
+end sub
+
+sub onSizeChanged()
+    centerInCell()
+end sub
+
+sub centerInCell()
+    cellW = m.top.width
+    cellH = m.top.height
+    currentW = m.itemRect.width
+    currentH = m.itemRect.height
+
+    if cellW > 0 and cellH > 0 and currentW > 0
+        m.itemGroup.translation = [(cellW - currentW) / 2, (cellH - currentH) / 2]
+    end if
+end sub
+
+sub onFocusPercentChanged()
+    fp = m.top.focusPercent
+    if m.unfocusedW = 0 then return
+
+    ' Interpolate width and height between unfocused and focused
+    w = m.unfocusedW + fp * (m.focusedW - m.unfocusedW)
+    h = m.unfocusedH + fp * (m.focusedH - m.unfocusedH)
+
+    m.itemRect.width = w
+    m.itemRect.height = h
+    m.itemLabel.width = w
+    m.itemLabel.height = h
+
+    centerInCell()
+
+    ' m.focusColorInterp.fraction = fp
+end sub

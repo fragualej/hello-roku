@@ -1,0 +1,100 @@
+sub init()
+    m.rowList = m.top.findNode("rowList")
+    m.focusLabel = m.top.findNode("focusLabel")
+
+    setupLayout()
+    setupContent()
+
+    m.rowList.observeField("rowItemFocused", "onItemFocused")
+    m.top.observeField("focusedChild", "onFocusedChildChanged")
+end sub
+
+sub setupLayout()
+    ' === Item Type Definitions ===
+    ' Each row has a different item type with distinct focused/unfocused dimensions:
+    '   LiveItem:     564x375 → 712x448  (landscape, grows on focus)
+    '   Top10Item:    348x478 → 777x478  (portrait→landscape, height stays constant)
+    '   OriginalItem: 258x378 → 321x439  (portrait, grows on focus)
+    m.itemTypes = [
+        { name: "LiveItem", focusedW: 712, focusedH: 448, unfocusedW: 564, unfocusedH: 375 },
+        { name: "Top10Item", focusedW: 777, focusedH: 478, unfocusedW: 348, unfocusedH: 478 },
+        { name: "OriginalItem", focusedW: 321, focusedH: 439, unfocusedW: 258, unfocusedH: 378 }
+    ]
+
+    m.gridW = 1820
+    m.gapX = 20
+    m.gapY = 20
+    numRows = m.itemTypes.count()
+
+    ' === Per-row RowList configuration ===
+    ' Cell size = max(focused, unfocused) per axis to avoid clipping either state
+    rowItemSizes = []
+    rowItemSpacings = []
+    rowHeights = []
+
+    for each itemType in m.itemTypes
+        cellW = itemType.focusedW
+        cellH = itemType.focusedH
+        ' Top10Item unfocused is taller than focused — cell must hold both
+        if itemType.unfocusedH > cellH then cellH = itemType.unfocusedH
+        if itemType.unfocusedW > cellW then cellW = itemType.unfocusedW
+
+        rowItemSizes.push([cellW, cellH])
+        rowItemSpacings.push([m.gapX, 0])
+        rowHeights.push(cellH + m.gapY)
+    end for
+
+    ' === Apply to RowList ===
+    m.rowList.numRows = numRows
+    m.rowList.itemSize = [m.gridW, rowHeights[0]]
+    m.rowList.rowItemSize = rowItemSizes
+    m.rowList.rowItemSpacing = rowItemSpacings
+    m.rowList.rowHeights = rowHeights
+end sub
+
+sub onFocusedChildChanged()
+    if m.top.hasFocus()
+        m.rowList.setFocus(true)
+    end if
+end sub
+
+sub setupContent()
+    contentRoot = createObject("roSGNode", "ContentNode")
+    colors = Constants.Palette.GetItemColors()
+    rowTitles = ["Live", "Top 10", "Originals"]
+
+    for rowIndex = 0 to m.itemTypes.count() - 1
+        itemType = m.itemTypes[rowIndex]
+        rowNode = contentRoot.createChild("ContentNode")
+        rowNode.title = rowTitles[rowIndex]
+
+        for itemIndex = 0 to 9
+            itemNode = rowNode.createChild("ContentNode")
+            itemNode.title = itemType.name + " " + itemIndex.toStr()
+            colorIndex = (rowIndex + itemIndex) mod colors.count()
+            itemNode.addFields({
+                itemColor: colors[colorIndex],
+                focusedW: itemType.focusedW,
+                focusedH: itemType.focusedH,
+                unfocusedW: itemType.unfocusedW,
+                unfocusedH: itemType.unfocusedH
+            })
+        end for
+    end for
+
+    m.rowList.content = contentRoot
+end sub
+
+sub onItemFocused()
+    ' rowItemFocused is an array: [rowIndex, itemIndex]
+    focused = m.rowList.rowItemFocused
+    if focused <> invalid and focused.count() = 2
+        rowIndex = focused[0]
+        itemIndex = focused[1]
+        m.focusLabel.text = "Row: " + rowIndex.toStr() + " | Item: " + itemIndex.toStr()
+    end if
+end sub
+
+function onKeyEvent(key as string, press as boolean) as boolean
+    return false
+end function

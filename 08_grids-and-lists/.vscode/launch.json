@@ -17,6 +17,7 @@
                 "manifest"
             ],
             "enableDebugProtocol": true,
+            "injectRaleTrackerTask":false,
             "injectRdbOnDeviceComponent": true,
             "rendezvousTracking": true,
             "retainDeploymentArchive": true,
